@@ -5,7 +5,7 @@ https://python-packaging-user-guide.readthedocs.org/en/latest/distributing.html
 
 from setuptools import setup, find_packages
 
-setup(name='ship-mapper',
+setup(name='ship_mapper',
       version='0.1',
       packages=find_packages(),
       )
