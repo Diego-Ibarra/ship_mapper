@@ -1,3 +1,1 @@
-from .converters.convert_to_nc import convert_to_nc
-
-print('hello world!')
+from .converters import convert_to_nc
