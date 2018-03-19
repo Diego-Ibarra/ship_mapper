@@ -3,11 +3,11 @@ def convert_to_nc(data_in, data_out, converter, path=None):
      Import appropiate converter, which is a file in folder "converters" within
      this module, or a customade file in the "path" folder 
      '''
+    import imp
     try:
         if path is None:
             exec('from . import ' + converter)
         else:
-            import imp
             file, pathname, description = imp.find_module(converter,[path])
             exec(converter + " = imp.load_module('"+ converter +"', file, pathname, description)")
     except ImportError:
