@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb 15 09:17:41 2018
+
+@author: IbarraD
+"""
 
 import math
 import numpy as np
