@@ -78,3 +78,26 @@ def interp2d(x1, y1, x2, y2):
     
     return xx, yy
 
+
+
+def spatial_filter(file_in, spatial):
+    import xarray as xr
+    
+    minlat = spatial[0]
+    maxlat = spatial[1]
+    minlon = spatial[2]
+    maxlon = spatial[3]
+    
+    all_data = xr.open_dataset(file_in)
+    
+    indx = ((all_data['longitude']>  minlon) &
+            (all_data['longitude']<= maxlon) &
+            (all_data['latitude']>  minlat) &
+            (all_data['latitude']<= maxlat))
+        
+    filtered_data = all_data.sel(Dindex=indx)
+    
+    print("Filtered!!!")
+    
+    return filtered_data
+
