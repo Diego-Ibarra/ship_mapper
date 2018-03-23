@@ -101,3 +101,37 @@ def spatial_filter(file_in, spatial):
     
     return filtered_data
 
+
+
+def import_general_settings(path=None):
+    '''
+    imports general_settings
+    '''
+    import imp
+    import os
+
+    if path is None:
+#        path = os.path.realpath('..') 
+        print()
+        file, pathname, description = imp.find_module('general_settings',[os.path.realpath('..')+'\\'])
+        general_settings = imp.load_module('general_settings', file, pathname, description)
+    else:
+        file, pathname, description = imp.find_module('general_settings',[path])
+        general_settings = imp.load_module('general_settings', file, pathname, description)
+    
+    return general_settings
+
+
+def create_mydirs(project_name,path2settings=None):
+    general_settings = import_general_settings(path=path2settings)
+    
+    mydirs.top = general_settings.top_dir
+    mydirs.data_original = general_settings.data_original
+    mydirs.data_nc = general_settings.data_nc
+    mydirs.my_converters = general_settings.my_converters
+    mydirs.projects = general_settings.projects
+    mydirs.top = general_settings.top_dir
+    
+    return mydirs
+    
+    
