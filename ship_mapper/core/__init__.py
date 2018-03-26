@@ -1,6 +1,7 @@
 
 import math
 import numpy as np
+import os
 
 # distance -------------------------------------------------------
 def distance(lat1,lon1,lat2,lon2):
@@ -108,12 +109,12 @@ def import_general_settings(path=None):
     imports general_settings
     '''
     import imp
-    import os
+
 
     if path is None:
 #        path = os.path.realpath('..') 
         print()
-        file, pathname, description = imp.find_module('general_settings',[os.path.realpath('..')+'\\'])
+        file, pathname, description = imp.find_module('general_settings',[os.path.realpath('../..')+'\\'])
         general_settings = imp.load_module('general_settings', file, pathname, description)
     else:
         file, pathname, description = imp.find_module('general_settings',[path])
@@ -122,15 +123,22 @@ def import_general_settings(path=None):
     return general_settings
 
 
-def create_mydirs(project_name,path2settings=None):
+
+
+def load_mydirs(filedash, run_name, path2settings=None):
+#    general_settings = import_general_settings(path=path2settings)
     general_settings = import_general_settings(path=path2settings)
     
-    mydirs.top = general_settings.top_dir
-    mydirs.data_original = general_settings.data_original
-    mydirs.data_nc = general_settings.data_nc
-    mydirs.my_converters = general_settings.my_converters
-    mydirs.projects = general_settings.projects
-    mydirs.top = general_settings.top_dir
+    project_name = os.path.split(os.path.split(filedash)[0])[1]
+    
+    mydirs = {}
+    mydirs['top'] = general_settings.top_dir
+    mydirs['data_original'] = general_settings.data_original
+    mydirs['data_nc'] = general_settings.data_nc
+    mydirs['my_converters'] = general_settings.my_converters
+    mydirs['projects'] = general_settings.projects
+    mydirs['myproject'] = general_settings.projects + '\\' + project_name + '\\'
+    mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
     
     return mydirs
     
