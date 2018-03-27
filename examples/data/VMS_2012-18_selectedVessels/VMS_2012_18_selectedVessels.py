@@ -9,6 +9,9 @@ import xarray as xr
 import ship_mapper as sm
 
 def convert(file_in,file_out):
+    '''
+    test3
+    '''
     #Load data
     data = pd.read_excel(file_in, sep=',')
 #    data = pd.read_excel(datadir + 'L0_original\\' + filename + '.xls', sep=',')
@@ -139,34 +142,9 @@ def convert(file_in,file_out):
 
 
 if __name__ == '__main__':
-    import os
     
-    dir_here = os.path.dirname(os.path.abspath(__file__))
-    
-    dir_in  = dir_here + '\\data_original\\'
-    dir_out  = dir_here + '\\data_nc\\'
-    
-    
-#    print(dir_in)
-#    print(dir_out)
-#    
-    for root, dirs, files in os.walk(dir_in):
-        for file in files:
-            file_in = os.path.join(root, file)
-            filename, file_in_extension = os.path.splitext(file_in)
-            
-            print('-----')
-            print(file_in)
+    sm.bulk_convert_to_nc(__file__)
 
-            
-            file_out = file_in.replace('data_original', 'data_nc').replace(file_in_extension,'.nc')
-            
-            print(file_out)
-            
-            if file_out:
-                print('yes')
-            
-#            convert(file_in,file_out)
     
 
 

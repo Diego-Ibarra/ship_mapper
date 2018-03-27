@@ -151,6 +151,48 @@ def load_mydirs(filedash, run_name, path2settings=None):
     return mydirs
 
 
+def convert_data(converter_file):
+    import imp
 
+    dir_to_file, converter_filename = os.path.split(converter_file)
+        
+    file, pathname, description = imp.find_module(converter_filename[:-3],[dir_to_file])
+    
+    convert = imp.load_module('convert', file, pathname, description)
+#    print(type(convert))
+    
+    dir_here = os.path.dirname(os.path.abspath(converter_file))
+    
+    dir_in  = dir_here + '\\data_original\\'
+    dir_out  = dir_here + '\\data_nc\\'
+    
+    
+#    print(dir_in)
+#    print(dir_out)
+#    
+    for root, dirs, files in os.walk(dir_in):
+        for file in files:
+            file_in = os.path.join(root, file)
+            filename, file_in_extension = os.path.splitext(file_in)
+            
+            root_out = root.replace('data_original', 'data_nc')
+            
+            print('-----')
+            print(file_in)
+
+            
+            file_out = file_in.replace('data_original', 'data_nc').replace(file_in_extension,'.nc')
+            
+            print(file_out)
+            
+            if os.path.isfile(file_out):
+                print('yes')
+            else:
+                if not os.path.exists(root_out):
+                    os.makedirs(root_out)
+                    print("Directory didn't exist... now it does: " + root_out)
+                
+                    convert(file_in,file_out)
+    return
     
     
