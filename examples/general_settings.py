@@ -1,6 +1,7 @@
 
 
-top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
+#top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
+top_dir = 'C:\\Users\\cerc-user\\Documents\\Github\\ship_mapper\\examples\\'
 
 # ---------------------------------------------------
 data_original = top_dir + 'data_original\\'

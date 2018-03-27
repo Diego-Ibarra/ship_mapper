@@ -9,5 +9,6 @@ setup(name='ship_mapper',
       version='0.1',
       packages=find_packages(),
       install_requires=['xarray',
-                        'numpy']
+                        'numpy',
+                        'matplotlib']
       )

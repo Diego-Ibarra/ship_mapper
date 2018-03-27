@@ -132,6 +132,14 @@ def load_mydirs(filedash, run_name, path2settings=None):
     project_name = os.path.split(os.path.split(filedash)[0])[1]
     
     mydirs = {}
+#    mydirs['top'] = general_settings.top_dir
+#    mydirs['data_original'] = general_settings.data_original
+#    mydirs['data_nc'] = general_settings.data_nc
+#    mydirs['my_converters'] = general_settings.my_converters
+#    mydirs['projects'] = general_settings.projects
+#    mydirs['myproject'] = general_settings.projects + '\\' + project_name + '\\'
+#    mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
+    
     mydirs['top'] = general_settings.top_dir
     mydirs['data_original'] = general_settings.data_original
     mydirs['data_nc'] = general_settings.data_nc
