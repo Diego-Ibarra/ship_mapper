@@ -149,5 +149,8 @@ def load_mydirs(filedash, run_name, path2settings=None):
     mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
     
     return mydirs
+
+
+
     
     
