@@ -68,14 +68,12 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
             
             print(file_out)
             
-            if os.path.isfile(file_out):
-                print('yes')
-            else:
+            if os.path.isfile(file_out) and overwrite:
+                convert.convert(file_in,file_out)
+            elif not os.path.isfile(file_out):
                 if not os.path.exists(root_out):
                     os.makedirs(root_out)
                     print("Directory didn't exist... now it does: " + root_out)
-                    
-#                print('no file')
                 
                 convert.convert(file_in,file_out)
     return
