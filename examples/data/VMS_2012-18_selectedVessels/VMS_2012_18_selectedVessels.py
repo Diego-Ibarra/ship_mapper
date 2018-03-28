@@ -24,7 +24,6 @@ def convert(file_in,file_out):
     originTime = datetime.datetime.strptime('1/1/1980 00:00',"%m/%d/%Y %H:%M")
     
     #Check date-strings and calculate "serial-date" (i.e. SeqNum)
-    print('Processing...')
     for i in range(0,len(data)):
         try:
             DateTime_list.append(datetime.datetime.strptime(data['POSITION_UTC_DATE'][i],"%Y-%m-%d %H:%M:%S"))
@@ -143,7 +142,13 @@ def convert(file_in,file_out):
 
 if __name__ == '__main__':
     
-    sm.bulk_convert_to_nc(__file__)
+#    sm.bulk_convert_to_nc(__file__)
+    
+    
+    converter = 'VMS_2012_18_selectedVessels'
+    path_to_data_in = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels\\data_original'
+    path_to_converter = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
+    sm.bulk_convert_to_nc(converter, path_to_data_in=path_to_data_in, path_to_converter=path_to_converter, overwrite=True)
 
     
 

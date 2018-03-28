@@ -12,7 +12,7 @@ import xarray as xr
 import ship_mapper as sm
 
 
-def gridder(BinNo, upLim, data_in, file_out):
+def gridder(BinNo, upLim, data_in, mydirs):
     print('Gridding...')
     # -----------------------------------------------------------------------------
 
@@ -77,6 +77,17 @@ def gridder(BinNo, upLim, data_in, file_out):
                             'lat':(['grid_length'],y)})
     
 #    d.to_netcdf(path=datadir + 'L3_gridded_netCDF\\' + filename + '- Grid' + str(BinNo) + ' - upFilter' + '-' + str(upLim) + '.nc')
+    sm.checkDir(str(mydirs['gridded_data']))
+    
+    import os
+    
+    file_out = os.path.join(str(mydirs['gridded_data']), mydirs['run_name'] + '_' + str(BinNo) + '.nc')
+#    
+#    file_out = str(mydirs['gridded_data']) + mydirs['run_name'] + '_' + str(BinNo) + '.nc'
+    
+    print('Writting...')
+    print('...' + file_out)
+    
     d.to_netcdf(path=file_out)
     
     return

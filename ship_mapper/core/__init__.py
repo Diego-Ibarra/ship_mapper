@@ -104,34 +104,78 @@ def spatial_filter(file_in, spatial):
 
 
 
-def import_general_settings(path=None):
+def checkDir(directory):
     '''
-    imports general_settings
+    Check if ``directory`` exists. In not, make it!
+
+    parameters:
+        directory (str): Absolute path of directory to check and/or make.
     '''
-    import imp
+
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print("Directory didn't exist... now it does: " + directory)
+    return
 
 
-    if path is None:
-#        path = os.path.realpath('..') 
-        print()
-        file, pathname, description = imp.find_module('general_settings',[os.path.realpath('../..')+'\\'])
-        general_settings = imp.load_module('general_settings', file, pathname, description)
-    else:
-        file, pathname, description = imp.find_module('general_settings',[path])
-        general_settings = imp.load_module('general_settings', file, pathname, description)
+
+
+#def import_general_settings(path=None):
+#    '''
+#    imports general_settings
+#    '''
+#    import imp
+#
+#
+#    if path is None:
+##        path = os.path.realpath('..') 
+#        print()
+#        file, pathname, description = imp.find_module('general_settings',[os.path.realpath('../..')+'\\'])
+#        general_settings = imp.load_module('general_settings', file, pathname, description)
+#    else:
+#        file, pathname, description = imp.find_module('general_settings',[path])
+#        general_settings = imp.load_module('general_settings', file, pathname, description)
+#    
+#    return general_settings
+
+def make_mydirs(top_dir, data_nc_dir, filedash):
+    from pathlib import Path
     
-    return general_settings
+    project_name = os.path.split(os.path.split(filedash)[0])[1]   
+#    project_path = Path(os.path.split(os.path.split(filedash)[0])[0])
+#    run_path = Path(os.path.split(filedash)[0])
+    project_path = Path(os.path.split(filedash)[0])
+    run_name = os.path.split(filedash)[1][:-3]
+
+    mydirs = {}  
+    mydirs['top'] = top_dir
+    mydirs['data_nc'] = data_nc_dir
+    mydirs['project_name'] = project_name
+    mydirs['project_path'] = project_path
+#    mydirs['project_path'] = project_path
+#    mydirs['run_path'] = run_path
+    mydirs['run_name'] = run_name
+    mydirs['gridded_data'] = Path(project_path / 'gridded_data')
+    
+    return mydirs
 
 
 
-
-def load_mydirs(filedash, run_name, path2settings=None):
+#def load_mydirs(filedash, run_name, path2settings=None):
+##    general_settings = import_general_settings(path=path2settings)
 #    general_settings = import_general_settings(path=path2settings)
-    general_settings = import_general_settings(path=path2settings)
-    
-    project_name = os.path.split(os.path.split(filedash)[0])[1]
-    
-    mydirs = {}
+#    
+#    project_name = os.path.split(os.path.split(filedash)[0])[1]
+#    
+#    mydirs = {}
+##    mydirs['top'] = general_settings.top_dir
+##    mydirs['data_original'] = general_settings.data_original
+##    mydirs['data_nc'] = general_settings.data_nc
+##    mydirs['my_converters'] = general_settings.my_converters
+##    mydirs['projects'] = general_settings.projects
+##    mydirs['myproject'] = general_settings.projects + '\\' + project_name + '\\'
+##    mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
+#    
 #    mydirs['top'] = general_settings.top_dir
 #    mydirs['data_original'] = general_settings.data_original
 #    mydirs['data_nc'] = general_settings.data_nc
@@ -139,60 +183,52 @@ def load_mydirs(filedash, run_name, path2settings=None):
 #    mydirs['projects'] = general_settings.projects
 #    mydirs['myproject'] = general_settings.projects + '\\' + project_name + '\\'
 #    mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
-    
-    mydirs['top'] = general_settings.top_dir
-    mydirs['data_original'] = general_settings.data_original
-    mydirs['data_nc'] = general_settings.data_nc
-    mydirs['my_converters'] = general_settings.my_converters
-    mydirs['projects'] = general_settings.projects
-    mydirs['myproject'] = general_settings.projects + '\\' + project_name + '\\'
-    mydirs['gridded_data'] = mydirs['myproject'] + 'gridded_data\\'
-    
-    return mydirs
-
-
-def convert_data(converter_file):
-    import imp
-
-    dir_to_file, converter_filename = os.path.split(converter_file)
-        
-    file, pathname, description = imp.find_module(converter_filename[:-3],[dir_to_file])
-    
-    convert = imp.load_module('convert', file, pathname, description)
-#    print(type(convert))
-    
-    dir_here = os.path.dirname(os.path.abspath(converter_file))
-    
-    dir_in  = dir_here + '\\data_original\\'
-    dir_out  = dir_here + '\\data_nc\\'
-    
-    
-#    print(dir_in)
-#    print(dir_out)
 #    
-    for root, dirs, files in os.walk(dir_in):
-        for file in files:
-            file_in = os.path.join(root, file)
-            filename, file_in_extension = os.path.splitext(file_in)
-            
-            root_out = root.replace('data_original', 'data_nc')
-            
-            print('-----')
-            print(file_in)
+#    return mydirs
 
-            
-            file_out = file_in.replace('data_original', 'data_nc').replace(file_in_extension,'.nc')
-            
-            print(file_out)
-            
-            if os.path.isfile(file_out):
-                print('yes')
-            else:
-                if not os.path.exists(root_out):
-                    os.makedirs(root_out)
-                    print("Directory didn't exist... now it does: " + root_out)
-                
-                    convert(file_in,file_out)
-    return
+
+#def convert_data(converter_file):
+#    import imp
+#
+#    dir_to_file, converter_filename = os.path.split(converter_file)
+#        
+#    file, pathname, description = imp.find_module(converter_filename[:-3],[dir_to_file])
+#    
+#    convert = imp.load_module('convert', file, pathname, description)
+##    print(type(convert))
+#    
+#    dir_here = os.path.dirname(os.path.abspath(converter_file))
+#    
+#    dir_in  = dir_here + '\\data_original\\'
+#    dir_out  = dir_here + '\\data_nc\\'
+#    
+#    
+##    print(dir_in)
+##    print(dir_out)
+##    
+#    for root, dirs, files in os.walk(dir_in):
+#        for file in files:
+#            file_in = os.path.join(root, file)
+#            filename, file_in_extension = os.path.splitext(file_in)
+#            
+#            root_out = root.replace('data_original', 'data_nc')
+#            
+#            print('-----')
+#            print(file_in)
+#
+#            
+#            file_out = file_in.replace('data_original', 'data_nc').replace(file_in_extension,'.nc')
+#            
+#            print(file_out)
+#            
+#            if os.path.isfile(file_out):
+#                print('yes')
+#            else:
+#                if not os.path.exists(root_out):
+#                    os.makedirs(root_out)
+#                    print("Directory didn't exist... now it does: " + root_out)
+#                
+#                    convert(file_in,file_out)
+#    return
     
     
