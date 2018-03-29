@@ -12,18 +12,28 @@ mydirs = sm.make_mydirs(top_dir, data_nc_dir, __file__)
 ##
 ##
 ##
-##converter = 'VMS_2012_18_selectedVessels'
+converter = 'VMS_2012_18_selectedVessels'
 ###path_to_converter = 'C:\\Users\\IbarraD\\Documents\\Example\\converters\\'
 ##path_to_converter = 'C:\\Users\\cerc-user\\Documents\\Github\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels\\'
 ##
-##sm.convert_to_nc(mydirs['data_original'], mydirs['data_nc'], converter, path=mydirs['my_converters'])
-#
+#sm.convert_to_nc(mydirs['data_original'], mydirs['data_nc'], converter, path=mydirs['my_converters'])
+##
 # Number of gridcells in the x and y dimenssions
 BinNo = 1000
 # Upper and lower limits (apparent Spped) to filter ship density data 
 downLim = 1 # Knots
 upLim = 4.5 # Knots
 spatial=[43,45.55,-61.1,-55.7]
+
+path_to_data_in = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels\\data_original'
+path_to_converter = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
+#sm.bulk_convert_to_nc(converter, path_to_data_in=path_to_data_in, path_to_converter=path_to_converter, overwrite=False)
+
+
+
+
+
+
 #
 ##
 ##file_nc= 'C:\Users\IbarraD\Documents\GitHub\ship_mapper\examples\data\VMS_2012-18_selectedVessels\data_nc'

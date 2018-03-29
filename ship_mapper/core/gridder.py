@@ -33,8 +33,12 @@ def gridder(BinNo, upLim, data_in, mydirs):
         print('Ship: ' + str(counter) + '('+ str(ship) + ')')
         singleship = data.sel("data['ship_id_vrn'] == ship")
         
+        print('****************************************************************')
+        print(len(singleship['longitude'].values))
+        
         # Loop over each ship
-        for i in range(1,len(singleship)):
+#        for i in range(1,len(singleship)):
+        for i in range(1,len(singleship['longitude'].values)):
             if len(singleship) > 1:
                 # Iterpolate bewtween known points
                 lon1 = singleship['longitude'].values[i-1]
