@@ -161,6 +161,24 @@ def make_mydirs(top_dir, data_nc_dir, filedash):
 
 
 
+def get_all_files(dir_in):
+    
+    all_files =[]
+    # Do all files in all directories within dir_in
+    for root, dirs, files in os.walk(dir_in):
+        for file in files:
+            all_files.append(os.path.join(root, file))  
+    return all_files
+
+
+
+def get_filename_from_fullpath(fullpath):
+    
+    return os.path.splitext(os.path.split(fullpath)[1])[0]
+
+
+
+
 #def load_mydirs(filedash, run_name, path2settings=None):
 ##    general_settings = import_general_settings(path=path2settings)
 #    general_settings = import_general_settings(path=path2settings)
