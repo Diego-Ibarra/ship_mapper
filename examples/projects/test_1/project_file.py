@@ -2,7 +2,10 @@ import ship_mapper as sm
 
 
 
-top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
+#top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
+top_dir = 'C:\\Users\\cerc-user\\Documents\\Github\\ship_mapper\\examples\\'
+
+
 data_nc_dir = top_dir + 'data\\VMS_2012-18_selectedVessels\\data_original\\'
 
 # Pack dirs into mydirs (other default dirs are also populated in mydirs)
@@ -22,7 +25,8 @@ info.filt.speed_high = 4.5 # Knots
 # -----------------------------------------------------------------------------
 
 converter = 'VMS_2012_18_selectedVessels'
-path_to_converter = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
+#path_to_converter = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
+path_to_converter = 'C:\\Users\\cerc-user\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
 
 # Convert original data to nc
 sm.bulk_convert_to_nc(converter,
