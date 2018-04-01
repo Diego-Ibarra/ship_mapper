@@ -12,15 +12,15 @@ import xarray as xr
 import ship_mapper as sm
 
 
-def gridder(BinNo, upLim, data_in, mydirs):
+def gridder(info, data_in):
     print('Gridding...')
     # -----------------------------------------------------------------------------
 
     data = data_in
 
     # Make grid
-    x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=BinNo)
-    y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=BinNo)
+    x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
+    y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
     
     
     # Find unique ships
@@ -49,7 +49,7 @@ def gridder(BinNo, upLim, data_in, mydirs):
                 # Estimate distance and velocity
                 dist = sm.distance(lat1,lon1,lat2,lon2)
                 
-                if dist < (upLim * 1.852 * 1000): # only concidere points less than x km appart
+                if dist < (info.filt.speed_high * 1.852 * 1000): # only concidere points less than x km appart
                     elapsed_days = singleship['SeqNum'].values[i] - singleship['SeqNum'].values[i-1]
                     elapsed_secs = elapsed_days * 86400
                     veloc = sm.estimate_velocity(elapsed_secs, dist)
@@ -81,11 +81,11 @@ def gridder(BinNo, upLim, data_in, mydirs):
                             'lat':(['grid_length'],y)})
     
 #    d.to_netcdf(path=datadir + 'L3_gridded_netCDF\\' + filename + '- Grid' + str(BinNo) + ' - upFilter' + '-' + str(upLim) + '.nc')
-    sm.checkDir(str(mydirs['gridded_data']))
+    sm.checkDir(str(info.dirs.gridded_data))
     
     import os
     
-    file_out = os.path.join(str(mydirs['gridded_data']), mydirs['run_name'] + '_' + str(BinNo) + '.nc')
+    file_out = os.path.join(str(info.dirs.gridded_data), info.run_name + '_' + str(info.grid.bin_number) + '.nc')
 #    
 #    file_out = str(mydirs['gridded_data']) + mydirs['run_name'] + '_' + str(BinNo) + '.nc'
     

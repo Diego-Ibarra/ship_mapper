@@ -9,3 +9,5 @@ from .core.gridder import gridder
 
 from .core.mapper import map_density, make_basemap
 
+from .core.infoObject import info
+

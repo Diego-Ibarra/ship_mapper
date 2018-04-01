@@ -18,38 +18,43 @@ import urllib.request
 import netCDF4
 
 
-def map_density(BinNo,downLim,upLim,file_in,mydirs,spatial=None):
+def map_density(info, file_in, save=True):
     print('Mapping...')
     # -----------------------------------------------------------------------------
+    
+    BinNo = info.grid.bin_number
+    downLim = info.filt.speed_low
+    upLim   = info.filt.speed_high
+#    mydirs
     
     # Load data
     d = xr.open_dataset(file_in)
     
     # Define boundaries
-    if spatial == None:  
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
         minlat = d['lat'].values.min()
         maxlat = d['lat'].values.max()
         minlon = d['lon'].values.min()
         maxlon = d['lon'].values.max()
     else:
-        minlat = spatial[0]
-        maxlat = spatial[1]
-        minlon = spatial[2]
-        maxlon = spatial[3]
+        minlat = info.grid.minlat
+        maxlat = info.grid.maxlat
+        minlon = info.grid.minlon
+        maxlon = info.grid.maxlon
     
     # APply filter (i.e. get rid of points above and below the velocity thresholds)
     d = d.where((d['velocgridded'] >= downLim) & (d['velocgridded'] < upLim),drop=True)
     
     
     
-    path_to_basemap = mydirs['project_path'] / 'ancillary'
+    path_to_basemap = info.dirs.project_path / 'ancillary'
     print('-----------------------------------------------------')
     print('-----------------------------------------------------')
     
     basemap_file = str(path_to_basemap / 'basemap.p')
     
     if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(mydirs['project_path'],[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
@@ -67,6 +72,7 @@ def map_density(BinNo,downLim,upLim,file_in,mydirs,spatial=None):
      
     # Mask zeros
     Hmasked = np.ma.masked_where(H<2.1,H)
+#    Hmasked = np.ma.masked_where(H<20,H)
      
     # Log H for better display
     Hmasked = np.log10(Hmasked)
@@ -103,9 +109,16 @@ def map_density(BinNo,downLim,upLim,file_in,mydirs,spatial=None):
 #    mng.frame.Maximize(True)
 #    
     plt.show()
-#    
-##    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
-##    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
+    
+    # Save map as png
+    if save:
+        filedir = str(info.dirs.pngs)
+        sm.checkDir(filedir)
+        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+        plt.savefig(os.path.join(filedir,filename), dpi=300)
+    
+#    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
+#    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
 #    plt.savefig('test.png')
     
     return

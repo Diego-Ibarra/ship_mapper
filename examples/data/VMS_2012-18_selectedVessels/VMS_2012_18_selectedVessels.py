@@ -13,6 +13,7 @@ def convert(file_in,file_out):
     test3
     '''
     #Load data
+    print(file_in)
     data = pd.read_excel(file_in, sep=',')
 #    data = pd.read_excel(datadir + 'L0_original\\' + filename + '.xls', sep=',')
     

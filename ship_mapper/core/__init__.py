@@ -81,13 +81,13 @@ def interp2d(x1, y1, x2, y2):
 
 
 
-def spatial_filter(file_in, spatial):
+def spatial_filter(file_in, info):
     import xarray as xr
     
-    minlat = spatial[0]
-    maxlat = spatial[1]
-    minlon = spatial[2]
-    maxlon = spatial[3]
+    minlat = info.grid.minlat
+    maxlat = info.grid.maxlat
+    minlon = info.grid.minlon
+    maxlon = info.grid.maxlon
     
     all_data = xr.open_dataset(file_in)
     
