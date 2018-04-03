@@ -35,16 +35,33 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
         dir_to_converter, converter_filename = os.path.split(converter)
         dir_in  = Path(dir_to_converter) / 'data_original'
 #        dir_out  = Path(dir_to_converter) / 'data_nc'
+    elif not os.path.isfile(converter) and path_to_converter is not None and path_to_data_in is not None:
+        dir_to_converter = Path(path_to_converter)
+        converter_filename = converter + '.py'
+        dir_in  = Path(path_to_data_in) / 'data_original'
+#        dir_out  = Path(dir_to_converter) / 'data_nc'
     elif not os.path.isfile(converter) and path_to_converter is not None and path_to_data_in is None:
         dir_to_converter = path_to_converter
         converter_filename = converter + '.py'
         dir_in  = Path(dir_to_converter) / 'data_original'
 #        dir_out  = Path(dir_to_converter) / 'data_nc'
-    else:
-        dir_to_converter = path_to_converter
+    elif not os.path.isfile(converter) and path_to_converter is None and path_to_data_in is not None:
+        dir_to_converter = os.path.split(__file__)[0]
         converter_filename = converter + '.py'
-        dir_in = path_to_data_in
-        
+        dir_in  = Path(path_to_data_in)
+#        dir_out  = Path(dir_to_converter) / 'data_nc'
+    else:
+        # This case is when 'converter' is actually a 'info' object
+        dir_to_converter = os.path.split(__file__)[0]
+        converter_filename = converter + '.py'
+        dir_in =  Path(path_to_data_in)
+
+    print('Yay!')
+    print(dir_in)   
+
+
+#    print('Yay!')
+#    print(str(dir_to_converter))      
   
     # Load converter as module
     file, pathname, description = imp.find_module(converter_filename[:-3],[Path(dir_to_converter)])   

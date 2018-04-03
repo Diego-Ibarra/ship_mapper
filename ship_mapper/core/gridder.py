@@ -34,7 +34,7 @@ def gridder(info, data_in, file_name, overwrite=False):
         
         
         # Find unique ships
-        unis = pd.unique(data['ship_id_vrn'])
+        unis = pd.unique(data['ship_id_vrn'].values)
         print('Number of Unique Ships = ' + str(len(unis)))
         iix, iiy, iiveloc = [], [], []
         counter = 0
