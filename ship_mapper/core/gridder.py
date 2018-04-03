@@ -9,6 +9,7 @@ Created on Thu Feb 15 09:19:49 2018
 import pandas as pd
 import numpy as np
 import xarray as xr
+import os
 import ship_mapper as sm
 
 
@@ -101,4 +102,61 @@ def gridder(info, data_in, file_name, overwrite=False):
         d.to_netcdf(path=file_out)
     
     return
+
+
+
+
+
+
+def grid_merger(info, files=None):
+    
+    if files == None:
+        all_files = sm.get_all_files(info.dirs.gridded_data)
+    else:
+        all_files = files
+    
+    # Process 1st grid
+    d = xr.open_dataset(all_files[0])
+    H0, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
+    # Rotate and flip H...
+    H0 = np.rot90(H0)
+    H0 = np.flipud(H0)
+    
+    # Process the rest of the grid files
+    for file_in in all_files[1:] :
+        d = xr.open_dataset(file_in)
+        H, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
+        # Rotate and flip H...
+        H = np.rot90(H)
+        H = np.flipud(H)
+        # Add new matrix (H) to summed matrix (H0) 
+        H0 = H0 + H
+            
+    # Create dataset
+    D = xr.Dataset({'ship_density':(['x','y'],H0)},
+            coords={'lon':(['x'],d['lon'].values),
+                    'lat':(['y'],d['lat'].values)})
+            
+    # Save merged file
+    sm.checkDir(str(info.dirs.merged_grid))
+    file_out = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
+    D.to_netcdf(path=file_out)
+    
+    return D
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
