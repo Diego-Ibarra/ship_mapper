@@ -18,16 +18,18 @@ import urllib.request
 import netCDF4
 
 
-def map_density(info, file_in, save=True):
+def map_density(info, file_in=None, save=True):
     print('Mapping...')
     # -----------------------------------------------------------------------------
     
     BinNo = info.grid.bin_number
     downLim = info.filt.speed_low
     upLim   = info.filt.speed_high
-#    mydirs
     
     # Load data
+    if file_in == None:
+        file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
+        
     d = xr.open_dataset(file_in)
     
     # Define boundaries
@@ -42,8 +44,8 @@ def map_density(info, file_in, save=True):
         minlon = info.grid.minlon
         maxlon = info.grid.maxlon
     
-    # APply filter (i.e. get rid of points above and below the velocity thresholds)
-    d = d.where((d['velocgridded'] >= downLim) & (d['velocgridded'] < upLim),drop=True)
+#    # APply filter (i.e. get rid of points above and below the velocity thresholds)
+#    d = d.where((d['velocgridded'] >= downLim) & (d['velocgridded'] < upLim),drop=True)
     
     
     
@@ -63,12 +65,7 @@ def map_density(info, file_in, save=True):
     # Create grid for mapping
     xx,yy = m(d['lon'].values,d['lat'].values)
     
-#    # Calculate 2D histogram
-#    H, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
-    H, xedges, yedges = np.histogram2d(np.append(d['xgridded'].values,[0,BinNo]),np.append(d['ygridded'].values,[0,BinNo]),bins=BinNo)
-    # Rotate and flip H...
-    H = np.rot90(H)
-    H = np.flipud(H)
+    H = d['ship_density'].values
      
     # Mask zeros
     Hmasked = np.ma.masked_where(H<2.1,H)
@@ -78,6 +75,7 @@ def map_density(info, file_in, save=True):
     Hmasked = np.log10(Hmasked)
     
     cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
+#    cs = m.pcolor(xx,yy,H, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
 #     
 ##    m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
 #    # Make map

@@ -3,6 +3,9 @@ ancillary/*
 gridded_data/*
 pngs/*
 
+*.p
+*.png
+
 # Below here was created automatically by Github
 
 # Byte-compiled / optimized / DLL files

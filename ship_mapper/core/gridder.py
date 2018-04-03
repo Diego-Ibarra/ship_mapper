@@ -82,13 +82,25 @@ def gridder(info, data_in, file_name, overwrite=False):
                 iix.append(xend)
                 iiy.append(yend)
                 iiveloc.append(veloc)
+                
+                
+                
+        H0, xedges, yedges = np.histogram2d(iix,iiy,bins=info.grid.bin_number)
+        # Rotate and flip H...
+        H0 = np.rot90(H0)
+        H0 = np.flipud(H0)
+                
+        D = xr.Dataset({'ship_density':(['x','y'],H0)},
+                coords={'lon':(['x'],x),
+                        'lat':(['y'],y)})
+                    
     
-        # Print NetCDF file
-        d = xr.Dataset({'xgridded':(['No_of_points'],iix),
-                        'ygridded':(['No_of_points'],iiy),
-                        'velocgridded':(['No_of_points'],iiveloc)},
-                        coords={'lon':(['grid_length'],x),
-                                'lat':(['grid_length'],y)})
+#        # Print NetCDF file
+#        d = xr.Dataset({'xgridded':(['No_of_points'],iix),
+#                        'ygridded':(['No_of_points'],iiy),
+#                        'velocgridded':(['No_of_points'],iiveloc)},
+#                        coords={'lon':(['grid_length'],x),
+#                                'lat':(['grid_length'],y)})
         
     #    d.to_netcdf(path=datadir + 'L3_gridded_netCDF\\' + filename + '- Grid' + str(BinNo) + ' - upFilter' + '-' + str(upLim) + '.nc')
         sm.checkDir(str(info.dirs.gridded_data))
@@ -99,7 +111,7 @@ def gridder(info, data_in, file_name, overwrite=False):
         print('Writting...')
         print('...' + file_out)
         
-        d.to_netcdf(path=file_out)
+        D.to_netcdf(path=file_out)
     
     return
 
@@ -116,35 +128,63 @@ def grid_merger(info, files=None):
         all_files = files
     
     # Process 1st grid
-    d = xr.open_dataset(all_files[0])
-    H0, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
-    # Rotate and flip H...
-    H0 = np.rot90(H0)
-    H0 = np.flipud(H0)
-    
+    data0 = xr.open_dataset(all_files[0])
+    H0 = data0['ship_density'].values
+
     # Process the rest of the grid files
-    for file_in in all_files[1:] :
-        d = xr.open_dataset(file_in)
-        H, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
-        # Rotate and flip H...
-        H = np.rot90(H)
-        H = np.flipud(H)
-        # Add new matrix (H) to summed matrix (H0) 
+    for file_in in all_files[1:]:
+        H = xr.open_dataset(file_in)['ship_density'].values
         H0 = H0 + H
             
     # Create dataset
     D = xr.Dataset({'ship_density':(['x','y'],H0)},
-            coords={'lon':(['x'],d['lon'].values),
-                    'lat':(['y'],d['lat'].values)})
+            coords={'lon':(['x'],data0['lon'].values),
+                    'lat':(['y'],data0['lat'].values)})
             
     # Save merged file
     sm.checkDir(str(info.dirs.merged_grid))
     file_out = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
     D.to_netcdf(path=file_out)
     
+    print('Merging completed!')
+    
     return D
 
-
+#def grid_merger(info, files=None):
+#    
+#    if files == None:
+#        all_files = sm.get_all_files(info.dirs.gridded_data)
+#    else:
+#        all_files = files
+#    
+#    # Process 1st grid
+#    d = xr.open_dataset(all_files[0])
+#    H0, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
+#    # Rotate and flip H...
+#    H0 = np.rot90(H0)
+#    H0 = np.flipud(H0)
+#    
+#    # Process the rest of the grid files
+#    for file_in in all_files[1:] :
+#        d = xr.open_dataset(file_in)
+#        H, xedges, yedges = np.histogram2d(d['xgridded'].values,d['ygridded'].values,bins=len(d['lat']))
+#        # Rotate and flip H...
+#        H = np.rot90(H)
+#        H = np.flipud(H)
+#        # Add new matrix (H) to summed matrix (H0) 
+#        H0 = H0 + H
+#            
+#    # Create dataset
+#    D = xr.Dataset({'ship_density':(['x','y'],H0)},
+#            coords={'lon':(['x'],d['lon'].values),
+#                    'lat':(['y'],d['lat'].values)})
+#            
+#    # Save merged file
+#    sm.checkDir(str(info.dirs.merged_grid))
+#    file_out = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
+#    D.to_netcdf(path=file_out)
+#    
+#    return D
 
 
 
