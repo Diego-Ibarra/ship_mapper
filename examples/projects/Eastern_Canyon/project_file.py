@@ -18,46 +18,55 @@ info.grid.minlon = -61.1
 info.grid.maxlon = -55.7
 
 ## Upper and lower limits (apparent Spped) to filter ship density data
-info.filt.speed_low = 1 # Knots
-info.filt.speed_high = 4.5 # Knots
+#info.filt.speed_low = 1 # Knots
+#info.filt.speed_high = 4.5 # Knots
+info.filt.speed_low = 0 # Knots
+info.filt.speed_high = 20 # Knots
 
 # -----------------------------------------------------------------------------
 
-## Convert original data to nc
-#converter = 'VMS_DFO'
-#sm.bulk_convert_to_nc(converter, path_to_data_in=info.dirs.data_original)
+# Convert original data to nc
+converter = 'VMS_DFO'
+sm.bulk_convert_to_nc(converter, path_to_data_in=info.dirs.data_original, overwrite=True)
 
 
-## Filter and grid all input files
-#for file_in in sm.get_all_files(info.dirs.data_nc):
-#    
-#    # Get file name
-#    file_name = sm.get_filename_from_fullpath(file_in)
-#    
-#    # Filter data
-#    filtered_data = sm.spatial_filter(file_in, info) 
+# Filter and grid all input files
+for file_in in sm.get_all_files(info.dirs.data_nc):
     
-#    # Further filter data by speed
-#    indx = ((filtered_data['ApparentSpeed'] > info.filt.speed_low) &
-#            (filtered_data['ApparentSpeed'] < info.filt.speed_high))
-#    
-#    filtered_data = filtered_data.sel(Dindex=indx)
+    # Get file name
+    file_name = sm.get_filename_from_fullpath(file_in)
+    
+    # Filter data
+    filtered_data = sm.spatial_filter(file_in, info) 
+    
+    # Further filter data by speed
+    indx = ((filtered_data['ApparentSpeed'] > info.filt.speed_low) &
+            (filtered_data['ApparentSpeed'] < info.filt.speed_high))
+    
+    filtered_data = filtered_data.sel(Dindex=indx)
 
-file_in = sm.get_all_files(info.dirs.data_nc)[0]    
 
-file_name = sm.get_filename_from_fullpath(file_in)
+sm.gridder(info, filtered_data, file_name, overwrite=True)
 
-import xarray as xr
-data = xr.open_dataset(file_in)
-
-# Project "dots" into a grid
-sm.gridder(info, data, file_name, overwrite=True)
+#file_in = sm.get_all_files(info.dirs.data_nc)[0]    
+#
+#file_name = sm.get_filename_from_fullpath(file_in)
+#import xarray as xr
+#data = xr.open_dataset(file_in)
+#
+## Project "dots" into a grid
+#sm.gridder(info, data, file_name, overwrite=True)
     
 # Merge grids    
 sm.grid_merger(info)
 
 # Make plots
 sm.map_density(info)
+
+# Make plots
+import os
+file_in = os.path.join(info.dirs.data_nc, 'TextReport.nc')
+sm.map_dots(info, file_in)
      
     
     

@@ -32,9 +32,10 @@ def gridder(info, data_in, file_name, overwrite=False):
         x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
         y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
         
-        
+        print(data['ship_id_vrn'].to_pandas())
         # Find unique ships
-        unis = pd.unique(data['ship_id_vrn'].values)
+#        unis = pd.unique(data['ship_id_vrn'].values)
+        unis = pd.unique(data['ship_id_vrn'].to_pandas().values)
         print('Number of Unique Ships = ' + str(len(unis)))
         iix, iiy, iiveloc = [], [], []
         counter = 0

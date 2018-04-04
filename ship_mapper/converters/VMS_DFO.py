@@ -107,7 +107,7 @@ def convert(file_in,file_out):
                     ApparentSpeed.append(np.nan)
     
                 # Done! Append extra information to lists
-                VRN.append(singleship['VESSEL VRN'][idx2])
+                VRN.append(int(singleship['VESSEL VRN'][idx2]))
                 LATITUDE.append(singleship['LATITUDE'][idx2])
                 LONGITUDE.append(singleship['LONGITUDE'][idx2])
                 POSITION_UTC_DATE.append(singleship['POSITION DATE (UTC)'][idx2])

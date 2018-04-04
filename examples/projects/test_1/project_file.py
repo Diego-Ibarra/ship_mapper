@@ -58,7 +58,7 @@ sm.grid_merger(info)
 #
 #file_in = str(info.dirs.gridded_data) + '\\project_file_1000.nc'
 #sm.map_density(info, file_in, save=True)
-sm.map_density(info)
+m = sm.map_density(info)
      
     
     

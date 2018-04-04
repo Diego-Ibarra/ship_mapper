@@ -124,6 +124,72 @@ def map_density(info, file_in=None, save=True):
 
 
 
+def map_dots(info, file_in, save=True):
+    print('Mapping...')
+    # -----------------------------------------------------------------------------
+        
+    d = xr.open_dataset(file_in)
+    
+    # Define boundaries
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
+        minlat = d['lat'].values.min()
+        maxlat = d['lat'].values.max()
+        minlon = d['lon'].values.min()
+        maxlon = d['lon'].values.max()
+    else:
+        minlat = info.grid.minlat
+        maxlat = info.grid.maxlat
+        minlon = info.grid.minlon
+        maxlon = info.grid.maxlon
+    
+    
+    
+    path_to_basemap = info.dirs.project_path / 'ancillary'
+    print('-----------------------------------------------------')
+    print('-----------------------------------------------------')
+    
+    basemap_file = str(path_to_basemap / 'basemap.p')
+    
+    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+    else:
+        print('Found basemap...')
+        m = pickle.load(open(basemap_file,'rb'))
+
+    x, y = m(d['longitude'].values,d['latitude'].values)
+    
+    cs = m.scatter(x,y,2,marker='o',color='r', zorder=10)
+#    
+    plt.show()
+    
+#    # Save map as png
+#    if save:
+#        filedir = str(info.dirs.pngs)
+#        sm.checkDir(filedir)
+#        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+#        plt.savefig(os.path.join(filedir,filename), dpi=300)
+   
+    return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     

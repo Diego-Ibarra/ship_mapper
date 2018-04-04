@@ -7,7 +7,7 @@ from .core import distance, estimate_velocity, elapsed_days, align_with_grid, in
 
 from .core.gridder import gridder, grid_merger
 
-from .core.mapper import map_density, make_basemap
+from .core.mapper import map_density, map_dots, make_basemap
 
 from .core.infoObject import info
 
