@@ -84,6 +84,8 @@ def interp2d(x1, y1, x2, y2):
 def spatial_filter(file_in, info):
     import xarray as xr
     
+    print('spatial_filter ---------------------------------------------------')
+    
     minlat = info.grid.minlat
     maxlat = info.grid.maxlat
     minlon = info.grid.minlon
@@ -98,7 +100,7 @@ def spatial_filter(file_in, info):
         
     filtered_data = all_data.sel(Dindex=indx)
     
-    print("Filtered!!!")
+
     
     return filtered_data
 

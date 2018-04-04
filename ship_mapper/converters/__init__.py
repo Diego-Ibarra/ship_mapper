@@ -56,12 +56,6 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
         converter_filename = converter + '.py'
         dir_in =  Path(path_to_data_in)
 
-    print('Yay!')
-    print(dir_in)   
-
-
-#    print('Yay!')
-#    print(str(dir_to_converter))      
   
     # Load converter as module
     file, pathname, description = imp.find_module(converter_filename[:-3],[Path(dir_to_converter)])   
@@ -86,9 +80,6 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
                 
             elif not os.path.isfile(file_out):
                 sm.checkDir(root_out)
-#                if not os.path.exists(root_out):
-#                    os.makedirs(root_out)
-#                    print("Directory didn't exist... now it does: " + root_out)
                 
                 # Convert!
                 print('Processing: ' + file_in)

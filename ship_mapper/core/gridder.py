@@ -15,6 +15,7 @@ import ship_mapper as sm
 
 def gridder(info, data_in, file_name, overwrite=False):
     
+    print('gridder ----------------------------------------------------------')
     
     import os
     
@@ -22,8 +23,6 @@ def gridder(info, data_in, file_name, overwrite=False):
     
     if not os.path.isfile(file_out) or overwrite:
         
-        
-        print('Gridding...')
         # -----------------------------------------------------------------------------
     
         data = data_in
@@ -31,26 +30,23 @@ def gridder(info, data_in, file_name, overwrite=False):
         # Make grid
         x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
         y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
-        
-        print(data['ship_id_vrn'].to_pandas())
+
         # Find unique ships
-#        unis = pd.unique(data['ship_id_vrn'].values)
-        unis = pd.unique(data['ship_id_vrn'].to_pandas().values)
+        unis = pd.unique(data['ship_id_vrn'].values)
+#        unis = pd.unique(data['ship_id_vrn'].to_pandas().values)
         print('Number of Unique Ships = ' + str(len(unis)))
         iix, iiy, iiveloc = [], [], []
         counter = 0
         for ship in unis:
             counter += 1
-            print('Ship: ' + str(counter) + '('+ str(ship) + ')')
+            print('Ship: ' + str(counter) + ' (id: '+ str(ship) + ')')
             singleship = data.sel("data['ship_id_vrn'] == ship")
-            
-            print('****************************************************************')
-            print(len(singleship['longitude'].values))
             
             # Loop over each ship
     #        for i in range(1,len(singleship)):
-            for i in range(1,len(singleship['longitude'].values)):
-                if len(singleship) > 1:
+            pings_per_ship = len(singleship['longitude'].values)
+            for i in range(1,pings_per_ship):
+                if pings_per_ship > 1:
                     # Iterpolate bewtween known points
                     lon1 = singleship['longitude'].values[i-1]
                     lat1 = singleship['latitude'].values[i-1]
@@ -85,7 +81,7 @@ def gridder(info, data_in, file_name, overwrite=False):
                 iiveloc.append(veloc)
                 
                 
-                
+        # Project pings to grid        
         H0, xedges, yedges = np.histogram2d(iix,iiy,bins=info.grid.bin_number)
         # Rotate and flip H...
         H0 = np.rot90(H0)
@@ -122,6 +118,8 @@ def gridder(info, data_in, file_name, overwrite=False):
 
 
 def grid_merger(info, files=None):
+    
+    print('grid_merger ------------------------------------------------------')
     
     if files == None:
         all_files = sm.get_all_files(info.dirs.gridded_data)

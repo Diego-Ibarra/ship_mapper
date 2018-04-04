@@ -8,6 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.basemap import Basemap
+# Suppress matplotlib warnings
+np.warnings.filterwarnings('ignore')
+
 import xarray as xr
 import cmocean
 from pathlib import Path
@@ -18,13 +21,10 @@ import urllib.request
 import netCDF4
 
 
+
 def map_density(info, file_in=None, save=True):
-    print('Mapping...')
-    # -----------------------------------------------------------------------------
     
-    BinNo = info.grid.bin_number
-    downLim = info.filt.speed_low
-    upLim   = info.filt.speed_high
+    print('map_density ------------------------------------------------------')
     
     # Load data
     if file_in == None:
@@ -44,14 +44,9 @@ def map_density(info, file_in=None, save=True):
         minlon = info.grid.minlon
         maxlon = info.grid.maxlon
     
-#    # APply filter (i.e. get rid of points above and below the velocity thresholds)
-#    d = d.where((d['velocgridded'] >= downLim) & (d['velocgridded'] < upLim),drop=True)
-    
     
     
     path_to_basemap = info.dirs.project_path / 'ancillary'
-    print('-----------------------------------------------------')
-    print('-----------------------------------------------------')
     
     basemap_file = str(path_to_basemap / 'basemap.p')
     
@@ -75,14 +70,7 @@ def map_density(info, file_in=None, save=True):
     Hmasked = np.log10(Hmasked)
     
     cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
-#    cs = m.pcolor(xx,yy,H, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
-#     
-##    m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
-#    # Make map
-#    fig = plt.figure(figsize=(18,9))
-#
-#
-#    
+   
 #    
 ##    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
 ##              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
@@ -99,8 +87,6 @@ def map_density(info, file_in=None, save=True):
     
     cbar.ax.set_yticklabels(labels)
 
-    
-    
     cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
     
 #    mng = plt.get_current_fig_manager()
@@ -114,10 +100,6 @@ def map_density(info, file_in=None, save=True):
         sm.checkDir(filedir)
         filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
         plt.savefig(os.path.join(filedir,filename), dpi=300)
-    
-#    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
-#    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
-#    plt.savefig('test.png')
     
     return
 
