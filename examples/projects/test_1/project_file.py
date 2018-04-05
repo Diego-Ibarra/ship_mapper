@@ -27,11 +27,11 @@ converter = 'VMS_2012_18_selectedVessels'
 path_to_converter = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
 #path_to_converter = 'C:\\Users\\cerc-user\\Documents\\GitHub\\ship_mapper\\examples\\data\\VMS_2012-18_selectedVessels'
 
-# Convert original data to nc
-sm.bulk_convert_to_nc(converter,
-                      path_to_data_in=info.dirs.data_original,
-                      path_to_converter=path_to_converter,
-                      overwrite=True)
+## Convert original data to nc
+#sm.bulk_convert_to_nc(converter,
+#                      path_to_data_in=info.dirs.data_original,
+#                      path_to_converter=path_to_converter,
+#                      overwrite=True)
 
 
 # Filter and grid all input files
@@ -48,6 +48,12 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
             (filtered_data['ApparentSpeed'] < info.filt.speed_high))
     
     filtered_data = filtered_data.sel(Dindex=indx)
+    
+    data_in = filtered_data
+    overwrite=True
+    i = 1
+    j = 1
+    
     
     
     # Project "dots" into a grid
