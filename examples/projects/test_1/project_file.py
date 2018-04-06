@@ -21,6 +21,8 @@ info.grid.maxlon = -55.7
 info.filt.speed_low = 1 # Knots
 info.filt.speed_high = 4.5 # Knots
 
+info.ship_id = 'ship_id_vms'
+
 # -----------------------------------------------------------------------------
 
 converter = 'VMS_2012_18_selectedVessels'

@@ -5,13 +5,32 @@ This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terres
 def convert(file_in,file_out):
 
     import pandas as pd
+    import numpy as np
     import xarray as xr
+    import datetime
     import time
 
     print(file_in)
+    
+#    file_in = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\CCG_AIS\\data_original\\CCG_AIS_Dynamic_Data_2017-06-01.csv'
+    
     t0 = time.time()
     csv = pd.read_table(file_in, sep=',')
     #csvS = pd.read_table(Sfilename, sep=',')
+       
+    originTime = datetime.datetime.strptime('1/1/1980 00:00',"%m/%d/%Y %H:%M")
+        
+    df = pd.DataFrame({'year':csv['year'].values,
+                       'month':csv['month'].values,
+                       'day':csv['day'].values,
+                       'hour':csv['hour'].values,
+                       'minute':csv['minute'].values,
+                       'second':csv['second'].values})
+
+    timeObject = pd.to_datetime(df)
+    
+    SeqNum = (timeObject - originTime).astype('timedelta64[s]') / (60*60*24)
+
     
     
     D = xr.Dataset({'Region':(['Dindex'],csv['Region']),
@@ -24,11 +43,13 @@ def convert(file_in,file_out):
                     'minute':(['Dindex'],csv['minute']),
                     'second':(['Dindex'],csv['second']),
                     'TimeZone':(['Dindex'],csv['TimeZone']),
+                    'DateTime':(['Dindex'],timeObject),
+                    'SeqNum':(['Dindex'],SeqNum),
                     'ID':(['Dindex'],csv['ID']),
                     'AIS_Class':(['Dindex'],csv['AIS_Class']),
                     'Message_Type':(['Dindex'],csv['Message_Type']),
                     'Repeat_Indicator':(['Dindex'],csv['Repeat_Indicator']),
-                    'ship_id_mmsi':(['Dindex'],csv['MMSI']),
+                    'MMSI':(['Dindex'],csv['MMSI']),
                     'Speed_Over_Ground_SOG_knots':(['Dindex'],csv['Speed_Over_Ground_SOG_knots']),
                     'Position_Accuracy':(['Dindex'],csv['Position_Accuracy']),
                     'longitude':(['Dindex'],csv['Longitude_decimal_degrees']),
@@ -50,10 +71,12 @@ def convert(file_in,file_out):
                 'minute':{'zlib':True},
                 'second':{'zlib':True},
                 'TimeZone':{'dtype':'S3','zlib':True},
+                'DateTime':{'zlib':True},
+                'SeqNum':{'zlib':True},
                 'AIS_Class':{'dtype':'S1','zlib':True},
                 'Message_Type':{'zlib':True},
                 'Repeat_Indicator':{'zlib':True},
-                'ship_id_mmsi':{'zlib':True},
+                'MMSI':{'zlib':True},
                 'Speed_Over_Ground_SOG_knots':{'zlib':True},
                 'Position_Accuracy':{'zlib':True},
                 'longitude':{'zlib':True},

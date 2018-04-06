@@ -23,6 +23,8 @@ info.grid.maxlon = -55.7
 info.filt.speed_low = 0 # Knots
 info.filt.speed_high = 20 # Knots
 
+info.ship_id = 'ship_id_vms'
+
 # -----------------------------------------------------------------------------
 
 # Convert original data to nc

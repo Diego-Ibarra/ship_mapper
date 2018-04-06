@@ -24,6 +24,8 @@ def gridder(info, data_in, file_name, overwrite=False):
     if not os.path.isfile(file_out) or overwrite:
         
         # -----------------------------------------------------------------------------
+        
+        ship_id = info.ship_id
     
         data = data_in
     
@@ -32,7 +34,7 @@ def gridder(info, data_in, file_name, overwrite=False):
         y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
 
         # Find unique ships
-        unis = pd.unique(data['ship_id_vrn'].values)
+        unis = pd.unique(data[ship_id].values)
 #        unis = pd.unique(data['ship_id_vrn'].to_pandas().values)
         print('Number of Unique Ships = ' + str(len(unis)))
         iiix, iiiy = [], []
@@ -41,7 +43,7 @@ def gridder(info, data_in, file_name, overwrite=False):
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
             
-            indxship = (data['ship_id_vrn'] == ship)
+            indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
 
             indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
@@ -65,28 +67,27 @@ def gridder(info, data_in, file_name, overwrite=False):
                 
                 time_bins = np.arange(MinSeqNum, MaxSeqNum, 1/144) # 1/144 = once every 10 minutes
                 
-                print(len(time_bins))
+#                print(len(time_bins))
                 
                 # Loop over each ship's time_bin
-                iix, iiy = [], []
+                
                 for i in range(1,len(time_bins)):
     #                print(i)
-                    
+                    iix, iiy = [], []
                     indx = ((trip['SeqNum'] > time_bins[i-1]) &
                             (trip['SeqNum'] < time_bins[i]))
                     
                     singleship_bin = trip.sel(Dindex=indx)
                     
-                    print('------------------------------------------------' + str(i))
+#                    print('------------------------------------------------' + str(i))
     #                    print(singleship_bin)
                     
-                    num_of_bins = len(singleship_bin['SeqNum'].values)
+                    num_of_pings = len(singleship_bin['SeqNum'].values)
                     
-                    print(num_of_bins)
+#                    print(num_of_bins)
                 
-                    if num_of_bins > 1:
-                        for j in range(1,num_of_bins): 
-                            print(j)
+                    if num_of_pings > 1:
+                        for j in range(1,num_of_pings): 
                             # Iterpolate bewtween known points
                             lon1 = singleship_bin['longitude'].values[j-1]
                             lat1 = singleship_bin['latitude'].values[j-1]
@@ -103,22 +104,28 @@ def gridder(info, data_in, file_name, overwrite=False):
                                 
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
+#                                iix.append(x1)
+#                                iiy.append(y1)
                                 iix.extend(ix)
                                 iiy.extend(iy)
                         
                         # add the last location 
                         xend, yend = sm.align_with_grid(x, y, singleship_bin['longitude'].values[j], singleship_bin['latitude'].values[j])
-    
-                        iix.append(xend)
-                        iiy.append(yend)
-                        
-                        #drop duplicates
-                        df = {}
-                        df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='first')
+
+                    iix.append(xend)
+                    iiy.append(yend)
                     
-                # Append
-                iiix.append(df['x'].tolist())
-                iiiy.append(df['y'].tolist())
+                    #drop duplicates
+                    df = {}
+                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='first')
+#                    print(len(df['x'].values))
+#                    print(df['x'].values)
+                    
+                    # Append
+                    iiix.extend(df['x'].tolist())
+                    iiiy.extend(df['y'].tolist())
+                    
+#                    print('----------------------' + str(len(iiix)))
 
                 
         # Project pings to grid        
