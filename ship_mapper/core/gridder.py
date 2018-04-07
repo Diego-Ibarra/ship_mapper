@@ -39,12 +39,19 @@ def gridder(info, data_in, file_name, overwrite=False):
         print('Number of Unique Ships = ' + str(len(unis)))
         iiix, iiiy = [], []
         counter = 0
+        #ship = unis[0]
         for ship in unis:
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
             
             indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
+            
+
+#            singleship.reset_index('Dindex')
+#            import matplotlib.pyplot as plt
+#            plt.plot(singleship['longitude'],singleship['latitude'],'.');plt.show()
+#            plt.plot(singleship['Dindex'],singleship['Dindex'],'.');plt.show()
 
             indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
             
@@ -54,76 +61,84 @@ def gridder(info, data_in, file_name, overwrite=False):
             trip_gaps = np.insert(trip_gaps, 0, 0)
             trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
                 
-            
+            # Loop over trips
             for k in range(1,len(trip_gaps)):
                 
                 index_gap = ((singleship['Dindex'] > trip_gaps[k-1]-1) &
                              (singleship['Dindex'] < trip_gaps[k]))
                 
-                trip = singleship.sel(Dindex=index_gap)
-                    
-                MinSeqNum = trip['SeqNum'].values.min()
-                MaxSeqNum = trip['SeqNum'].values.max() + (1/144)
+                singleship_trip = singleship.sel(Dindex=index_gap)
+
                 
-                time_bins = np.arange(MinSeqNum, MaxSeqNum, 1/144) # 1/144 = once every 10 minutes
+                bin_size = 1/144 # 1/144 = once every 10 minutes
+
+                
+                MinSeqNum = singleship_trip['SeqNum'].values.min()
+                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
+                
+                time_bins = np.arange(MinSeqNum, MaxSeqNum, bin_size) # 1/144 = once every 10 minutes
                 
 #                print(len(time_bins))
+#                plt.figure();plt.plot(singleship_trip['longitude'],singleship_trip['latitude'],'.');plt.show()
                 
                 # Loop over each ship's time_bin
                 
                 for i in range(1,len(time_bins)):
-    #                print(i)
                     iix, iiy = [], []
-                    indx = ((trip['SeqNum'] > time_bins[i-1]) &
-                            (trip['SeqNum'] < time_bins[i]))
+#                    print(i)
                     
-                    singleship_bin = trip.sel(Dindex=indx)
+                    indx = ((singleship_trip['SeqNum'] > time_bins[i-1]) &
+                            (singleship_trip['SeqNum'] <= time_bins[i]))
+                    
+                    singleship_trip_bin = singleship_trip.sel(Dindex=indx)
+
                     
 #                    print('------------------------------------------------' + str(i))
     #                    print(singleship_bin)
                     
-                    num_of_pings = len(singleship_bin['SeqNum'].values)
+                    num_of_pings = len(singleship_trip_bin['SeqNum'].values)
                     
-#                    print(num_of_bins)
+#                    print(num_of_bins) 
                 
-                    if num_of_pings > 1:
+                    if num_of_pings == 0:
+                        pass
+                    elif num_of_pings == 1:                            
+                        xend, yend = sm.align_with_grid(x, y, singleship_trip_bin['longitude'].values[0], singleship_trip_bin['latitude'].values[0])
+                    elif num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
                             # Iterpolate bewtween known points
-                            lon1 = singleship_bin['longitude'].values[j-1]
-                            lat1 = singleship_bin['latitude'].values[j-1]
-                            lon2 = singleship_bin['longitude'].values[j]
-                            lat2 = singleship_bin['latitude'].values[j]
+                            lon1 = singleship_trip_bin['longitude'].values[j-1]
+                            lat1 = singleship_trip_bin['latitude'].values[j-1]
+                            lon2 = singleship_trip_bin['longitude'].values[j]
+                            lat2 = singleship_trip_bin['latitude'].values[j]
                             
                             # Estimate distance and velocity
                             dist = sm.distance(lat1,lon1,lat2,lon2)
                             
-                            if dist < (info.filt.speed_high * 1.852 * 1000): # only concidere points less than x km appart
+#                            if dist < (info.filt.speed_high * 1.852 * 1000): # only concidere points less than x km appart
+                            if dist < (55 * 10000): # about half-degree (in meters)
                                 
                                 x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
                                 x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
                                 
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
-#                                iix.append(x1)
-#                                iiy.append(y1)
                                 iix.extend(ix)
                                 iiy.extend(iy)
                         
                         # add the last location 
-                        xend, yend = sm.align_with_grid(x, y, singleship_bin['longitude'].values[j], singleship_bin['latitude'].values[j])
-
-                    iix.append(xend)
-                    iiy.append(yend)
+                        xend, yend = sm.align_with_grid(x, y, singleship_trip_bin['longitude'].values[j], singleship_trip_bin['latitude'].values[j])
+                        iix.append(xend)
+                        iiy.append(yend)                 
                     
                     #drop duplicates
                     df = {}
-                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='first')
-#                    print(len(df['x'].values))
-#                    print(df['x'].values)
+                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
                     
                     # Append
                     iiix.extend(df['x'].tolist())
                     iiiy.extend(df['y'].tolist())
+#                    plt.figure();plt.plot(iiix,iiiy,'.');plt.show()
                     
 #                    print('----------------------' + str(len(iiix)))
 
@@ -448,6 +463,8 @@ def grid_merger(info, files=None):
     sm.checkDir(str(info.dirs.merged_grid))
     file_out = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
     D.to_netcdf(path=file_out)
+    
+    data0.close()
     
     print('Merging completed!')
     

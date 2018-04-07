@@ -63,7 +63,8 @@ def map_density(info, file_in=None, save=True):
     H = d['ship_density'].values
      
     # Mask zeros
-    Hmasked = np.ma.masked_where(H<2.1,H)
+    Hmasked = np.ma.masked_where(H<1,H)
+#    Hmasked = np.ma.masked_where(H<2.1,H)
 #    Hmasked = np.ma.masked_where(H<20,H)
      
     # Log H for better display
@@ -100,6 +101,8 @@ def map_density(info, file_in=None, save=True):
         sm.checkDir(filedir)
         filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
         plt.savefig(os.path.join(filedir,filename), dpi=300)
+        
+    d.close()
     
     return
 
