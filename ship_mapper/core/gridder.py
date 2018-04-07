@@ -64,7 +64,7 @@ def gridder(info, data_in, file_name, overwrite=False):
             # Loop over trips
             for k in range(1,len(trip_gaps)):
                 
-                index_gap = ((singleship['Dindex'] > trip_gaps[k-1]-1) &
+                index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
                              (singleship['Dindex'] < trip_gaps[k]))
                 
                 singleship_trip = singleship.sel(Dindex=index_gap)
