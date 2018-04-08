@@ -52,8 +52,12 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
     filtered_data = filtered_data.sel(Dindex=indx)
 ##
 filtered_data.close()   
-    
+
 sm.gridder(info, filtered_data, file_name, overwrite=True)
+
+
+
+
 ##
 ##
 ###data_in = filtered_data

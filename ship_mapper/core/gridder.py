@@ -39,7 +39,9 @@ def gridder(info, data_in, file_name, overwrite=False):
         print('Number of Unique Ships = ' + str(len(unis)))
         iiix, iiiy = [], []
         counter = 0
-        #ship = unis[0]
+
+
+#        for ship in unis[0:3]:
         for ship in unis:
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
@@ -82,35 +84,57 @@ def gridder(info, data_in, file_name, overwrite=False):
 #                plt.figure();plt.plot(singleship_trip['longitude'],singleship_trip['latitude'],'.');plt.show()
                 
                 # Loop over each ship's time_bin
-                
                 for i in range(1,len(time_bins)):
                     iix, iiy = [], []
 #                    print(i)
-                    
-                    indx = ((singleship_trip['SeqNum'] > time_bins[i-1]) &
-                            (singleship_trip['SeqNum'] <= time_bins[i]))
+
+
+                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
+                            (singleship_trip['SeqNum'] < time_bins[i]))
+
+#                    if i < 1:
+#                        indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]-1) &
+#                                (singleship_trip['SeqNum'] <= time_bins[i]))
+#                    else:
+#                        indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
+#                                (singleship_trip['SeqNum'] <= time_bins[i]))
+
+#                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
+#                            (singleship_trip['SeqNum'] < time_bins[i]))
                     
                     singleship_trip_bin = singleship_trip.sel(Dindex=indx)
 
+                    # Get lat/lons
+                    lons = singleship_trip_bin['longitude'].values.tolist()
+                    lats = singleship_trip_bin['latitude'].values.tolist()
                     
-#                    print('------------------------------------------------' + str(i))
-    #                    print(singleship_bin)
+                    #Insert last bin's lat/lon
+                    if i > 1 and len(lons) > 0:
+#                        np.insert(lons,0,last_lon)
+#                        np.insert(lats,0,last_lat)
+                        lons.insert(0, last_lon)
+                        lats.insert(0, last_lat)
+#                        print(lats)
+#                        print(lons)
+
                     
-                    num_of_pings = len(singleship_trip_bin['SeqNum'].values)
+                    num_of_pings = len(lons)
                     
 #                    print(num_of_bins) 
                 
                     if num_of_pings == 0:
                         pass
-                    elif num_of_pings == 1:                            
-                        xend, yend = sm.align_with_grid(x, y, singleship_trip_bin['longitude'].values[0], singleship_trip_bin['latitude'].values[0])
+                    elif num_of_pings == 1:
+                        lon2 = lons[0]
+                        lat2 = lats[0]             
+                        xend, yend = sm.align_with_grid(x, y, lon2, lat2)
                     elif num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
                             # Iterpolate bewtween known points
-                            lon1 = singleship_trip_bin['longitude'].values[j-1]
-                            lat1 = singleship_trip_bin['latitude'].values[j-1]
-                            lon2 = singleship_trip_bin['longitude'].values[j]
-                            lat2 = singleship_trip_bin['latitude'].values[j]
+                            lon1 = lons[j-1]
+                            lat1 = lats[j-1]
+                            lon2 = lons[j]
+                            lat2 = lats[j]
                             
                             # Estimate distance and velocity
                             dist = sm.distance(lat1,lon1,lat2,lon2)
@@ -127,10 +151,10 @@ def gridder(info, data_in, file_name, overwrite=False):
                                 iiy.extend(iy)
                         
                         # add the last location 
-                        xend, yend = sm.align_with_grid(x, y, singleship_trip_bin['longitude'].values[j], singleship_trip_bin['latitude'].values[j])
+                        xend, yend = sm.align_with_grid(x, y, lons[j], lats[j])
                         iix.append(xend)
-                        iiy.append(yend)                 
-                    
+                        iiy.append(yend)
+                                           
                     #drop duplicates
                     df = {}
                     df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
@@ -138,6 +162,13 @@ def gridder(info, data_in, file_name, overwrite=False):
                     # Append
                     iiix.extend(df['x'].tolist())
                     iiiy.extend(df['y'].tolist())
+                    
+                    #Save last lat/lon
+                    if len(lats) > 0:
+                        last_lat = lats[-1]
+                        last_lon = lons[-1]
+
+                    
 #                    plt.figure();plt.plot(iiix,iiiy,'.');plt.show()
                     
 #                    print('----------------------' + str(len(iiix)))
