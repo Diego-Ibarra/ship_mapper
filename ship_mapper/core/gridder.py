@@ -41,7 +41,7 @@ def gridder(info, data_in, file_name, overwrite=False):
         counter = 0
 
 
-#        for ship in unis[0:3]:
+#        for ship in unis[20:21]:
         for ship in unis:
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
@@ -75,8 +75,10 @@ def gridder(info, data_in, file_name, overwrite=False):
                 bin_size = 1/144 # 1/144 = once every 10 minutes
 
                 
+#                MinSeqNum = singleship_trip['SeqNum'].values.min()
+#                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
                 MinSeqNum = singleship_trip['SeqNum'].values.min()
-                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
+                MaxSeqNum = singleship_trip['SeqNum'].values.max() 
                 
                 time_bins = np.arange(MinSeqNum, MaxSeqNum, bin_size) # 1/144 = once every 10 minutes
                 
@@ -89,8 +91,8 @@ def gridder(info, data_in, file_name, overwrite=False):
 #                    print(i)
 
 
-                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
-                            (singleship_trip['SeqNum'] < time_bins[i]))
+                    indx = ((singleship_trip['SeqNum'] > time_bins[i-1]) &
+                            (singleship_trip['SeqNum'] <= time_bins[i]))
 
 #                    if i < 1:
 #                        indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]-1) &
@@ -102,6 +104,13 @@ def gridder(info, data_in, file_name, overwrite=False):
 #                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
 #                            (singleship_trip['SeqNum'] < time_bins[i]))
                     
+                    
+                    
+#                    print(singleship_trip['Dindex'].values)
+#                    print(indx)
+#                    
+                    
+                    
                     singleship_trip_bin = singleship_trip.sel(Dindex=indx)
 
                     # Get lat/lons
@@ -110,13 +119,8 @@ def gridder(info, data_in, file_name, overwrite=False):
                     
                     #Insert last bin's lat/lon
                     if i > 1 and len(lons) > 0:
-#                        np.insert(lons,0,last_lon)
-#                        np.insert(lats,0,last_lat)
                         lons.insert(0, last_lon)
                         lats.insert(0, last_lat)
-#                        print(lats)
-#                        print(lons)
-
                     
                     num_of_pings = len(lons)
                     
@@ -127,7 +131,7 @@ def gridder(info, data_in, file_name, overwrite=False):
                     elif num_of_pings == 1:
                         lon2 = lons[0]
                         lat2 = lats[0]             
-                        xend, yend = sm.align_with_grid(x, y, lon2, lat2)
+#                        xend, yend = sm.align_with_grid(x, y, lon2, lat2)
                     elif num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
                             # Iterpolate bewtween known points
@@ -140,7 +144,7 @@ def gridder(info, data_in, file_name, overwrite=False):
                             dist = sm.distance(lat1,lon1,lat2,lon2)
                             
 #                            if dist < (info.filt.speed_high * 1.852 * 1000): # only concidere points less than x km appart
-                            if dist < (55 * 10000): # about half-degree (in meters)
+                            if dist < (40 * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
                                 
                                 x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
                                 x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
@@ -151,9 +155,9 @@ def gridder(info, data_in, file_name, overwrite=False):
                                 iiy.extend(iy)
                         
                         # add the last location 
-                        xend, yend = sm.align_with_grid(x, y, lons[j], lats[j])
-                        iix.append(xend)
-                        iiy.append(yend)
+#                        xend, yend = sm.align_with_grid(x, y, lons[j], lats[j])
+#                        iix.append(xend)
+#                        iiy.append(yend)
                                            
                     #drop duplicates
                     df = {}
