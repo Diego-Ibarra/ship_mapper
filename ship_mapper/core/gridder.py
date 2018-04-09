@@ -49,36 +49,40 @@ def gridder(info, data_in, file_name, overwrite=False):
             indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
             
+#            print('presort')
+#            singleship_sorted = singleship.sortby('SeqNum')
+#            print('postsort----')
+            
 
 #            singleship.reset_index('Dindex')
 #            import matplotlib.pyplot as plt
 #            plt.plot(singleship['longitude'],singleship['latitude'],'.');plt.show()
 #            plt.plot(singleship['Dindex'],singleship['Dindex'],'.');plt.show()
 
-            indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
+            indxtrip = (singleship_sorted['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
             
 #            gaps = np.trim_zeros(indxtrip.values*indxtrip['Dindex'].values)
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
 #            if trip_gaps[0] != 0:
             trip_gaps = np.insert(trip_gaps, 0, 0)
-            trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
+            trip_gaps = np.append(trip_gaps,singleship_sorted['Dindex'].values[-1]+1)
                 
             # Loop over trips
             for k in range(1,len(trip_gaps)):
                 
-                index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
-                             (singleship['Dindex'] < trip_gaps[k]))
+                index_gap = ((singleship_sorted['Dindex'] >= trip_gaps[k-1]) &
+                             (singleship_sorted['Dindex'] < trip_gaps[k]))
                 
-                singleship_trip = singleship.sel(Dindex=index_gap)
+                singleship_trip = singleship_sorted.sel(Dindex=index_gap)
 
                 
                 bin_size = 1/144 # 1/144 = once every 10 minutes
 
                 
-#                MinSeqNum = singleship_trip['SeqNum'].values.min()
-#                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
                 MinSeqNum = singleship_trip['SeqNum'].values.min()
-                MaxSeqNum = singleship_trip['SeqNum'].values.max() 
+                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
+#                MinSeqNum = singleship_trip['SeqNum'].values.min()
+#                MaxSeqNum = singleship_trip['SeqNum'].values.max() 
                 
                 time_bins = np.arange(MinSeqNum, MaxSeqNum, bin_size) # 1/144 = once every 10 minutes
                 
@@ -91,7 +95,10 @@ def gridder(info, data_in, file_name, overwrite=False):
 #                    print(i)
 
 
-                    indx = ((singleship_trip['SeqNum'] > time_bins[i-1]) &
+#                    indx = ((singleship_trip['SeqNum'] > time_bins[i-1]) &
+#                            (singleship_trip['SeqNum'] <= time_bins[i]))
+                    
+                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
                             (singleship_trip['SeqNum'] <= time_bins[i]))
 
 #                    if i < 1:
@@ -130,7 +137,9 @@ def gridder(info, data_in, file_name, overwrite=False):
                         pass
                     elif num_of_pings == 1:
                         lon2 = lons[0]
-                        lat2 = lats[0]             
+                        lat2 = lats[0]
+                        print(lons)
+                        print(singleship['longitude'].values)
 #                        xend, yend = sm.align_with_grid(x, y, lon2, lat2)
                     elif num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
@@ -152,7 +161,7 @@ def gridder(info, data_in, file_name, overwrite=False):
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
                                 iix.extend(ix)
-                                iiy.extend(iy)
+                                iiy.extend(iy)                   
                         
                         # add the last location 
 #                        xend, yend = sm.align_with_grid(x, y, lons[j], lats[j])
