@@ -77,21 +77,21 @@ def map_density(info, file_in=None, save=True):
 ##              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
 #    
     
-#    cbar = plt.colorbar(extend='both')
-#    
-#    
-#    label_values = cbar._tick_data_values
-#    log_label_values = np.round(10 ** label_values,decimals=0)
-#    labels = []
-#    for log_label_value in log_label_values:
-#        labels.append(str(int(log_label_value)))
-#    
-#    cbar.ax.set_yticklabels(labels)
-#
-#    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
+    cbar = plt.colorbar(extend='both')
     
-#    mng = plt.get_current_fig_manager()
-#    mng.frame.Maximize(True)
+    
+    label_values = cbar._tick_data_values
+    log_label_values = np.round(10 ** label_values,decimals=0)
+    labels = []
+    for log_label_value in log_label_values:
+        labels.append(str(int(log_label_value)))
+    
+    cbar.ax.set_yticklabels(labels)
+
+    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
+    
+    mng = plt.get_current_fig_manager()
+    mng.frame.Maximize(True)
 #    
     plt.show()
     

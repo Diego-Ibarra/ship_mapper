@@ -21,7 +21,7 @@ info.grid.maxlon = -55.7
 info.filt.speed_low = 1 # Knots
 info.filt.speed_high = 4.5 # Knots
 
-info.ship_id = 'ship_id_vms'
+info.ship_id = 'ship_id_vrn'
 
 # -----------------------------------------------------------------------------
 
