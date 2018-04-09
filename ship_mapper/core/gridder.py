@@ -30,10 +30,10 @@ def gridder(info, data_in, file_name, overwrite=False):
         data = data_in
     
         # Make grid
-        x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
-        y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
-#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
-#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
+#        x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
+#        y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
+        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
+        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
 
         # Find unique ships
         unis = pd.unique(data[ship_id].values)
@@ -43,8 +43,9 @@ def gridder(info, data_in, file_name, overwrite=False):
         counter = 0
 
 
-        for ship in unis[29:30]:
-#        for ship in unis:
+#        for ship in unis[35:36]:
+#        for ship in unis[29:30]:
+        for ship in unis:
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
             
@@ -142,8 +143,11 @@ def gridder(info, data_in, file_name, overwrite=False):
                     elif num_of_pings == 1:
                         lon2 = lons[0]
                         lat2 = lats[0]
-                        print(lons)
-                        print(singleship['longitude'].values)
+                        x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
+                        iix.append(x2)
+                        iiy.append(y2) 
+#                        print(lons)
+#                        print(singleship['longitude'].values)
 #                        xend, yend = sm.align_with_grid(x, y, lon2, lat2)
                     elif num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
@@ -203,36 +207,40 @@ def gridder(info, data_in, file_name, overwrite=False):
                 coords={'lon':(['x'],x),
                         'lat':(['y'],y)})
                     
-        # MAP --------------------------------------------------------------
-        import matplotlib.pyplot as plt
-        from mpl_toolkits.basemap import Basemap
-        minlat = data['latitude'].values.min()
-        maxlat = data['latitude'].values.max()
-        minlon = data['longitude'].values.min()
-        maxlon = data['longitude'].values.max()
-        
-        m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-        llcrnrlon=minlon, urcrnrlon=maxlon,resolution='i')
-        
-        xdots, ydots = m(singleship['longitude'].values,singleship['latitude'].values) 
-                
-        cs = m.scatter(xdots,ydots,1,marker='.',color='r', zorder=15)
-        
-        # ------------
-#        x = np.linspace(minlon, maxlon, num=info.grid.bin_number)
-#        y = np.linspace(minlat, maxlat, num=info.grid.bin_number)
-
-        xx, yy = m(x,y)
-
-        print(H0)
-        Hmasked = np.ma.masked_where(H0<1,H0)
-
-        cs2 = m.pcolor(xx,yy,Hmasked,cmap=plt.get_cmap('copper_r'),alpha=0.5, zorder=10)
-        cbar = plt.colorbar(extend='both')
-        m.drawcoastlines(linewidth=0.5,zorder=25)
-    #    
-        plt.show()
-        # MAP --------------------------------------------------------------
+#        # MAP --------------------------------------------------------------
+#        import matplotlib.pyplot as plt
+#        from mpl_toolkits.basemap import Basemap
+##        minlat = data['latitude'].values.min()
+##        maxlat = data['latitude'].values.max()
+##        minlon = data['longitude'].values.min()
+##        maxlon = data['longitude'].values.max()
+#        minlat = info.grid.minlat
+#        maxlat = info.grid.maxlat
+#        minlon = info.grid.minlon
+#        maxlon = info.grid.maxlon
+#        
+#        m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
+#        llcrnrlon=minlon, urcrnrlon=maxlon,resolution='i')
+#        
+#        xdots, ydots = m(singleship['longitude'].values,singleship['latitude'].values) 
+#                
+#        cs = m.scatter(xdots,ydots,1,marker='.',color='r', zorder=15)
+#        
+#        # ------------
+##        x = np.linspace(minlon, maxlon, num=info.grid.bin_number)
+##        y = np.linspace(minlat, maxlat, num=info.grid.bin_number)
+#
+#        xx, yy = m(x,y)
+#
+#        print(H0)
+#        Hmasked = np.ma.masked_where(H0<1,H0)
+#
+#        cs2 = m.pcolor(xx,yy,Hmasked,cmap=plt.get_cmap('copper_r'),alpha=0.5, zorder=10)
+#        cbar = plt.colorbar(extend='both')
+#        m.drawcoastlines(linewidth=0.5,zorder=25)
+#    #    
+#        plt.show()
+#        # MAP --------------------------------------------------------------
         
         
         # Print NetCDF file
