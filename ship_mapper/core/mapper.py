@@ -158,7 +158,77 @@ def map_dots(info, file_in, save=True):
 
 
 
+def map_dots_one_ship(info, file_in, Ship_No, save=True):
+    import pandas as pd
+    print('Mapping...')
+    # -----------------------------------------------------------------------------
+        
+    d = xr.open_dataset(file_in)
+    
+    # Define boundaries
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
+        minlat = d['lat'].values.min()
+        maxlat = d['lat'].values.max()
+        minlon = d['lon'].values.min()
+        maxlon = d['lon'].values.max()
+    else:
+        minlat = info.grid.minlat
+        maxlat = info.grid.maxlat
+        minlon = info.grid.minlon
+        maxlon = info.grid.maxlon
+    
+    
+    
+    path_to_basemap = info.dirs.project_path / 'ancillary'
+    print('-----------------------------------------------------')
+    print('-----------------------------------------------------')
+    
+#    basemap_file = str(path_to_basemap / 'basemap_spots.p')
+    
+    m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+    
+#    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+#        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+#    else:
+#        print('Found basemap...')
+#        m = pickle.load(open(basemap_file,'rb'))
+        
+    indx = ((d['longitude']>  minlon) &
+            (d['longitude']<= maxlon) &
+            (d['latitude']>  minlat) &
+            (d['latitude']<= maxlat))
+        
+    filtered_data = d.sel(Dindex=indx)
 
+    ship_id = info.ship_id
+    unis = pd.unique(filtered_data[ship_id].values)
+    ship = unis[Ship_No]
+    indxship = (filtered_data[ship_id] == ship)
+    singleship = filtered_data.sel(Dindex=indxship)
+    print('Ship id:'+ str(ship))
+    
+#    print(singleship['longitude'].values)
+#    print(singleship['latitude'].values)
+    
+        
+    x, y = m(singleship['longitude'].values,singleship['latitude'].values)
+#    x, y = m(d['longitude'].values,d['latitude'].values)
+    
+    cs = m.scatter(x,y,2,marker='o',color='r', zorder=30)
+    
+#    fig = plt.figure()
+#    plt.plot(filtered_data['longitude'].values,filtered_data['latitude'].values,'.')
+#    
+    plt.show()
+    
+#    # Save map as png
+#    if save:
+#        filedir = str(info.dirs.pngs)
+#        sm.checkDir(filedir)
+#        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+#        plt.savefig(os.path.join(filedir,filename), dpi=300)
+   
+    return
 
 
 
@@ -552,9 +622,12 @@ if __name__ == "__main__":
 #    map_density(BinNo,downLim,upLim,datadir,filename,spatial=[41.5,46,-61,-55])
     
     import ship_mapper as sm
-    
-    
-    project_path = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1'
-    
-    m = sm.make_basemap(project_path,[41.5,46,-61,-55])
+#    
+#    
+#    project_path = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1'
+#    
+#    m = sm.make_basemap(project_path,[41.5,46,-61,-55])
+    import os
+    file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
+    sm.map_dots_one_ship(info, file_in, 20)
 

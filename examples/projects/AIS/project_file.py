@@ -1,8 +1,8 @@
 import ship_mapper as sm
 
 
-#top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
-top_dir = 'C:\\Users\\cerc-user\\Documents\\Github\\ship_mapper\\examples\\'
+top_dir = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\'
+#top_dir = 'C:\\Users\\cerc-user\\Documents\\Github\\ship_mapper\\examples\\'
 
 
 data_nc_dir = top_dir + 'data\\CCG_AIS\\data_original\\'
@@ -72,15 +72,19 @@ sm.gridder(info, filtered_data, file_name, overwrite=True)
 ####sm.gridder(info, data, file_name, overwrite=True)
 ###    
 # Merge grids    
-sm.grid_merger(info)
-
-# Make plots
-sm.map_density(info)
+#sm.grid_merger(info)
 #
 ## Make plots
+#sm.map_density(info)
+#
+##Make plots
 #import os
 #file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
 #sm.map_dots(info, file_in)
-     
+
+#import os
+#file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
+#sm.map_dots_one_ship(info, file_in, 15)
+#     
     
     

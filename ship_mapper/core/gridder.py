@@ -32,6 +32,8 @@ def gridder(info, data_in, file_name, overwrite=False):
         # Make grid
         x = np.linspace(data['longitude'].min(), data['longitude'].max(), num=info.grid.bin_number)
         y = np.linspace(data['latitude'].min(), data['latitude'].max(), num=info.grid.bin_number)
+#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
+#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
 
         # Find unique ships
         unis = pd.unique(data[ship_id].values)
@@ -41,14 +43,16 @@ def gridder(info, data_in, file_name, overwrite=False):
         counter = 0
 
 
-#        for ship in unis[20:21]:
-        for ship in unis:
+        for ship in unis[29:30]:
+#        for ship in unis:
             counter += 1
             print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
             
             indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
             
+            
+           
 #            print('presort')
 #            singleship_sorted = singleship.sortby('SeqNum')
 #            print('postsort----')
@@ -59,21 +63,21 @@ def gridder(info, data_in, file_name, overwrite=False):
 #            plt.plot(singleship['longitude'],singleship['latitude'],'.');plt.show()
 #            plt.plot(singleship['Dindex'],singleship['Dindex'],'.');plt.show()
 
-            indxtrip = (singleship_sorted['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
+            indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
             
 #            gaps = np.trim_zeros(indxtrip.values*indxtrip['Dindex'].values)
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
 #            if trip_gaps[0] != 0:
             trip_gaps = np.insert(trip_gaps, 0, 0)
-            trip_gaps = np.append(trip_gaps,singleship_sorted['Dindex'].values[-1]+1)
+            trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
                 
             # Loop over trips
             for k in range(1,len(trip_gaps)):
                 
-                index_gap = ((singleship_sorted['Dindex'] >= trip_gaps[k-1]) &
-                             (singleship_sorted['Dindex'] < trip_gaps[k]))
+                index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
+                             (singleship['Dindex'] < trip_gaps[k]))
                 
-                singleship_trip = singleship_sorted.sel(Dindex=index_gap)
+                singleship_trip = singleship.sel(Dindex=index_gap)
 
                 
                 bin_size = 1/144 # 1/144 = once every 10 minutes
@@ -188,7 +192,9 @@ def gridder(info, data_in, file_name, overwrite=False):
 
                 
         # Project pings to grid        
-        H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number)
+        H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
+                                            range=[[0, info.grid.bin_number],
+                                                   [0, info.grid.bin_number]])
         # Rotate and flip H...
         H0 = np.rot90(H0)
         H0 = np.flipud(H0)
@@ -197,7 +203,38 @@ def gridder(info, data_in, file_name, overwrite=False):
                 coords={'lon':(['x'],x),
                         'lat':(['y'],y)})
                     
-    
+        # MAP --------------------------------------------------------------
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.basemap import Basemap
+        minlat = data['latitude'].values.min()
+        maxlat = data['latitude'].values.max()
+        minlon = data['longitude'].values.min()
+        maxlon = data['longitude'].values.max()
+        
+        m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
+        llcrnrlon=minlon, urcrnrlon=maxlon,resolution='i')
+        
+        xdots, ydots = m(singleship['longitude'].values,singleship['latitude'].values) 
+                
+        cs = m.scatter(xdots,ydots,1,marker='.',color='r', zorder=15)
+        
+        # ------------
+#        x = np.linspace(minlon, maxlon, num=info.grid.bin_number)
+#        y = np.linspace(minlat, maxlat, num=info.grid.bin_number)
+
+        xx, yy = m(x,y)
+
+        print(H0)
+        Hmasked = np.ma.masked_where(H0<1,H0)
+
+        cs2 = m.pcolor(xx,yy,Hmasked,cmap=plt.get_cmap('copper_r'),alpha=0.5, zorder=10)
+        cbar = plt.colorbar(extend='both')
+        m.drawcoastlines(linewidth=0.5,zorder=25)
+    #    
+        plt.show()
+        # MAP --------------------------------------------------------------
+        
+        
         # Print NetCDF file
         sm.checkDir(str(info.dirs.gridded_data))
         print('Writting...')
@@ -205,6 +242,12 @@ def gridder(info, data_in, file_name, overwrite=False):
         D.to_netcdf(path=file_out)
     
     return
+
+
+
+
+
+
 
 
 
