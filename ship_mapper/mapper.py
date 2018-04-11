@@ -277,16 +277,11 @@ def make_basemap(project_path,spatial):
     fig = plt.figure(figsize=(18,9))
 
     
-    
-    
-    
     TOPOmasked = np.ma.masked_where(topo>0,topo)
 
     cs = m.pcolormesh(lons,lats,TOPOmasked,cmap=load_my_cmap('my_cmap_lightblue'),latlon=True,zorder=5)
 
-#    
-#    
-#    
+ 
     m.drawcoastlines(linewidth=0.5,zorder=25)
     m.fillcontinents()
     m.drawmapboundary()
@@ -376,28 +371,4 @@ def load_my_cmap(name):
         print('cmap name does not match any of the available cmaps')
 
     return  my_cmap
-
-
-
-
-
-
-
-if __name__ == "__main__":
-#    filename = '2012-2018 - Select Vessels - Clipped'
-#    datadir = 'C:\\Users\\IbarraD\\Documents\\VMS\\data_2012-2018 - Selected Vessels\\'
-#    BinNo = 300
-#    downLim = 1 # Knots
-#    upLim = 4.5 # Knots
-#    map_density(BinNo,downLim,upLim,datadir,filename,spatial=[41.5,46,-61,-55])
-    
-    import ship_mapper as sm
-#    
-#    
-#    project_path = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1'
-#    
-#    m = sm.make_basemap(project_path,[41.5,46,-61,-55])
-    import os
-    file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
-    sm.map_dots_one_ship(info, file_in, 20)
 

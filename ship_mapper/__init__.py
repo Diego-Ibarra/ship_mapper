@@ -3,11 +3,14 @@ Below are functions that will be loaded when calling: import ship_mapper as sm
 '''
 from .converters import convert_to_nc, bulk_convert_to_nc
 
-from .core import distance, estimate_velocity, elapsed_days, align_with_grid, interp2d, spatial_filter, checkDir, make_mydirs, get_all_files, get_filename_from_fullpath
+from .utils import (distance, estimate_velocity, elapsed_days,
+                    align_with_grid, interp2d, spatial_filter,
+                    checkDir, make_mydirs, get_all_files,
+                    get_filename_from_fullpath)
 
-from .core.gridder import gridder, grid_merger
+from .gridder import gridder, grid_merger
 
-from .core.mapper import map_density, map_dots, make_basemap, map_dots_one_ship
+from .mapper import map_density, map_dots, make_basemap, map_dots_one_ship
 
-from .core.infoObject import info
+from .info_object import info
 

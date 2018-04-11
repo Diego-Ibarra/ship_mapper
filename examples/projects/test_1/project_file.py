@@ -42,7 +42,7 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
     # Get file name
     file_name = sm.get_filename_from_fullpath(file_in)
     
-    # Filter data
+    # Filter data (spatial trimmer)
     filtered_data = sm.spatial_filter(file_in, info) 
     
     # Further filter data by speed
@@ -50,72 +50,12 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
             (filtered_data['ApparentSpeed'] < info.filt.speed_high))
     
     filtered_data = filtered_data.sel(Dindex=indx)
-    
-    data_in = filtered_data
-    overwrite=True
-    i = 1
-    j = 1
-    
-    
-    
+     
     # Project "dots" into a grid
     sm.gridder(info, filtered_data, file_name, overwrite=True)
     
-    
+# Merge grids   
 sm.grid_merger(info)
 
-#file_in = str(info.dirs.gridded_data) + '\\project_file_1000.nc'
-#sm.map_density(info, file_in, save=True)
+# Make map
 m = sm.map_density(info)
-     
-    
-    
-    
-    
-    
-    
-    
-## Filter data
-#filtered_data = sm.spatial_filter(str(info.dirs.data_nc) + '\\2012-2018 - Select Vessels - Clipped.nc', info) 
-#
-#
-## Further filter data by speed
-#indx = ((filtered_data['ApparentSpeed'] > info.filt.speed_low) &
-#        (filtered_data['ApparentSpeed'] < info.filt.speed_high))
-#
-#filtered_data = filtered_data.sel(Dindex=indx)
-#
-#
-## Project "dots" into a grid
-#sm.gridder(info, filtered_data)
-#
-#file_in = str(info.dirs.gridded_data) + '\\project_file_1000.nc'
-#sm.map_density(info, file_in, save=True)
-
-
-
-
-#
-#
-#
-#
-#
-#
-##
-###
-###file_nc= 'C:\Users\IbarraD\Documents\GitHub\ship_mapper\examples\data\VMS_2012-18_selectedVessels\data_nc'
-###file_grid= 'C:\\Users\\IbarraD\\Documents\\Example\\grid - 2012-2018 - Select Vessels - Clipped.nc'
-##
-###Good##
-#filtered_data = sm.spatial_filter(mydirs['data_nc'] + '2012-2018 - Select Vessels - Clipped.nc', spatial) 
-###
-####sm.gridder(BinNo, upLim, filtered_data, file_grid)
-#sm.gridder(BinNo, upLim, filtered_data, mydirs)
-###
-###sm.gridder(BinNo, file_in, file_out, spatial=spatial)
-###
-###sm.map_density(BinNo,downLim,upLim,file_grid,spatial=None)
-#
-#file_in = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1\\gridded_data\\project_file_1000.nc'
-#
-#sm.map_density(BinNo,downLim,upLim,file_in,mydirs,spatial=spatial)

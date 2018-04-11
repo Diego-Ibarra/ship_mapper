@@ -1,7 +1,10 @@
 
 
 class info:
-    """A simple example class"""
+    """
+    info class makes and 'info object' which contains all the metadata
+    needed to run a project.
+    """
     
     
     def __init__(self,dir_top, dir_data_original, filedash):
@@ -41,6 +44,8 @@ class info:
         self.dirs = SimpleNamespace(**dirs)
         
         return
+    
+    
     
     def __repr__(self):
         to_screen = ('*** Project information***' + '\n' +

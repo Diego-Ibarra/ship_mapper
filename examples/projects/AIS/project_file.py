@@ -50,37 +50,23 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
             (filtered_data['Speed_Over_Ground_SOG_knots'] < info.filt.speed_high))
     
     filtered_data = filtered_data.sel(Dindex=indx)
-##
-filtered_data.close()   
+ 
 
-sm.gridder(info, filtered_data, file_name, overwrite=True)
+    sm.gridder(info, filtered_data, file_name, overwrite=True)
+    
+    filtered_data.close()  
 
 
-
-
-##
-##
-###data_in = filtered_data
-##
-####file_in = sm.get_all_files(info.dirs.data_nc)[0]    
-####
-####file_name = sm.get_filename_from_fullpath(file_in)
-####import xarray as xr
-####data = xr.open_dataset(file_in)
-####
-##### Project "dots" into a grid
-####sm.gridder(info, data, file_name, overwrite=True)
-###    
 ##Merge grids    
 sm.grid_merger(info)
 
 # Make plots
 sm.map_density(info)
 
-#Make plots
-import os
-file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
-sm.map_dots(info, file_in)
+##Make plots
+#import os
+#file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
+#sm.map_dots(info, file_in)
 
 #import os
 #file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
