@@ -21,19 +21,18 @@ import urllib.request
 import netCDF4
 
 
-
 def map_density(info, file_in=None, save=True):
-    
+
     print('map_density ------------------------------------------------------')
-    
+
     # Load data
     if file_in == None:
-        file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
-        
+        file_in = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
+
     d = xr.open_dataset(file_in)
-    
+
     # Define boundaries
-    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:
         minlat = d['lat'].values.min()
         maxlat = d['lat'].values.max()
         minlon = d['lon'].values.min()
@@ -43,80 +42,78 @@ def map_density(info, file_in=None, save=True):
         maxlat = info.grid.maxlat
         minlon = info.grid.minlon
         maxlon = info.grid.maxlon
-    
+
     # Some address
     path_to_basemap = info.dirs.project_path / 'ancillary'
     basemap_file = str(path_to_basemap / 'basemap.p')
-    
-    
+
     # Check for basemap.p and, if doesn;t exist, make it
     if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info.dirs.project_path,
+                            [minlat, maxlat, minlon, maxlon])
     else:
         print('Found basemap...')
-        m = pickle.load(open(basemap_file,'rb'))
+        m = pickle.load(open(basemap_file, 'rb'))
 
-    
     # Create grid for mapping
-    xx,yy = m(d['lon'].values,d['lat'].values)
-    
+    xx, yy = m(d['lon'].values, d['lat'].values)
+
     H = d['ship_density'].values
-     
+
     # Mask zeros
-    Hmasked = np.ma.masked_where(H<1,H)
-     
+    Hmasked = np.ma.masked_where(H < 1, H)
+
     # Log H for better display
     Hmasked = np.log10(Hmasked)
-    
+
     # Make colormap
-    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
-   
-#    
-##    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
-##              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
-#    
-    
+    cs = m.pcolor(
+        xx, yy, Hmasked, cmap=load_my_cmap('my_cmap_amber2red'), zorder=10)
+
+    #
+    ##    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
+    ##              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
+    #
+
     cbar = plt.colorbar(extend='both')
-    
+
     # Change colorbar labels for easier interpreting
     label_values = cbar._tick_data_values
-    log_label_values = np.round(10 ** label_values,decimals=0)
+    log_label_values = np.round(10**label_values, decimals=0)
     labels = []
     for log_label_value in log_label_values:
         labels.append(str(int(log_label_value)))
-    
+
     cbar.ax.set_yticklabels(labels)
     cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
-    
+
     # TODO: maybe delete this?
-#    mng = plt.get_current_fig_manager()
-#    mng.frame.Maximize(True)
-#    
+    #    mng = plt.get_current_fig_manager()
+    #    mng.frame.Maximize(True)
+    #
     plt.show()
-    
+
     # Save map as png
     if save:
         filedir = str(info.dirs.pngs)
         sm.checkDir(filedir)
         filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
-        plt.savefig(os.path.join(filedir,filename), dpi=300)
-    
+        plt.savefig(os.path.join(filedir, filename), dpi=300)
+
     # Close netCDF file
     d.close()
-    
+
     return
-
-
 
 
 def map_dots(info, file_in, save=True):
     print('Mapping...')
     # -----------------------------------------------------------------------------
-        
+
     d = xr.open_dataset(file_in)
-    
+
     # Define boundaries
-    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:
         minlat = d['lat'].values.min()
         maxlat = d['lat'].values.max()
         minlon = d['lon'].values.min()
@@ -126,48 +123,45 @@ def map_dots(info, file_in, save=True):
         maxlat = info.grid.maxlat
         minlon = info.grid.minlon
         maxlon = info.grid.maxlon
-    
-    
-    
+
     path_to_basemap = info.dirs.project_path / 'ancillary'
     print('-----------------------------------------------------')
     print('-----------------------------------------------------')
-    
+
     basemap_file = str(path_to_basemap / 'basemap.p')
-    
+
     if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info.dirs.project_path,
+                            [minlat, maxlat, minlon, maxlon])
     else:
         print('Found basemap...')
-        m = pickle.load(open(basemap_file,'rb'))
+        m = pickle.load(open(basemap_file, 'rb'))
 
-    x, y = m(d['longitude'].values,d['latitude'].values)
-    
-    cs = m.scatter(x,y,2,marker='o',color='r', zorder=10)
-#    
+    x, y = m(d['longitude'].values, d['latitude'].values)
+
+    cs = m.scatter(x, y, 2, marker='o', color='r', zorder=10)
+    #
     plt.show()
-    
-#    # Save map as png
-#    if save:
-#        filedir = str(info.dirs.pngs)
-#        sm.checkDir(filedir)
-#        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
-#        plt.savefig(os.path.join(filedir,filename), dpi=300)
-   
+
+    #    # Save map as png
+    #    if save:
+    #        filedir = str(info.dirs.pngs)
+    #        sm.checkDir(filedir)
+    #        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+    #        plt.savefig(os.path.join(filedir,filename), dpi=300)
+
     return
-
-
 
 
 def map_dots_one_ship(info, file_in, Ship_No, save=True):
     import pandas as pd
     print('Mapping...')
     # -----------------------------------------------------------------------------
-        
+
     d = xr.open_dataset(file_in)
-    
+
     # Define boundaries
-    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:  
+    if info.grid.minlat == None or info.grid.maxlat == None or info.grid.minlon == None or info.grid.maxlon == None:
         minlat = d['lat'].values.min()
         maxlat = d['lat'].values.max()
         minlon = d['lon'].values.min()
@@ -177,28 +171,25 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
         maxlat = info.grid.maxlat
         minlon = info.grid.minlon
         maxlon = info.grid.maxlon
-    
-    
-    
+
     path_to_basemap = info.dirs.project_path / 'ancillary'
     print('-----------------------------------------------------')
     print('-----------------------------------------------------')
-    
-#    basemap_file = str(path_to_basemap / 'basemap_spots.p')
-    
-    m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
-    
-#    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-#        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
-#    else:
-#        print('Found basemap...')
-#        m = pickle.load(open(basemap_file,'rb'))
-        
-    indx = ((d['longitude']>  minlon) &
-            (d['longitude']<= maxlon) &
-            (d['latitude']>  minlat) &
-            (d['latitude']<= maxlat))
-        
+
+    #    basemap_file = str(path_to_basemap / 'basemap_spots.p')
+
+    m = sm.make_basemap(info.dirs.project_path,
+                        [minlat, maxlat, minlon, maxlon])
+
+    #    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+    #        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+    #    else:
+    #        print('Found basemap...')
+    #        m = pickle.load(open(basemap_file,'rb'))
+
+    indx = ((d['longitude'] > minlon) & (d['longitude'] <= maxlon) &
+            (d['latitude'] > minlat) & (d['latitude'] <= maxlat))
+
     filtered_data = d.sel(Dindex=indx)
 
     ship_id = info.ship_id
@@ -206,42 +197,37 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
     ship = unis[Ship_No]
     indxship = (filtered_data[ship_id] == ship)
     singleship = filtered_data.sel(Dindex=indxship)
-    print('Ship id:'+ str(ship))
-    
-#    print(singleship['longitude'].values)
-#    print(singleship['latitude'].values)
-    
-        
-    x, y = m(singleship['longitude'].values,singleship['latitude'].values)
-#    x, y = m(d['longitude'].values,d['latitude'].values)
-    
-    cs = m.scatter(x,y,2,marker='o',color='r', zorder=30)
-    
-#    fig = plt.figure()
-#    plt.plot(filtered_data['longitude'].values,filtered_data['latitude'].values,'.')
-#    
+    print('Ship id:' + str(ship))
+
+    #    print(singleship['longitude'].values)
+    #    print(singleship['latitude'].values)
+
+    x, y = m(singleship['longitude'].values, singleship['latitude'].values)
+    #    x, y = m(d['longitude'].values,d['latitude'].values)
+
+    cs = m.scatter(x, y, 2, marker='o', color='r', zorder=30)
+
+    #    fig = plt.figure()
+    #    plt.plot(filtered_data['longitude'].values,filtered_data['latitude'].values,'.')
+    #
     plt.show()
-    
-#    # Save map as png
-#    if save:
-#        filedir = str(info.dirs.pngs)
-#        sm.checkDir(filedir)
-#        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
-#        plt.savefig(os.path.join(filedir,filename), dpi=300)
-   
+
+    #    # Save map as png
+    #    if save:
+    #        filedir = str(info.dirs.pngs)
+    #        sm.checkDir(filedir)
+    #        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+    #        plt.savefig(os.path.join(filedir,filename), dpi=300)
+
     return
 
 
-
-
-
-def make_basemap(project_path,spatial):
+def make_basemap(project_path, spatial):
     print('Mapping...')
     # -----------------------------------------------------------------------------
-    
+
     path_to_map = Path(project_path) / 'ancillary'
     sm.checkDir(str(path_to_map))
-    
 
     minlat = spatial[0]
     maxlat = spatial[1]
@@ -249,155 +235,163 @@ def make_basemap(project_path,spatial):
     maxlon = spatial[3]
 
     # Create map
-    m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
+    m = Basemap(
+        projection='mill',
+        llcrnrlat=minlat,
+        urcrnrlat=maxlat,
+        llcrnrlon=minlon,
+        urcrnrlon=maxlon,
+        resolution='h')
 
-
-    
     # TOPO
     # Read data from: http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.html
     # using the netCDF output option
     bathymetry_file = str(path_to_map / 'usgsCeSrtm30v6.nc')
-    
+
     if not os.path.isfile(bathymetry_file):
         isub = 1
-        base_url='http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.nc?'
-        query='topo[(%f):%d:(%f)][(%f):%d:(%f)]' % (maxlat,isub,minlat,minlon,isub,maxlon)
-        url = base_url+query
+        base_url = 'http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.nc?'
+        query = 'topo[(%f):%d:(%f)][(%f):%d:(%f)]' % (maxlat, isub, minlat,
+                                                      minlon, isub, maxlon)
+        url = base_url + query
         # store data in NetCDF file
         urllib.request.urlretrieve(url, bathymetry_file)
-    # open NetCDF data in 
+    # open NetCDF data in
     nc = netCDF4.Dataset(bathymetry_file)
     ncv = nc.variables
     lon = ncv['longitude'][:]
     lat = ncv['latitude'][:]
-    lons, lats = np.meshgrid(lon,lat)
-    topo = ncv['topo'][:,:]
-#    
-    fig = plt.figure(figsize=(18,9))
+    lons, lats = np.meshgrid(lon, lat)
+    topo = ncv['topo'][:, :]
+    #
+    fig = plt.figure(figsize=(18, 9))
 
-    
-    
-    
-    
-    TOPOmasked = np.ma.masked_where(topo>0,topo)
+    TOPOmasked = np.ma.masked_where(topo > 0, topo)
 
-    cs = m.pcolormesh(lons,lats,TOPOmasked,cmap=load_my_cmap('my_cmap_lightblue'),latlon=True,zorder=5)
+    cs = m.pcolormesh(
+        lons,
+        lats,
+        TOPOmasked,
+        cmap=load_my_cmap('my_cmap_lightblue'),
+        latlon=True,
+        zorder=5)
 
-#    
-#    
-#    
-    m.drawcoastlines(linewidth=0.5,zorder=25)
+    #
+    #
+    #
+    m.drawcoastlines(linewidth=0.5, zorder=25)
     m.fillcontinents()
     m.drawmapboundary()
-    
-    def setcolor(x, color):
-         for m in x:
-             for t in x[m][1]:
-                 t.set_color(color)
 
-    parallels = np.arange(minlat,maxlat,1)
+    def setcolor(x, color):
+        for m in x:
+            for t in x[m][1]:
+                t.set_color(color)
+
+    parallels = np.arange(minlat, maxlat, 1)
     # labels = [left,right,top,bottom]
-    par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
-    setcolor(par,'#00a3cc')                      
-    meridians = np.arange(minlon,maxlon,1)
-    mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
-    setcolor(mers,'#00a3cc') 
+    par = m.drawparallels(
+        parallels,
+        labels=[True, False, False, False],
+        dashes=[1, 2],
+        color='#00a3cc',
+        zorder=25)
+    
+    setcolor(par, '#00a3cc')
+    meridians = np.arange(minlon, maxlon, 1)
+    mers = m.drawmeridians(
+                        meridians,
+                        labels=[False, False, False, True],
+                        dashes=[1, 2],
+                        color='#00a3cc',
+                        zorder=25)
+    setcolor(mers, '#00a3cc')
 
     ax = plt.gca()
-#    ax.axhline(linewidth=4, color="#00a3cc")        
-#    ax.axvline(linewidth=4, color="#00a3cc") 
-#    
+    #    ax.axhline(linewidth=4, color="#00a3cc")
+    #    ax.axvline(linewidth=4, color="#00a3cc")
+    #
     ax.spines['top'].set_color('#00a3cc')
     ax.spines['right'].set_color('#00a3cc')
     ax.spines['bottom'].set_color('#00a3cc')
     ax.spines['left'].set_color('#00a3cc')
-             
+
     for k, spine in ax.spines.items():  #ax.spines is a dictionary
-        spine.set_zorder(35)    
-    
+        spine.set_zorder(35)
+
+
 #    ax.spines['top'].set_visible(False)
 #    ax.spines['right'].set_visible(False)
 #    ax.spines['bottom'].set_visible(False)
 #    ax.spines['left'].set_visible(False)
-  
 
-##    
+##
     plt.show()
-    
+
     # Save basemap
     picklename = str(path_to_map / 'basemap.p')
-    pickle.dump(m,open(picklename,'wb'),-1)
+    pickle.dump(m, open(picklename, 'wb'), -1)
     print('!!! Pickle just made: ' + picklename)
-#    
-##    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
-##    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
-#    plt.savefig('test.png')
-    
+    #
+    ##    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
+    ##    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
+    #    plt.savefig('test.png')
+
     return m
 
 
-
-
-
-
 def load_my_cmap(name):
-#    cdict = {'red': ((0.0, 0.0, 0.0),
-#                     (1.0, 0.7, 0.7)),
-#           'green': ((0.0, 0.25, 0.25),
-#                     (1.0, 0.85, 0.85)),
-#            'blue': ((0.0, 0.5, 0.5),
-#                     (1.0, 1.0, 1.0))}
-#    my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
+    #    cdict = {'red': ((0.0, 0.0, 0.0),
+    #                     (1.0, 0.7, 0.7)),
+    #           'green': ((0.0, 0.25, 0.25),
+    #                     (1.0, 0.85, 0.85)),
+    #            'blue': ((0.0, 0.5, 0.5),
+    #                     (1.0, 1.0, 1.0))}
+    #    my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
     if name == 'my_cmap_lightblue':
-        cdict = {'red': ((0.0, 0.0, 0.0), # Dark
-                         (1.0, 0.9, 0.9)), # Light
-               'green': ((0.0, 0.9, 0.9),
-                         (1.0, 1.0,1.0)),
-                'blue': ((0.0, 0.9, 0.9),
-                         (1.0, 1.0, 1.0))}
-        my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
+        cdict = {
+            'red': (
+                (0.0, 0.0, 0.0),  # Dark
+                (1.0, 0.9, 0.9)),  # Light
+            'green': ((0.0, 0.9, 0.9), (1.0, 1.0, 1.0)),
+            'blue': ((0.0, 0.9, 0.9), (1.0, 1.0, 1.0))
+        }
+        my_cmap = LinearSegmentedColormap('my_colormap', cdict, 256)
     elif name == 'my_cmap_amber2red':
-    #    cdict = {'red': ((0.0, 1.0, 1.0),
-    #                     (1.0, 0.5, 0.5)),
-    #           'green': ((0.0, 1.0, 1.0),
-    #                     (1.0, 0.0, 0.0)),
-    #            'blue': ((0.0, 0.0, 0.0),
-    #                     (1.0, 0.0, 0.0))}
-    #    my_cmap_yellow2red = LinearSegmentedColormap('my_colormap',cdict,256)
-        cdict = {'red': ((0.0, 1.0, 1.0),
-                         (1.0, 0.5, 0.5)),
-               'green': ((0.0, 0.85, 0.85),
-                         (1.0, 0.0, 0.0)),
-                'blue': ((0.0, 0.3, 0.3),
-                         (1.0, 0.0, 0.0))}
-        my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
+        #    cdict = {'red': ((0.0, 1.0, 1.0),
+        #                     (1.0, 0.5, 0.5)),
+        #           'green': ((0.0, 1.0, 1.0),
+        #                     (1.0, 0.0, 0.0)),
+        #            'blue': ((0.0, 0.0, 0.0),
+        #                     (1.0, 0.0, 0.0))}
+        #    my_cmap_yellow2red = LinearSegmentedColormap('my_colormap',cdict,256)
+        cdict = {
+            'red': ((0.0, 1.0, 1.0), (1.0, 0.5, 0.5)),
+            'green': ((0.0, 0.85, 0.85), (1.0, 0.0, 0.0)),
+            'blue': ((0.0, 0.3, 0.3), (1.0, 0.0, 0.0))
+        }
+        my_cmap = LinearSegmentedColormap('my_colormap', cdict, 256)
     else:
         print('cmap name does not match any of the available cmaps')
 
-    return  my_cmap
-
-
-
-
-
+    return my_cmap
 
 
 if __name__ == "__main__":
-#    filename = '2012-2018 - Select Vessels - Clipped'
-#    datadir = 'C:\\Users\\IbarraD\\Documents\\VMS\\data_2012-2018 - Selected Vessels\\'
-#    BinNo = 300
-#    downLim = 1 # Knots
-#    upLim = 4.5 # Knots
-#    map_density(BinNo,downLim,upLim,datadir,filename,spatial=[41.5,46,-61,-55])
-    
-    import ship_mapper as sm
-#    
-#    
-#    project_path = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1'
-#    
-#    m = sm.make_basemap(project_path,[41.5,46,-61,-55])
-    import os
-    file_in = os.path.join(info.dirs.data_nc, 'CCG_AIS_Dynamic_Data_2017-06-01.nc')
-    sm.map_dots_one_ship(info, file_in, 20)
+    #    filename = '2012-2018 - Select Vessels - Clipped'
+    #    datadir = 'C:\\Users\\IbarraD\\Documents\\VMS\\data_2012-2018 - Selected Vessels\\'
+    #    BinNo = 300
+    #    downLim = 1 # Knots
+    #    upLim = 4.5 # Knots
+    #    map_density(BinNo,downLim,upLim,datadir,filename,spatial=[41.5,46,-61,-55])
 
+    import ship_mapper as sm
+    #
+    #
+    #    project_path = 'C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\projects\\test_1'
+    #
+    #    m = sm.make_basemap(project_path,[41.5,46,-61,-55])
+    import os
+    file_in = os.path.join(info.dirs.data_nc,
+                           'CCG_AIS_Dynamic_Data_2017-06-01.nc')
+    sm.map_dots_one_ship(info, file_in, 20)
