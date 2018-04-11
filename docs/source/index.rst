@@ -1,14 +1,17 @@
-.. ship_mapper documentation master file, created by
-   sphinx-quickstart on Wed Apr 11 11:37:08 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Ship Mapper
+===========
 
-Welcome to ship_mapper's documentation!
-=======================================
+This is a tool to create "ship density" heat maps from AIS, VMS and other ship-position services.
+
+WARNING: This project is in VERY early development stages. Don't use just yet
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   ./installation
+   ./api
 
 
 

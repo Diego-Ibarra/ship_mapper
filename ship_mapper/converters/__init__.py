@@ -23,6 +23,9 @@ def convert_to_nc(data_in, data_out, converter, path_to_converter=None):
 
 
 def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, overwrite=False):
+    '''
+    Just s test docs
+    '''
     import imp
     import os
     from pathlib import Path
