@@ -21,9 +21,6 @@ for root, dirName, files in os.walk('../../../ship_mapper'):
     sys.path.insert(0, os.path.abspath(root))
 
 
-print(sys.path)
-
-
 # -- Project information -----------------------------------------------------
 
 project = 'ship_mapper'
