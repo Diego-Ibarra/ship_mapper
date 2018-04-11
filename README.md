@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/ship-mapper/badge/?version=latest)](http://ship-mapper.readthedocs.io/en/latest/?badge=latest)
+ 
 # ship-mapper
 Tool to create "ship density" heat maps from AIS, VMS and other ship-position services.
 
