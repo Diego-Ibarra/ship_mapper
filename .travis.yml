@@ -15,7 +15,7 @@ install:
   - conda info -a
 
   # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -n test-environment python=3.6 pytest matplotlib xarray pandas basemap basemap-data-hires xlrd
+  - conda create -q -n test-environment python=3.6 pytest matplotlib xarray pandas basemap basemap-data-hires xlrd cmocean
   - source activate test-environment
   - python setup.py install
   
