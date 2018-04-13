@@ -8,7 +8,7 @@ from .utils import (distance, estimate_velocity, elapsed_days,
                     checkDir, make_mydirs, get_all_files,
                     get_filename_from_fullpath)
 
-from .gridder import gridder, grid_merger
+from .gridder import gridder, grid_merger, mergedgrid_to_shp
 
 from .mapper import map_density, map_dots, make_basemap, map_dots_one_ship
 

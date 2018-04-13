@@ -226,6 +226,62 @@ def grid_merger(info, files=None):
 
 
 
+        
+def getWKT_PRJ (epsg_code):
+    import urllib.request
+    wkt = urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/prettywkt/".format(epsg_code))
+    wkt_text = wkt.read()
+    remove_spaces = str(wkt_text).replace(" ","")
+    output = remove_spaces.replace("\\n", "")
+    return output
+
+
+
+def mergedgrid_to_shp(info, file_in=None):
+    
+    import shapefile
+    import urllib.request
+    
+    print('mergedgrid_to_shp ------------------------------------------------')
+    
+    # Load data
+    if file_in == None:
+        file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
+    
+    d = xr.open_dataset(file_in)
+    
+    
+    w = shapefile.Writer()
+    w.field('Vessel Density', 'C')
+  
+    
+    for i in range(0,len(d['lon'].values)-1):
+        print(i)
+        for j in range(0,len(d['lat'].values)-1):     
+            lon1 = float(d['lon'].values[i])
+            lat1 = float(d['lat'].values[j])
+            lon2 = float(d['lon'].values[i+1])
+            lat2 = float(d['lat'].values[j+1])
+            density = float(d['ship_density'].values[i,j])
+            
+            if density > 0:
+                w.poly(parts=[[[lon1,lat1],[lon2,lat1],[lon2,lat2],[lon1,lat2],[lon1,lat1]]])
+                w.record(density)
+    
+    shapefile_name = os.path.join(str(info.dirs.shapefiles),info.project_name)
+
+    w.save(shapefile_name)
+    
+    info.grid.epsg_code = '4326'
+    
+    prj = open(shapefile_name + '.prj', 'w')
+    epsg = getWKT_PRJ(info.grid.epsg_code)
+    prj.write(epsg)
+    prj.close()
+    
+
+
+
 
 
 

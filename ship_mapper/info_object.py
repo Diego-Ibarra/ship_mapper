@@ -27,6 +27,7 @@ class info:
         dirs['gridded_data'] = Path(project_path / 'gridded_data')
         dirs['merged_grid'] = Path(project_path / 'merged_grid')
         dirs['pngs'] = Path(project_path / 'pngs')
+        dirs['shapefiles'] = Path(project_path / 'shapefiles')
         
         grid ={}
         grid['bin_number'] = None
@@ -34,6 +35,7 @@ class info:
         grid['maxlat'] = None
         grid['minlon'] = None
         grid['maxlon'] = None
+        grid['epsg_code'] = None
         
         filt ={}
         filt['speed_low'] = None
