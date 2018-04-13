@@ -11,6 +11,7 @@ WARNING: This project is in VERY early development stages. Don't use just yet
    :caption: Contents:
    
    ./installation
+   ./workflow
    ./api
 
 
