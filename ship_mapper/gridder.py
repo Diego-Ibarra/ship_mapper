@@ -230,9 +230,10 @@ def grid_merger(info, files=None):
 def getWKT_PRJ (epsg_code):
     import urllib.request
     wkt = urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/prettywkt/".format(epsg_code))
-    wkt_text = wkt.read()
-    remove_spaces = str(wkt_text).replace(" ","")
-    output = remove_spaces.replace("\\n", "")
+    wkt_bytes = wkt.read()
+    wkt_decoded = wkt_bytes.decode("utf8")
+    remove_spaces = wkt_decoded.replace(" ","")
+    output = remove_spaces.replace("\n", "")
     return output
 
 
@@ -240,7 +241,6 @@ def getWKT_PRJ (epsg_code):
 def mergedgrid_to_shp(info, file_in=None):
     
     import shapefile
-    import urllib.request
     
     print('mergedgrid_to_shp ------------------------------------------------')
     
@@ -271,8 +271,6 @@ def mergedgrid_to_shp(info, file_in=None):
     shapefile_name = os.path.join(str(info.dirs.shapefiles),info.project_name)
 
     w.save(shapefile_name)
-    
-    info.grid.epsg_code = '4326'
     
     prj = open(shapefile_name + '.prj', 'w')
     epsg = getWKT_PRJ(info.grid.epsg_code)
