@@ -11,7 +11,8 @@ data_nc_dir = top_dir + 'data\\CCG_AIS\\data_original\\'
 info = sm.info(top_dir, data_nc_dir, __file__)
 
 # Define more items in info
-info.grid.bin_number = 1000 ## Number of gridcells in the x and y dimenssions
+info.grid.bin_number = None ## Number of gridcells in the x and y dimenssions
+info.grid.bin_size = 0.003 # Degrees
 #info.grid.minlat = 43
 #info.grid.maxlat = 45.55
 #info.grid.minlon = -61.1
@@ -20,6 +21,7 @@ info.grid.minlat = 43
 info.grid.maxlat = 46
 info.grid.minlon = -62.0
 info.grid.maxlon = -55.7
+info.grid.epsg_code = '4326'
 
 ## Upper and lower limits (apparent Spped) to filter ship density data
 #info.filt.speed_low = 1 # Knots
@@ -35,33 +37,36 @@ info.ship_id = 'MMSI'
 converter = 'CCG_AIS'
 #sm.bulk_convert_to_nc(converter, path_to_data_in=info.dirs.data_original, overwrite=True)
 
+#
+## Filter and grid all input files
+#for file_in in sm.get_all_files(info.dirs.data_nc):
+#    
+#    # Get file name
+#    file_name = sm.get_filename_from_fullpath(file_in)
+#    
+#    # Filter data
+#    filtered_data = sm.spatial_filter(file_in, info) 
+#    
+#    # Further filter data by speed
+#    indx = ((filtered_data['Speed_Over_Ground_SOG_knots'] > info.filt.speed_low) &
+#            (filtered_data['Speed_Over_Ground_SOG_knots'] < info.filt.speed_high))
+#    
+#    filtered_data = filtered_data.sel(Dindex=indx)
+# 
+#
+#    sm.gridder(info, filtered_data, file_name, overwrite=True)
+#    
+#    filtered_data.close()  
 
-# Filter and grid all input files
-for file_in in sm.get_all_files(info.dirs.data_nc):
-    
-    # Get file name
-    file_name = sm.get_filename_from_fullpath(file_in)
-    
-    # Filter data
-    filtered_data = sm.spatial_filter(file_in, info) 
-    
-    # Further filter data by speed
-    indx = ((filtered_data['Speed_Over_Ground_SOG_knots'] > info.filt.speed_low) &
-            (filtered_data['Speed_Over_Ground_SOG_knots'] < info.filt.speed_high))
-    
-    filtered_data = filtered_data.sel(Dindex=indx)
- 
 
-    sm.gridder(info, filtered_data, file_name, overwrite=True)
-    
-    filtered_data.close()  
+###Merge grids    
+#sm.grid_merger(info)
+#
+## Make plots
+#sm.map_density(info)
 
-
-##Merge grids    
-sm.grid_merger(info)
-
-# Make plots
-sm.map_density(info)
+# Make shapefiles
+sm.mergedgrid_to_shp(info)
 
 ##Make plots
 #import os

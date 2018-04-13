@@ -58,9 +58,14 @@ def map_density(info, file_in=None, save=True):
 
     
     # Create grid for mapping
-    xx,yy = m(d['lon'].values,d['lat'].values)
+    lons_grid, lats_grid = np.meshgrid(d['lon'].values,d['lat'].values)
+    xx,yy = m(lons_grid, lats_grid)
     
     H = d['ship_density'].values
+    
+    # Rotate and flip H... ----------------------------------------------------------------------------
+    H = np.rot90(H)
+    H = np.flipud(H)
      
     # Mask zeros
     Hmasked = np.ma.masked_where(H<1,H)

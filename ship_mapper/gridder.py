@@ -26,8 +26,14 @@ def gridder(info, data_in, file_name, overwrite=False):
         data = data_in
     
         # Make grid
-        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
-        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
+#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
+#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
+        
+        x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
+        y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
+        
+        info.grid.bin_number = (np.ceil((info.grid.maxlon - info.grid.minlon)/info.grid.bin_size),
+                                np.ceil((info.grid.maxlat - info.grid.minlat)/info.grid.bin_size))
 
         # Find unique ships
         unis = pd.unique(data[ship_id].values)
@@ -132,14 +138,15 @@ def gridder(info, data_in, file_name, overwrite=False):
                         last_lat = lats[-1]
                         last_lon = lons[-1]
 
+
                 
         # Project pings to grid        
         H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
-                                            range=[[0, info.grid.bin_number],
-                                                   [0, info.grid.bin_number]])
-        # Rotate and flip H...
-        H0 = np.rot90(H0)
-        H0 = np.flipud(H0)
+                                            range=[[0, info.grid.bin_number[0]],
+                                                   [0, info.grid.bin_number[1]]])
+#        # Rotate and flip H...
+#        H0 = np.rot90(H0)
+#        H0 = np.flipud(H0)
                 
         D = xr.Dataset({'ship_density':(['x','y'],H0)},
                 coords={'lon':(['x'],x),

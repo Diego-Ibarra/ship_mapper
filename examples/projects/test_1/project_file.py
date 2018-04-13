@@ -16,7 +16,7 @@ info.grid.minlat = 43
 info.grid.maxlat = 45.55
 info.grid.minlon = -61.1
 info.grid.maxlon = -55.7
-info.grid.epsg_code = '26920'
+info.grid.epsg_code = '4326'
 
 ## Upper and lower limits (apparent Spped) to filter ship density data
 info.filt.speed_low = 1 # Knots
