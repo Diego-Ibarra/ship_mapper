@@ -11,7 +11,8 @@ data_nc_dir = top_dir + 'data\\VMS_DFO\\data_original\\'
 info = sm.info(top_dir, data_nc_dir, __file__)
 
 # Define more items in info
-info.grid.bin_number = 1000 ## Number of gridcells in the x and y dimenssions
+info.grid.bin_number = None ## Number of gridcells in the x and y dimenssions
+info.grid.bin_size = 0.003 # Degrees
 info.grid.minlat = 43
 info.grid.maxlat = 45.55
 info.grid.minlon = -61.1

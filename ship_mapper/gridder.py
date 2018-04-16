@@ -17,7 +17,7 @@ def gridder(info, data_in, file_name, overwrite=False):
     
     print('gridder ---------------------------------------------')
     
-    file_out = os.path.join(str(info.dirs.gridded_data), info.run_name + '_' + str(info.grid.bin_number)+ '_' + file_name  + '.nc')
+    file_out = os.path.join(str(info.dirs.gridded_data), file_name  + '.nc')
     
     if not os.path.isfile(file_out) or overwrite:
         

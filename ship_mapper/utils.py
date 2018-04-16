@@ -161,3 +161,12 @@ def get_all_files(dir_in):
 def get_filename_from_fullpath(fullpath):
     
     return os.path.splitext(os.path.split(fullpath)[1])[0]
+
+
+
+def get_path_from_fullpath(fullpath):
+    
+    return os.path.splitext(os.path.split(fullpath)[0])[0]
+
+
+

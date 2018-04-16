@@ -68,18 +68,23 @@ def map_density(info, file_in=None, save=True):
     H = np.flipud(H)
      
     # Mask zeros
-    Hmasked = np.ma.masked_where(H<1,H)
+    Hmasked = np.ma.masked_where(H<info.maps.mask_below,H)
      
     # Log H for better display
     Hmasked = np.log10(Hmasked)
     
     # Make colormap
     cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
-   
-#    
-##    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
-##              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
-#    
+
+    if info.maps.title == 'auto':
+        plot_title = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+    else:
+        plot_title = info.maps.title
+
+    plt.title(plot_title)
+  
+#    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
+#              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
     
     cbar = plt.colorbar(extend='both')
     
@@ -103,7 +108,11 @@ def map_density(info, file_in=None, save=True):
     if save:
         filedir = str(info.dirs.pngs)
         sm.checkDir(filedir)
-        filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+        filename = info.run_name + '__' + sm.get_filename_from_fullpath(file_in) + '.png'
+#        if info.maps.title == 'auto':
+#            filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+#        else:
+#            filename = info.maps.title + '.png'
         plt.savefig(os.path.join(filedir,filename), dpi=300)
     
     # Close netCDF file
