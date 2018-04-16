@@ -3,7 +3,7 @@ ancillary/*
 gridded_data/*
 pngs/*
 
-!*/docs/source/_static/*
+!/docs/source/_static/**
 *.p
 *.png
 
