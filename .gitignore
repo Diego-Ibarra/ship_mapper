@@ -3,9 +3,10 @@ ancillary/*
 gridded_data/*
 pngs/*
 
+!*/docs/source/_static
 *.p
 *.png
-!/docs/source/_static
+
 
 # Below here was created automatically by Github
 
