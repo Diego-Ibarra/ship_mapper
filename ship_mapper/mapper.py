@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Feb 20 10:51:50 2018
+
 @author: IbarraD
 """
 import numpy as np
@@ -72,11 +73,15 @@ def map_density(info, file_in=None, save=True):
     # Log H for better display
     Hmasked = np.log10(Hmasked)
     
+
     # Make colormap
-    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
+    fig = plt.gcf()
+    ax = plt.gca()
+    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'), zorder=10)
+    
 
     if info.maps.title == 'auto':
-        plot_title = info.project_name
+        plot_title = info.run_name
     else:
         plot_title = info.maps.title
 
@@ -84,8 +89,14 @@ def map_density(info, file_in=None, save=True):
   
 #    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
 #              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
+
     
-    cbar = plt.colorbar(extend='both')
+    fig = plt.gcf()
+#    cbaxes2 = fig.add_axes([0.70, 0.1, 0.2, 0.02]) 
+#    cbaxes2 = fig.add_axes([0.71, 0.7, 0.15, 0.01],zorder=60)
+    cbaxes2 = fig.add_axes([0.6, 0.18, 0.2, 0.03],zorder=60)
+#    cb = plt.colorbar(ax1, cax = cbaxes)
+    cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
     
     # Change colorbar labels for easier interpreting
     label_values = cbar._tick_data_values
@@ -95,12 +106,37 @@ def map_density(info, file_in=None, save=True):
         labels.append(str(int(log_label_value)))
     
     cbar.ax.set_yticklabels(labels)
-    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
+#    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
+    cbar.ax.set_xlabel('No. of vessels within grid-cell')
+    
+    
+    legend_content = ('--- Vessel Density Map ---\n\n' +
+                      'Test'
+            )
+    
+    
+
+    props = dict( facecolor='#e6e6e6', alpha=1,edgecolor='#a6a6a6',boxstyle="Square,pad=0.5",zorder=1)
+    
+    plt.figtext(0.85, 0.1,
+                legend_content,
+                linespacing=1.0,
+                bbox=props,
+                zorder=0)
+    
+#    ax2 = fig.add_axes([0,0,1,1])
+#    ax2.text(left, bottom, 'left top',
+#            horizontalalignment='left',
+#            verticalalignment='top',
+#            transform=ax.transAxes)
+    
+    
     
     # TODO: maybe delete this?
 #    mng = plt.get_current_fig_manager()
 #    mng.frame.Maximize(True)
-#    
+#
+#    fig.tight_layout()
     plt.show()
     
     # Save map as png
@@ -287,7 +323,9 @@ def make_basemap(project_path,spatial):
     lons, lats = np.meshgrid(lon,lat)
     topo = ncv['topo'][:,:]
 #    
-    fig = plt.figure(figsize=(18,9))
+    fig = plt.figure(figsize=(19,9))
+    
+    ax = fig.add_axes([0.03,0.03,.80,1])
 
     
     TOPOmasked = np.ma.masked_where(topo>0,topo)
@@ -323,15 +361,13 @@ def make_basemap(project_path,spatial):
              
     for k, spine in ax.spines.items():  #ax.spines is a dictionary
         spine.set_zorder(35)    
-    
+
 #    ax.spines['top'].set_visible(False)
 #    ax.spines['right'].set_visible(False)
 #    ax.spines['bottom'].set_visible(False)
 #    ax.spines['left'].set_visible(False)
   
-
-##
-    fig.tight_layout(pad=2.5 )
+    fig.tight_layout(pad=4 )
     plt.show()
     
     # Save basemap
@@ -385,3 +421,4 @@ def load_my_cmap(name):
         print('cmap name does not match any of the available cmaps')
 
     return  my_cmap
+
