@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Feb 20 10:51:50 2018
-
 @author: IbarraD
 """
 import numpy as np
@@ -77,7 +76,7 @@ def map_density(info, file_in=None, save=True):
     cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
 
     if info.maps.title == 'auto':
-        plot_title = info.project_name + '_' + str(info.grid.bin_number) + '.png'
+        plot_title = info.project_name
     else:
         plot_title = info.maps.title
 
@@ -264,7 +263,7 @@ def make_basemap(project_path,spatial):
 
     # Create map
     m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
+                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='f')
 
 
     
@@ -305,11 +304,11 @@ def make_basemap(project_path,spatial):
              for t in x[m][1]:
                  t.set_color(color)
 
-    parallels = np.arange(minlat,maxlat,1)
+    parallels = np.arange(minlat,maxlat,0.1)
     # labels = [left,right,top,bottom]
     par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(par,'#00a3cc')                      
-    meridians = np.arange(minlon,maxlon,1)
+    meridians = np.arange(minlon,maxlon,0.1)
     mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(mers,'#00a3cc') 
 
@@ -331,7 +330,8 @@ def make_basemap(project_path,spatial):
 #    ax.spines['left'].set_visible(False)
   
 
-##    
+##
+    fig.tight_layout(pad=2.5 )
     plt.show()
     
     # Save basemap
@@ -385,4 +385,3 @@ def load_my_cmap(name):
         print('cmap name does not match any of the available cmaps')
 
     return  my_cmap
-

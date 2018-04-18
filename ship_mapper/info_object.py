@@ -36,6 +36,7 @@ class info:
         grid['maxlat'] = None
         grid['minlon'] = None
         grid['maxlon'] = None
+        grid['interp_threshold'] = 40 #knots
         grid['epsg_code'] = None
         
         filt ={}
@@ -45,6 +46,10 @@ class info:
         maps = {}
         maps['mask_below'] = 1
         maps['title'] = 'auto'
+        
+        legend = {}
+        legend['source'] = None
+        legend['filter'] = None
         
         self.grid = SimpleNamespace(**grid)
         self.filt = SimpleNamespace(**filt)
@@ -85,12 +90,15 @@ class info:
         '''
         import _pickle as pickle
         import os
+        import ship_mapper as sm
         
+        sm.checkDir(str(self.dirs.ancillary))
         full_filename = os.path.join(self.dirs.ancillary, 'info.p')
         
         pickle.dump(self,open(full_filename,'wb'),-1)
         print('!!! Pickle info.p file just got saved ')
         return
+    
     
 def load_info(filedash):
     import _pickle as pickle
