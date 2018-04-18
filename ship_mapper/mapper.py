@@ -6,6 +6,7 @@ Created on Tue Feb 20 10:51:50 2018
 """
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.basemap import Basemap
 # Suppress matplotlib warnings
@@ -116,20 +117,49 @@ def map_density(info, file_in=None, save=True):
     
     
 
-    props = dict( facecolor='#e6e6e6', alpha=1,edgecolor='#a6a6a6',boxstyle="Square,pad=0.5",zorder=1)
+#    props = dict( facecolor='#e6e6e6', alpha=1,edgecolor='#a6a6a6',boxstyle="Square,pad=0.5",zorder=1)  
+#    plt.figtext(0.85, 0.1,
+#                legend_content,
+#                linespacing=1.0,
+#                bbox=props,
+#                zorder=0)
+
+#    ax2 = fig.add_axes([0.80,0,1,1])
+#    ax2 = fig.add_axes([0,0,0.2,1])
     
-    plt.figtext(0.85, 0.1,
-                legend_content,
-                linespacing=1.0,
-                bbox=props,
-                zorder=0)
+    ax2 = plt.subplot2grid((1,24),(0,0),colspan=4)
+    # Turn off tick labels
+    ax2.get_xaxis().set_visible(False)
+    ax2.get_yaxis().set_visible(False)
+    ax2.add_patch(FancyBboxPatch((0,0),
+                            width=1, height=1, clip_on=False,
+                            boxstyle="square,pad=0", zorder=3,
+                            facecolor='#e6e6e6', alpha=1.0,
+                            edgecolor='#a6a6a6',
+                            transform=plt.gca().transAxes))
+    plt.text(0.01, 0.99, "VESSEL DENSITY HEATMAP",
+            verticalalignment='top',
+            horizontalalignment='left',
+            weight='bold',
+            size=10,
+            transform=plt.gca().transAxes)
     
-#    ax2 = fig.add_axes([0,0,1,1])
+    plt.text(0.01, 0.9, "*** VESSEL DENSITY HEATMAP ***",
+            horizontalalignment='left',
+            verticalalignment='top',
+            size=9,
+            transform=plt.gca().transAxes)
+#    plt.text(-0.04, 0.95, " Regular Plot:      plt.plot(...)\n Just a test",
+#            horizontalalignment='left',
+#            verticalalignment='top',
+#            size='xx-large',
+#            transform=plt.gca().transAxes)
+    
 #    ax2.text(left, bottom, 'left top',
 #            horizontalalignment='left',
 #            verticalalignment='top',
 #            transform=ax.transAxes)
-    
+#    
     
     
     # TODO: maybe delete this?
@@ -299,7 +329,7 @@ def make_basemap(project_path,spatial):
 
     # Create map
     m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='f')
+                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
 
 
     
@@ -325,7 +355,15 @@ def make_basemap(project_path,spatial):
 #    
     fig = plt.figure(figsize=(19,9))
     
-    ax = fig.add_axes([0.03,0.03,.80,1])
+#    ax = fig.add_axes([0.05,0.05,0.80,1])
+#    ax = fig.add_axes([0,0,0.80,1])
+    
+
+
+    
+#    ax = fig.add_axes([0.23,0.035,0.85,0.9])
+    ax = plt.subplot2grid((1,24),(0,5),colspan=19)
+    
 
     
     TOPOmasked = np.ma.masked_where(topo>0,topo)
@@ -342,11 +380,11 @@ def make_basemap(project_path,spatial):
              for t in x[m][1]:
                  t.set_color(color)
 
-    parallels = np.arange(minlat,maxlat,0.1)
+    parallels = np.arange(minlat,maxlat,1)
     # labels = [left,right,top,bottom]
     par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(par,'#00a3cc')                      
-    meridians = np.arange(minlon,maxlon,0.1)
+    meridians = np.arange(minlon,maxlon,1)
     mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(mers,'#00a3cc') 
 
@@ -367,7 +405,7 @@ def make_basemap(project_path,spatial):
 #    ax.spines['bottom'].set_visible(False)
 #    ax.spines['left'].set_visible(False)
   
-    fig.tight_layout(pad=4 )
+    fig.tight_layout(pad=0.25)
     plt.show()
     
     # Save basemap
