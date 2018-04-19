@@ -45,6 +45,7 @@ class info:
         
         maps = {}
         maps['mask_below'] = 1
+        maps['scalebar_km'] = 100
         maps['title'] = 'auto'
         
         legend = {}

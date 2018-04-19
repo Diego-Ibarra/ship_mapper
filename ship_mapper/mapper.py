@@ -23,7 +23,7 @@ import netCDF4
 
 
 
-def map_density(info, file_in=None, save=True):
+def map_density(info, file_in=None, sidebar=False, save=True):
     
     print('map_density ------------------------------------------------------')
     
@@ -47,7 +47,11 @@ def map_density(info, file_in=None, save=True):
     
     # Some address
     path_to_basemap = info.dirs.project_path / 'ancillary'
-    basemap_file = str(path_to_basemap / 'basemap.p')
+    
+    if sidebar:
+        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
+    else:
+        basemap_file = str(path_to_basemap / 'basemap.p')
     
     
     # Check for basemap.p and, if doesn;t exist, make it
@@ -80,40 +84,51 @@ def map_density(info, file_in=None, save=True):
     ax = plt.gca()
     cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'), zorder=10)
     
+    #scalebar
+    sblon = info.grid.minlon + ((info.grid.maxlon-info.grid.minlon)/10)
+    sblat = info.grid.minlat + ((info.grid.maxlat-info.grid.minlat)/20)
+    m.drawmapscale(sblon, sblat,
+           info.grid.minlon, info.grid.minlat,
+           info.maps.scalebar_km, barstyle='fancy',
+           units='km', fontsize=8,
+           fontcolor='#808080',
+           fillcolor1 = '#cccccc',
+           fillcolor2 = '#a6a6a6',
+           yoffset = (0.01*(m.ymax-m.ymin)),
+           labelstyle='simple',zorder=60)
 
-    if info.maps.title == 'auto':
-        plot_title = info.run_name
-    else:
-        plot_title = info.maps.title
+    
 
-    plt.title(plot_title)
-  
+#    if info.maps.title == 'auto':
+#        plot_title = info.run_name
+#    else:
+#        plot_title = info.maps.title
+#
+#    plt.title(plot_title)
+#  
 #    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
 #              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
 
-    
-    fig = plt.gcf()
-#    cbaxes2 = fig.add_axes([0.70, 0.1, 0.2, 0.02]) 
-#    cbaxes2 = fig.add_axes([0.71, 0.7, 0.15, 0.01],zorder=60)
-    cbaxes2 = fig.add_axes([0.6, 0.18, 0.2, 0.03],zorder=60)
-#    cb = plt.colorbar(ax1, cax = cbaxes)
-    cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
-    
-    # Change colorbar labels for easier interpreting
-    label_values = cbar._tick_data_values
-    log_label_values = np.round(10 ** label_values,decimals=0)
-    labels = []
-    for log_label_value in log_label_values:
-        labels.append(str(int(log_label_value)))
-    
-    cbar.ax.set_yticklabels(labels)
-#    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
-    cbar.ax.set_xlabel('No. of vessels within grid-cell')
+
+
+    if not sidebar:
+        cbaxes2 = fig.add_axes([0.70, 0.18, 0.2, 0.03],zorder=60)
+        cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
+        
+        # Change colorbar labels for easier interpreting
+        label_values = cbar._tick_data_values
+        log_label_values = np.round(10 ** label_values,decimals=0)
+        labels = []
+        for log_label_value in log_label_values:
+            labels.append(str(int(log_label_value)))
+        
+        cbar.ax.set_yticklabels(labels)
+        cbar.ax.set_xlabel('No. of vessels within grid-cell')
     
     
-    legend_content = ('--- Vessel Density Map ---\n\n' +
-                      'Test'
-            )
+#    legend_content = ('--- Vessel Density Map ---\n\n' +
+#                      'Test'
+#            )
     
     
 
@@ -126,40 +141,86 @@ def map_density(info, file_in=None, save=True):
 
 #    ax2 = fig.add_axes([0.80,0,1,1])
 #    ax2 = fig.add_axes([0,0,0.2,1])
-    
-    ax2 = plt.subplot2grid((1,24),(0,0),colspan=4)
-    # Turn off tick labels
-    ax2.get_xaxis().set_visible(False)
-    ax2.get_yaxis().set_visible(False)
-    ax2.add_patch(FancyBboxPatch((0,0),
-                            width=1, height=1, clip_on=False,
-                            boxstyle="square,pad=0", zorder=3,
-                            facecolor='#e6e6e6', alpha=1.0,
-                            edgecolor='#a6a6a6',
-                            transform=plt.gca().transAxes))
-    plt.text(0.01, 0.99, "VESSEL DENSITY HEATMAP",
-            verticalalignment='top',
-            horizontalalignment='left',
-            weight='bold',
-            size=10,
-            transform=plt.gca().transAxes)
-    
-    plt.text(0.01, 0.9, "*** VESSEL DENSITY HEATMAP ***",
-            horizontalalignment='left',
-            verticalalignment='top',
-            size=9,
-            transform=plt.gca().transAxes)
-#    plt.text(-0.04, 0.95, " Regular Plot:      plt.plot(...)\n Just a test",
-#            horizontalalignment='left',
-#            verticalalignment='top',
-#            size='xx-large',
-#            transform=plt.gca().transAxes)
-    
-#    ax2.text(left, bottom, 'left top',
-#            horizontalalignment='left',
-#            verticalalignment='top',
-#            transform=ax.transAxes)
-#    
+    if sidebar:
+        
+        text1, text2, text3, text4 = make_legend_text(info)
+        
+        ax2 = plt.subplot2grid((1,24),(0,0),colspan=4)
+                
+        # Turn off tick labels
+        ax2.get_xaxis().set_visible(False)
+        ax2.get_yaxis().set_visible(False)
+        ax2.add_patch(FancyBboxPatch((0,0),
+                                width=1, height=1, clip_on=False,
+                                boxstyle="square,pad=0", zorder=3,
+                                facecolor='#e6e6e6', alpha=1.0,
+                                edgecolor='#a6a6a6',
+                                transform=plt.gca().transAxes))
+        plt.text(0.15, 0.99, text1,
+                verticalalignment='top',
+                horizontalalignment='left',
+                weight='bold',
+                size=10,
+                color= '#737373',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.83, text2,
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=9,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.145, text3,
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=7,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.4, text4,
+                style='italic',
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=9,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        
+        cbaxes2 = fig.add_axes([0.02, 0.9, 0.15, 0.02],zorder=60)
+        cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
+        cbar.ax.tick_params(labelsize=8, labelcolor='#808080') 
+        
+        # Change colorbar labels for easier interpreting
+        label_values = cbar._tick_data_values
+        print("values")
+        print(label_values)
+        log_label_values = np.round(10 ** label_values,decimals=0)
+        print(log_label_values)
+        labels = []
+        for log_label_value in log_label_values:
+            labels.append(str(int(log_label_value)))
+        
+        cbar.ax.set_xticklabels(labels)
+        cbar.ax.set_xlabel('No. of vessels within grid-cell', size=9, color='#808080')
+                           
+                           
+                           
+
+
+        
+        
+    #    plt.text(-0.04, 0.95, " Regular Plot:      plt.plot(...)\n Just a test",
+    #            horizontalalignment='left',
+    #            verticalalignment='top',
+    #            size='xx-large',
+    #            transform=plt.gca().transAxes)
+        
+    #    ax2.text(left, bottom, 'left top',
+    #            horizontalalignment='left',
+    #            verticalalignment='top',
+    #            transform=ax.transAxes)
+    #    
     
     
     # TODO: maybe delete this?
@@ -185,6 +246,47 @@ def map_density(info, file_in=None, save=True):
     
     return
 
+
+def make_legend_text(info):
+    import datetime
+    
+    text1 = 'VESSEL DENSITY HEATMAP'
+    # --------------------------------------------------------
+    text2 = ('Unit description: Number of vessels inside\n' + 
+             'a gricell within the time range of\n' +
+             'observations\n\n' +
+             'Data source: CCG_AIS\n\n' +
+             'Data source description: Land-based AIS\n' + 
+             'from Canadian Coast Guard\n\n' +
+             'Grid size: ' + str(info.grid.bin_size) + ' degrees\n' +
+             'EPGS code: ' + str(info.grid.epsg_code) + '\n\n' +
+             'Time range: Jan 1, 2017 - Nov 11, 2017\n\n' +
+             'Other filters: None\n\n' +
+             'Interpolation: Linear\n' +
+             'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
+             'Time binning: 10 minutes'
+             )
+    
+    text3 = ('Creation date: ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n' + 
+             'Creation script: ' + info.run_name + '.py\n' +
+             'Software: ship mapper v0.1\n\n' +
+             'Created by:\n' +
+             'Oceans and Coastal Management Division\n' +
+             'Ecosystem Management Branch\n' +
+             'Fisheries and Oceans Canada – Maritimes Region\n' +
+             'Bedford Institute of Oceanography\n' +
+             'PO Box 1006, Dartmouth, NS, Canada, B2Y 4A2'
+         )
+    
+    text4 = ('WARNING: This is a preliminary data product.\n' +
+             'We cannot ​guarantee the validity, accuracy, \n' +
+             'or quality of this product. ​Data is provided\n' +
+             'on an "AS IS" basis. ​USE AT YOUR OWN RISK.'
+         )
+    
+    
+    
+    return text1, text2, text3, text4
 
 
 
@@ -314,7 +416,7 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
-def make_basemap(project_path,spatial):
+def make_basemap(project_path,spatial,sidebar=False):
     print('Mapping...')
     # -----------------------------------------------------------------------------
     
@@ -362,9 +464,10 @@ def make_basemap(project_path,spatial):
 
     
 #    ax = fig.add_axes([0.23,0.035,0.85,0.9])
-    ax = plt.subplot2grid((1,24),(0,5),colspan=19)
-    
-
+    if sidebar:
+        ax = plt.subplot2grid((1,24),(0,5),colspan=19)
+    else:
+        ax = fig.add_axes([0.05,0.05,0.94,0.94])
     
     TOPOmasked = np.ma.masked_where(topo>0,topo)
 
@@ -372,7 +475,7 @@ def make_basemap(project_path,spatial):
 
  
     m.drawcoastlines(linewidth=0.5,zorder=25)
-    m.fillcontinents()
+    m.fillcontinents(zorder=23)
     m.drawmapboundary()
     
     def setcolor(x, color):
@@ -405,11 +508,17 @@ def make_basemap(project_path,spatial):
 #    ax.spines['bottom'].set_visible(False)
 #    ax.spines['left'].set_visible(False)
   
-    fig.tight_layout(pad=0.25)
+#    fig.tight_layout(pad=0.25)
+    fig.tight_layout(rect=[0.01,0.01,.99,.99])
     plt.show()
     
+    if sidebar:
+        basemap_name = 'basemap_sidebar.p'
+    else:
+        basemap_name = 'basemap.p'
+    
     # Save basemap
-    picklename = str(path_to_map / 'basemap.p')
+    picklename = str(path_to_map / basemap_name)
     pickle.dump(m,open(picklename,'wb'),-1)
     print('!!! Pickle just made: ' + picklename)
 #    
