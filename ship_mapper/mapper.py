@@ -178,16 +178,16 @@ def map_density(info, file_in=None, sidebar=False, save=True):
                 color= '#808080',
                 transform=plt.gca().transAxes)
         
-        plt.text(0.02, 0.4, text4,
+        plt.text(0.02, 0.25, text4,
                 style='italic',
                 horizontalalignment='left',
                 verticalalignment='top',
-                size=9,
+                size=8,
                 color= '#808080',
                 transform=plt.gca().transAxes)
         
         
-        cbaxes2 = fig.add_axes([0.02, 0.9, 0.15, 0.02],zorder=60)
+        cbaxes2 = fig.add_axes([0.019, 0.9, 0.15, 0.02],zorder=60)
         cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
         cbar.ax.tick_params(labelsize=8, labelcolor='#808080') 
         
@@ -252,19 +252,17 @@ def make_legend_text(info):
     
     text1 = 'VESSEL DENSITY HEATMAP'
     # --------------------------------------------------------
-    text2 = ('Unit description: Number of vessels inside\n' + 
-             'a gricell within the time range of\n' +
-             'observations\n\n' +
-             'Data source: CCG_AIS\n\n' +
-             'Data source description: Land-based AIS\n' + 
-             'from Canadian Coast Guard\n\n' +
+    text2 = ('Unit description: ' + info.sidebar.unit_description + '\n\n' +
+             'Data source: ' + info.sidebar.data_source + '\n\n' +
+             'Data source description: ' + info.sidebar.data_description + '\n\n' +
+             'Time range: ' + info.sidebar.time_range + '\n\n' +
+             'Included speeds: ' + info.sidebar.included_speeds + '\n\n' +
              'Grid size: ' + str(info.grid.bin_size) + ' degrees\n' +
-             'EPGS code: ' + str(info.grid.epsg_code) + '\n\n' +
-             'Time range: Jan 1, 2017 - Nov 11, 2017\n\n' +
-             'Other filters: None\n\n' +
-             'Interpolation: Linear\n' +
+             'EPGS code: ' + str(info.grid.epsg_code) + '\n' +
+             'Interpolation: ' + info.sidebar.interpolation + '\n' +
              'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
-             'Time binning: 10 minutes'
+             'Time bin: ' + str(info.sidebar.time_bin) +  ' minutes\n' +
+             'Mask below: ' + str(info.maps.mask_below) + ' vessels per grid'
              )
     
     text3 = ('Creation date: ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n' + 
@@ -278,10 +276,12 @@ def make_legend_text(info):
              'PO Box 1006, Dartmouth, NS, Canada, B2Y 4A2'
          )
     
-    text4 = ('WARNING: This is a preliminary data product.\n' +
+    text4 = ('---------------------------------------------------------------\n' +
+             'WARNING: This is a preliminary data product.\n' +
              'We cannot ​guarantee the validity, accuracy, \n' +
              'or quality of this product. ​Data is provided\n' +
-             'on an "AS IS" basis. ​USE AT YOUR OWN RISK.'
+             'on an "AS IS" basis. ​USE AT YOUR OWN RISK.\n' +
+             '---------------------------------------------------------------\n'
          )
     
     

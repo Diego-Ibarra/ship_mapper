@@ -59,6 +59,7 @@ def gridder(info, data_in, file_name, overwrite=False):
                 
             # Loop over trips
             for k in range(1,len(trip_gaps)):
+                print(k)
                 
                 index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
                              (singleship['Dindex'] < trip_gaps[k]))
@@ -66,12 +67,12 @@ def gridder(info, data_in, file_name, overwrite=False):
                 singleship_trip = singleship.sel(Dindex=index_gap)
                 
                 # Split data into "time_bins"
-                bin_size = 1/144 # 1/144 = once every 10 minutes
+                time_bin = 1/144#info.grid.bin_size / (60*24) # units are converted to: days
                 
                 MinSeqNum = singleship_trip['SeqNum'].values.min()
-                MaxSeqNum = singleship_trip['SeqNum'].values.max() + bin_size
+                MaxSeqNum = singleship_trip['SeqNum'].values.max() + time_bin
                 
-                time_bins = np.arange(MinSeqNum, MaxSeqNum, bin_size) # 1/144 = once every 10 minutes
+                time_bins = np.arange(MinSeqNum, MaxSeqNum, time_bin) # 1/144 = once every 10 minutes
                 
                 # Loop over each ship's time_bin
                 for i in range(1,len(time_bins)):
