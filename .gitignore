@@ -2,6 +2,7 @@
 ancillary/*
 gridded_data/*
 pngs/*
+.pypirc
 
 
 *.p
