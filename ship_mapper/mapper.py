@@ -55,8 +55,9 @@ def map_density(info, file_in=None, sidebar=False, save=True):
     
     
     # Check for basemap.p and, if doesn;t exist, make it
-    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+#    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+    if not os.path.exists(basemap_file):
+        m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
@@ -250,6 +251,8 @@ def map_density(info, file_in=None, sidebar=False, save=True):
 def make_legend_text(info):
     import datetime
     
+    alat = (info.grid.maxlat - info.grid.minlat)/2
+    
     text1 = 'VESSEL DENSITY HEATMAP'
     # --------------------------------------------------------
     text2 = ('Unit description: ' + info.sidebar.unit_description + '\n\n' +
@@ -257,7 +260,7 @@ def make_legend_text(info):
              'Data source description: ' + info.sidebar.data_description + '\n\n' +
              'Time range: ' + info.sidebar.time_range + '\n\n' +
              'Included speeds: ' + info.sidebar.included_speeds + '\n\n' +
-             'Grid size: ' + str(info.grid.bin_size) + ' degrees\n' +
+             'Grid size: ' + str(info.grid.bin_size) + ' degrees (~' + str(int(round(sm.degrees_to_meters(info.grid.bin_size, alat))))+ ' m)\n' +
              'EPGS code: ' + str(info.grid.epsg_code) + '\n' +
              'Interpolation: ' + info.sidebar.interpolation + '\n' +
              'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
@@ -317,14 +320,14 @@ def map_dots(info, file_in, save=True):
     basemap_file = str(path_to_basemap / 'basemap.p')
     
     if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
 
     x, y = m(d['longitude'].values,d['latitude'].values)
     
-    cs = m.scatter(x,y,2,marker='o',color='r', zorder=10)
+    cs = m.scatter(x,y,s=0.1,marker='o',color='r',  zorder=10)
 #    
     plt.show()
     
@@ -416,7 +419,7 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
-def make_basemap(project_path,spatial,sidebar=False):
+def make_basemap(info,project_path,spatial,sidebar=False):
     print('Mapping...')
     # -----------------------------------------------------------------------------
     
@@ -431,7 +434,7 @@ def make_basemap(project_path,spatial,sidebar=False):
 
     # Create map
     m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='h')
+                llcrnrlon=minlon, urcrnrlon=maxlon,resolution=info.maps.resolution)
 
 
     
@@ -483,11 +486,11 @@ def make_basemap(project_path,spatial,sidebar=False):
              for t in x[m][1]:
                  t.set_color(color)
 
-    parallels = np.arange(minlat,maxlat,1)
+    parallels = np.arange(minlat,maxlat,info.maps.parallels)
     # labels = [left,right,top,bottom]
     par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(par,'#00a3cc')                      
-    meridians = np.arange(minlon,maxlon,1)
+    meridians = np.arange(minlon,maxlon,info.maps.meridians)
     mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(mers,'#00a3cc') 
 

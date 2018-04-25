@@ -48,6 +48,10 @@ class info:
         maps['mask_below'] = 1
         maps['scalebar_km'] = 100
         maps['title'] = 'auto'
+        maps['resolution'] = 'i'
+        maps['parallels'] = 1 # Deegres between lines
+        maps['meridians'] = 1# Deegres between lines
+
         
         sidebar = {}
         sidebar['units'] = None
