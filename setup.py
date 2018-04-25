@@ -12,6 +12,8 @@ setup(name='ship_mapper',
       author = 'Diego Ibarra',
       author_email = 'Diego.Ibarra@dal.ca',
       url = 'https://github.com/Diego-Ibarra/ship_mapper',
+      download_url = 'https://github.com/Diego-Ibarra/ship_mapper/archive/0.1.tar.gz',
+      keywords = ['ship', 'vessels', 'mapping'],
       install_requires=['xarray',
                         'pandas'
                         'numpy',
@@ -22,3 +24,5 @@ setup(name='ship_mapper',
                         'basemap-data-hires',
                         'matplotlib']
       )
+
+
