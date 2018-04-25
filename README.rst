@@ -1,7 +1,5 @@
 .. image:: https://readthedocs.org/projects/ship-mapper/badge/?version=latest
-:target: http://ship-mapper.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
-
+    :target: http://ship-mapper.readthedocs.io/en/latest/?badge=latest
 .. image:: https://travis-ci.org/Diego-Ibarra/ship_mapper.svg?branch=master
     :target: https://travis-ci.org/Diego-Ibarra/ship_mapper
 
