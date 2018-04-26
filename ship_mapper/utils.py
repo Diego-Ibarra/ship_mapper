@@ -169,4 +169,28 @@ def get_path_from_fullpath(fullpath):
     return os.path.splitext(os.path.split(fullpath)[0])[0]
 
 
+def degrees_to_meters(degrees, reference_latitude):
+    '''
+    dy   = latitude difference in meters
+    dlat = latitude difference in degrees
+    dx   = longitude difference in meters
+    dlon = longitude difference in degrees
+    alat = average latitude between the two fixes
+    Reference: American Practical Navigator, Vol II, 1975 Edition, p 5
+    
+    Source: http://pordlabs.ucsd.edu/matlab/coord.htm
+    '''
+    
+    import math
+    
+    rlat = reference_latitude * math.pi/180;
+    m = 111132.09 * 1 - 566.05 * math.cos(2 * rlat) + 1.2 * math.cos(4 * rlat);
+    dy = degrees * m
+    
+
+    p = 111415.13 * math.cos(rlat) - 94.55 * math.cos(3 * rlat);
+    dx = degrees * p
+    return (dx+dy)/2
+
+
 

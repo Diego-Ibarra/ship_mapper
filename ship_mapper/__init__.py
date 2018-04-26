@@ -6,7 +6,8 @@ from .converters import convert_to_nc, bulk_convert_to_nc
 from .utils import (distance, estimate_velocity, elapsed_days,
                     align_with_grid, interp2d, spatial_filter,
                     checkDir, make_mydirs, get_all_files,
-                    get_filename_from_fullpath, get_path_from_fullpath)
+                    get_filename_from_fullpath, get_path_from_fullpath,
+                    degrees_to_meters)
 
 from .gridder import gridder, grid_merger, mergedgrid_to_shp
 

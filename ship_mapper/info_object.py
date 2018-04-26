@@ -37,6 +37,7 @@ class info:
         grid['minlon'] = None
         grid['maxlon'] = None
         grid['interp_threshold'] = 40 #knots
+        grid['time_bin'] = 10 #minutes
         grid['epsg_code'] = None
         
         filt ={}
@@ -45,16 +46,29 @@ class info:
         
         maps = {}
         maps['mask_below'] = 1
+        maps['scalebar_km'] = 100
         maps['title'] = 'auto'
+        maps['resolution'] = 'i'
+        maps['parallels'] = 1 # Deegres between lines
+        maps['meridians'] = 1# Deegres between lines
+
         
-        legend = {}
-        legend['source'] = None
-        legend['filter'] = None
+        sidebar = {}
+        sidebar['units'] = None
+        sidebar['unit_description'] = None
+        sidebar['data_source'] = None
+        sidebar['data_description'] = None
+        sidebar['time_range'] = None
+        sidebar['included_speeds'] = 'All'
+        sidebar['interpolation'] = 'Linear'
+        sidebar['interpolation_threshold'] = None
+        sidebar['time_bin'] = 10
         
         self.grid = SimpleNamespace(**grid)
         self.filt = SimpleNamespace(**filt)
         self.dirs = SimpleNamespace(**dirs)
         self.maps = SimpleNamespace(**maps)
+        self.sidebar = SimpleNamespace(**sidebar)
         
         return
     

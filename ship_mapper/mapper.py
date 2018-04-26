@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Feb 20 10:51:50 2018
+
 @author: IbarraD
 """
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.basemap import Basemap
 # Suppress matplotlib warnings
@@ -21,7 +23,7 @@ import netCDF4
 
 
 
-def map_density(info, file_in=None, save=True):
+def map_density(info, file_in=None, sidebar=False, save=True):
     
     print('map_density ------------------------------------------------------')
     
@@ -45,12 +47,17 @@ def map_density(info, file_in=None, save=True):
     
     # Some address
     path_to_basemap = info.dirs.project_path / 'ancillary'
-    basemap_file = str(path_to_basemap / 'basemap.p')
+    
+    if sidebar:
+        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
+    else:
+        basemap_file = str(path_to_basemap / 'basemap.p')
     
     
     # Check for basemap.p and, if doesn;t exist, make it
-    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+#    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+    if not os.path.exists(basemap_file):
+        m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
@@ -72,35 +79,156 @@ def map_density(info, file_in=None, save=True):
     # Log H for better display
     Hmasked = np.log10(Hmasked)
     
+
     # Make colormap
-    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'),zorder=10)
+    fig = plt.gcf()
+    ax = plt.gca()
+    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'), zorder=10)
+    
+    #scalebar
+    sblon = info.grid.minlon + ((info.grid.maxlon-info.grid.minlon)/10)
+    sblat = info.grid.minlat + ((info.grid.maxlat-info.grid.minlat)/20)
+    m.drawmapscale(sblon, sblat,
+           info.grid.minlon, info.grid.minlat,
+           info.maps.scalebar_km, barstyle='fancy',
+           units='km', fontsize=8,
+           fontcolor='#808080',
+           fillcolor1 = '#cccccc',
+           fillcolor2 = '#a6a6a6',
+           yoffset = (0.01*(m.ymax-m.ymin)),
+           labelstyle='simple',zorder=60)
 
-    if info.maps.title == 'auto':
-        plot_title = info.project_name
-    else:
-        plot_title = info.maps.title
+    
 
-    plt.title(plot_title)
-  
+#    if info.maps.title == 'auto':
+#        plot_title = info.run_name
+#    else:
+#        plot_title = info.maps.title
+#
+#    plt.title(plot_title)
+#  
 #    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
 #              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
+
+
+
+    if not sidebar:
+        cbaxes2 = fig.add_axes([0.70, 0.18, 0.2, 0.03],zorder=60)
+        cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
+        
+        # Change colorbar labels for easier interpreting
+        label_values = cbar._tick_data_values
+        log_label_values = np.round(10 ** label_values,decimals=0)
+        labels = []
+        for log_label_value in log_label_values:
+            labels.append(str(int(log_label_value)))
+        
+        cbar.ax.set_yticklabels(labels)
+        cbar.ax.set_xlabel('No. of vessels within grid-cell')
     
-    cbar = plt.colorbar(extend='both')
     
-    # Change colorbar labels for easier interpreting
-    label_values = cbar._tick_data_values
-    log_label_values = np.round(10 ** label_values,decimals=0)
-    labels = []
-    for log_label_value in log_label_values:
-        labels.append(str(int(log_label_value)))
+#    legend_content = ('--- Vessel Density Map ---\n\n' +
+#                      'Test'
+#            )
     
-    cbar.ax.set_yticklabels(labels)
-    cbar.ax.set_xlabel('No. of vessels \n within grid-cell')
+    
+
+#    props = dict( facecolor='#e6e6e6', alpha=1,edgecolor='#a6a6a6',boxstyle="Square,pad=0.5",zorder=1)  
+#    plt.figtext(0.85, 0.1,
+#                legend_content,
+#                linespacing=1.0,
+#                bbox=props,
+#                zorder=0)
+
+#    ax2 = fig.add_axes([0.80,0,1,1])
+#    ax2 = fig.add_axes([0,0,0.2,1])
+    if sidebar:
+        
+        text1, text2, text3, text4 = make_legend_text(info)
+        
+        ax2 = plt.subplot2grid((1,24),(0,0),colspan=4)
+                
+        # Turn off tick labels
+        ax2.get_xaxis().set_visible(False)
+        ax2.get_yaxis().set_visible(False)
+        ax2.add_patch(FancyBboxPatch((0,0),
+                                width=1, height=1, clip_on=False,
+                                boxstyle="square,pad=0", zorder=3,
+                                facecolor='#e6e6e6', alpha=1.0,
+                                edgecolor='#a6a6a6',
+                                transform=plt.gca().transAxes))
+        plt.text(0.15, 0.99, text1,
+                verticalalignment='top',
+                horizontalalignment='left',
+                weight='bold',
+                size=10,
+                color= '#737373',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.83, text2,
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=9,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.145, text3,
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=7,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        plt.text(0.02, 0.25, text4,
+                style='italic',
+                horizontalalignment='left',
+                verticalalignment='top',
+                size=8,
+                color= '#808080',
+                transform=plt.gca().transAxes)
+        
+        
+        cbaxes2 = fig.add_axes([0.019, 0.9, 0.15, 0.02],zorder=60)
+        cbar = plt.colorbar(extend='both', cax = cbaxes2, orientation='horizontal')
+        cbar.ax.tick_params(labelsize=8, labelcolor='#808080') 
+        
+        # Change colorbar labels for easier interpreting
+        label_values = cbar._tick_data_values
+        print("values")
+        print(label_values)
+        log_label_values = np.round(10 ** label_values,decimals=0)
+        print(log_label_values)
+        labels = []
+        for log_label_value in log_label_values:
+            labels.append(str(int(log_label_value)))
+        
+        cbar.ax.set_xticklabels(labels)
+        cbar.ax.set_xlabel('No. of vessels within grid-cell', size=9, color='#808080')
+                           
+                           
+                           
+
+
+        
+        
+    #    plt.text(-0.04, 0.95, " Regular Plot:      plt.plot(...)\n Just a test",
+    #            horizontalalignment='left',
+    #            verticalalignment='top',
+    #            size='xx-large',
+    #            transform=plt.gca().transAxes)
+        
+    #    ax2.text(left, bottom, 'left top',
+    #            horizontalalignment='left',
+    #            verticalalignment='top',
+    #            transform=ax.transAxes)
+    #    
+    
     
     # TODO: maybe delete this?
 #    mng = plt.get_current_fig_manager()
 #    mng.frame.Maximize(True)
-#    
+#
+#    fig.tight_layout()
     plt.show()
     
     # Save map as png
@@ -119,6 +247,49 @@ def map_density(info, file_in=None, save=True):
     
     return
 
+
+def make_legend_text(info):
+    import datetime
+    
+    alat = (info.grid.maxlat - info.grid.minlat)/2
+    
+    text1 = 'VESSEL DENSITY HEATMAP'
+    # --------------------------------------------------------
+    text2 = ('Unit description: ' + info.sidebar.unit_description + '\n\n' +
+             'Data source: ' + info.sidebar.data_source + '\n\n' +
+             'Data source description: ' + info.sidebar.data_description + '\n\n' +
+             'Time range: ' + info.sidebar.time_range + '\n\n' +
+             'Included speeds: ' + info.sidebar.included_speeds + '\n\n' +
+             'Grid size: ' + str(info.grid.bin_size) + ' degrees (~' + str(int(round(sm.degrees_to_meters(info.grid.bin_size, alat))))+ ' m)\n' +
+             'EPGS code: ' + str(info.grid.epsg_code) + '\n' +
+             'Interpolation: ' + info.sidebar.interpolation + '\n' +
+             'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
+             'Time bin: ' + str(info.sidebar.time_bin) +  ' minutes\n' +
+             'Mask below: ' + str(info.maps.mask_below) + ' vessels per grid'
+             )
+    
+    text3 = ('Creation date: ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n' + 
+             'Creation script: ' + info.run_name + '.py\n' +
+             'Software: ship mapper v0.1\n\n' +
+             'Created by:\n' +
+             'Oceans and Coastal Management Division\n' +
+             'Ecosystem Management Branch\n' +
+             'Fisheries and Oceans Canada – Maritimes Region\n' +
+             'Bedford Institute of Oceanography\n' +
+             'PO Box 1006, Dartmouth, NS, Canada, B2Y 4A2'
+         )
+    
+    text4 = ('---------------------------------------------------------------\n' +
+             'WARNING: This is a preliminary data product.\n' +
+             'We cannot ​guarantee the validity, accuracy, \n' +
+             'or quality of this product. ​Data is provided\n' +
+             'on an "AS IS" basis. ​USE AT YOUR OWN RISK.\n' +
+             '---------------------------------------------------------------\n'
+         )
+    
+    
+    
+    return text1, text2, text3, text4
 
 
 
@@ -149,14 +320,14 @@ def map_dots(info, file_in, save=True):
     basemap_file = str(path_to_basemap / 'basemap.p')
     
     if not os.path.exists(str(path_to_basemap / 'basemap.p')):
-        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
 
     x, y = m(d['longitude'].values,d['latitude'].values)
     
-    cs = m.scatter(x,y,2,marker='o',color='r', zorder=10)
+    cs = m.scatter(x,y,s=0.1,marker='o',color='r',  zorder=10)
 #    
     plt.show()
     
@@ -248,7 +419,7 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
-def make_basemap(project_path,spatial):
+def make_basemap(info,project_path,spatial,sidebar=False):
     print('Mapping...')
     # -----------------------------------------------------------------------------
     
@@ -263,7 +434,7 @@ def make_basemap(project_path,spatial):
 
     # Create map
     m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-                llcrnrlon=minlon, urcrnrlon=maxlon,resolution='f')
+                llcrnrlon=minlon, urcrnrlon=maxlon,resolution=info.maps.resolution)
 
 
     
@@ -287,8 +458,19 @@ def make_basemap(project_path,spatial):
     lons, lats = np.meshgrid(lon,lat)
     topo = ncv['topo'][:,:]
 #    
-    fig = plt.figure(figsize=(18,9))
+    fig = plt.figure(figsize=(19,9))
+    
+#    ax = fig.add_axes([0.05,0.05,0.80,1])
+#    ax = fig.add_axes([0,0,0.80,1])
+    
 
+
+    
+#    ax = fig.add_axes([0.23,0.035,0.85,0.9])
+    if sidebar:
+        ax = plt.subplot2grid((1,24),(0,5),colspan=19)
+    else:
+        ax = fig.add_axes([0.05,0.05,0.94,0.94])
     
     TOPOmasked = np.ma.masked_where(topo>0,topo)
 
@@ -296,7 +478,7 @@ def make_basemap(project_path,spatial):
 
  
     m.drawcoastlines(linewidth=0.5,zorder=25)
-    m.fillcontinents()
+    m.fillcontinents(zorder=23)
     m.drawmapboundary()
     
     def setcolor(x, color):
@@ -304,11 +486,11 @@ def make_basemap(project_path,spatial):
              for t in x[m][1]:
                  t.set_color(color)
 
-    parallels = np.arange(minlat,maxlat,0.1)
+    parallels = np.arange(minlat,maxlat,info.maps.parallels)
     # labels = [left,right,top,bottom]
     par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(par,'#00a3cc')                      
-    meridians = np.arange(minlon,maxlon,0.1)
+    meridians = np.arange(minlon,maxlon,info.maps.meridians)
     mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
     setcolor(mers,'#00a3cc') 
 
@@ -323,19 +505,23 @@ def make_basemap(project_path,spatial):
              
     for k, spine in ax.spines.items():  #ax.spines is a dictionary
         spine.set_zorder(35)    
-    
+
 #    ax.spines['top'].set_visible(False)
 #    ax.spines['right'].set_visible(False)
 #    ax.spines['bottom'].set_visible(False)
 #    ax.spines['left'].set_visible(False)
   
-
-##
-    fig.tight_layout(pad=2.5 )
+#    fig.tight_layout(pad=0.25)
+    fig.tight_layout(rect=[0.01,0.01,.99,.99])
     plt.show()
     
+    if sidebar:
+        basemap_name = 'basemap_sidebar.p'
+    else:
+        basemap_name = 'basemap.p'
+    
     # Save basemap
-    picklename = str(path_to_map / 'basemap.p')
+    picklename = str(path_to_map / basemap_name)
     pickle.dump(m,open(picklename,'wb'),-1)
     print('!!! Pickle just made: ' + picklename)
 #    
@@ -385,3 +571,4 @@ def load_my_cmap(name):
         print('cmap name does not match any of the available cmaps')
 
     return  my_cmap
+
