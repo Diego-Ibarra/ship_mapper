@@ -477,8 +477,8 @@ def make_basemap(info,project_path,spatial,sidebar=False):
     cs = m.pcolormesh(lons,lats,TOPOmasked,cmap=load_my_cmap('my_cmap_lightblue'),latlon=True,zorder=5)
 
  
-    m.drawcoastlines(linewidth=0.5,zorder=25)
-    m.fillcontinents(zorder=23)
+    m.drawcoastlines(color='#A27D0C',linewidth=0.5,zorder=25)
+    m.fillcontinents(color='#E1E1A0',zorder=23)
     m.drawmapboundary()
     
     def setcolor(x, color):
