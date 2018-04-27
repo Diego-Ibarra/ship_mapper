@@ -23,7 +23,7 @@ import netCDF4
 
 
 
-def map_density(info, file_in=None, sidebar=False, save=True):
+def map_density(info, file_in=None, cmap='Default', sidebar=False, save=True):
     
     print('map_density ------------------------------------------------------')
     
@@ -83,7 +83,15 @@ def map_density(info, file_in=None, sidebar=False, save=True):
     # Make colormap
     fig = plt.gcf()
     ax = plt.gca()
-    cs = m.pcolor(xx,yy,Hmasked, cmap=load_my_cmap('my_cmap_amber2red'), zorder=10)
+    
+    if cmap == 'Default':
+        cmapcolor = load_my_cmap('my_cmap_amber2red')
+    elif cmap == 'red2black':
+        cmapcolor = load_my_cmap('my_cmap_red2black')
+    else:
+        cmapcolor =plt.get_cmap(cmap)
+        
+    cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
     
     #scalebar
     sblon = info.grid.minlon + ((info.grid.maxlon-info.grid.minlon)/10)
@@ -293,7 +301,7 @@ def make_legend_text(info):
 
 
 
-def map_dots(info, file_in, save=True):
+def map_dots(info, file_in, sidebar=False, save=True):
     print('Mapping...')
     # -----------------------------------------------------------------------------
         
@@ -317,9 +325,12 @@ def map_dots(info, file_in, save=True):
     print('-----------------------------------------------------')
     print('-----------------------------------------------------')
     
-    basemap_file = str(path_to_basemap / 'basemap.p')
+    if sidebar:
+        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
+    else:
+        basemap_file = str(path_to_basemap / 'basemap.p')
     
-    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
+    if not os.path.exists(basemap_file):
         m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
@@ -476,15 +487,17 @@ def make_basemap(info,project_path,spatial,sidebar=False):
 
     cs = m.pcolormesh(lons,lats,TOPOmasked,cmap=load_my_cmap('my_cmap_lightblue'),latlon=True,zorder=5)
 
- 
-    m.drawcoastlines(color='#A27D0C',linewidth=0.5,zorder=25)
-    m.fillcontinents(color='#E1E1A0',zorder=23)
+#    m.drawcoastlines(color='#A27D0C',linewidth=0.5,zorder=25)
+#    m.fillcontinents(color='#E1E1A0',zorder=23)
+    m.drawcoastlines(color='#a6a6a6',linewidth=0.5,zorder=25)
+    m.fillcontinents(color='#e6e6e6',zorder=23)
     m.drawmapboundary()
     
     def setcolor(x, color):
          for m in x:
              for t in x[m][1]:
                  t.set_color(color)
+
 
     parallels = np.arange(minlat,maxlat,info.maps.parallels)
     # labels = [left,right,top,bottom]
@@ -566,6 +579,19 @@ def load_my_cmap(name):
                          (1.0, 0.0, 0.0)),
                 'blue': ((0.0, 0.3, 0.3),
                          (1.0, 0.0, 0.0))}
+        my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
+    elif name == 'my_cmap_red2black':
+        
+#        c1 = np.array([252,142,110])/256 #RGB/256
+        c1 = np.array([250,59,59])/256 #RGB/256
+        c2 = np.array([103,0,13])/256 #RGB/256
+        
+        cdict = {'red': ((0.0, c1[0], c1[0]),
+                         (1.0, c2[0], c2[0])),
+               'green': ((0.0, c1[1], c1[1]),
+                         (1.0, c2[1], c2[1])),
+                'blue': ((0.0, c1[2], c1[2]),
+                         (1.0, c2[2], c2[2]))}
         my_cmap = LinearSegmentedColormap('my_colormap',cdict,256)
     else:
         print('cmap name does not match any of the available cmaps')

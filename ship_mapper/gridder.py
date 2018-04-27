@@ -56,6 +56,13 @@ def gridder(info, data_in, file_name, overwrite=False):
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
             trip_gaps = np.insert(trip_gaps, 0, 0)
             trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
+            
+            
+            import matplotlib.pyplot as plt
+            import time
+            fig8 = plt.figure()
+            
+            
                 
             # Loop over trips
             for k in range(1,len(trip_gaps)):
@@ -133,6 +140,15 @@ def gridder(info, data_in, file_name, overwrite=False):
                     # Append
                     iiix.extend(df['x'].tolist())
                     iiiy.extend(df['y'].tolist())
+                    
+
+
+                    plt.cla()
+                    plt.plot(iiix,iiiy,'.')
+                    fig8.show()
+                    fig8.canvas.draw()
+                    plt.pause(0.01)
+                    
                     
                     #Save last lat/lon
                     if len(lats) > 0:
