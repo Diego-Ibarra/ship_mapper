@@ -11,6 +11,7 @@ import numpy as np
 import xarray as xr
 import os
 import ship_mapper as sm
+import matplotlib.pyplot as plt
 
 
 def gridder(info, data_in, file_name, overwrite=False):
@@ -56,17 +57,10 @@ def gridder(info, data_in, file_name, overwrite=False):
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
             trip_gaps = np.insert(trip_gaps, 0, 0)
             trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
-            
-            
-            import matplotlib.pyplot as plt
-            import time
-            fig8 = plt.figure()
-            
-            
                 
             # Loop over trips
             for k in range(1,len(trip_gaps)):
-                print(k)
+                print('trip = ' + str(k))
                 
                 index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
                              (singleship['Dindex'] < trip_gaps[k]))
@@ -76,10 +70,11 @@ def gridder(info, data_in, file_name, overwrite=False):
                 # Split data into "time_bins"
                 time_bin = 1/144#info.grid.bin_size / (60*24) # units are converted to: days
                 
-                MinSeqNum = singleship_trip['SeqNum'].values.min()
-                MaxSeqNum = singleship_trip['SeqNum'].values.max() + time_bin
+                MinSeqNum = np.nanmin(singleship_trip['SeqNum'].values)
+                MaxSeqNum = np.nanmax(singleship_trip['SeqNum'].values) + time_bin
                 
                 time_bins = np.arange(MinSeqNum, MaxSeqNum, time_bin) # 1/144 = once every 10 minutes
+                
                 
                 # Loop over each ship's time_bin
                 for i in range(1,len(time_bins)):
@@ -130,7 +125,8 @@ def gridder(info, data_in, file_name, overwrite=False):
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
                                 iix.extend(ix)
-                                iiy.extend(iy)                   
+                                iiy.extend(iy)
+                                
 
                                            
                     #drop duplicates
@@ -140,20 +136,24 @@ def gridder(info, data_in, file_name, overwrite=False):
                     # Append
                     iiix.extend(df['x'].tolist())
                     iiiy.extend(df['y'].tolist())
-                    
 
-
-                    plt.cla()
-                    plt.plot(iiix,iiiy,'.')
-                    fig8.show()
-                    fig8.canvas.draw()
-                    plt.pause(0.01)
-                    
                     
                     #Save last lat/lon
                     if len(lats) > 0:
                         last_lat = lats[-1]
                         last_lon = lons[-1]
+                        
+
+
+                    
+
+
+#                    plt.cla()
+#                    plt.plot(iiix,iiiy,'.')
+#                    fig8.show()
+#                    fig8.canvas.draw()
+#                    plt.pause(0.01)
+
 
 
                 
