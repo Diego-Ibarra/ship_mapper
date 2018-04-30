@@ -4,11 +4,14 @@ Created on Tue Feb 20 10:51:50 2018
 
 @author: IbarraD
 """
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 from matplotlib.colors import LinearSegmentedColormap
 from mpl_toolkits.basemap import Basemap
+
+import numpy as np
 # Suppress matplotlib warnings
 np.warnings.filterwarnings('ignore')
 
@@ -23,7 +26,7 @@ import netCDF4
 
 
 
-def map_density(info, file_in=None, cmap='Default', sidebar=False, save=True):
+def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=True, save=True):
     
     print('map_density ------------------------------------------------------')
     
@@ -237,13 +240,17 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, save=True):
 #    mng.frame.Maximize(True)
 #
 #    fig.tight_layout()
+
     plt.show()
+
     
     # Save map as png
     if save:
         filedir = str(info.dirs.pngs)
         sm.checkDir(filedir)
         filename = info.run_name + '__' + sm.get_filename_from_fullpath(file_in) + '.png'
+        print(filedir)
+        print(filename)
 #        if info.maps.title == 'auto':
 #            filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
 #        else:
@@ -252,6 +259,9 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, save=True):
     
     # Close netCDF file
     d.close()
+    
+    if to_screen == False:
+        plt.close()
     
     return
 
