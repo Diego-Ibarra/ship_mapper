@@ -66,35 +66,35 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=Tru
         m = pickle.load(open(basemap_file,'rb'))
 
     
-    # Create grid for mapping
-    lons_grid, lats_grid = np.meshgrid(d['lon'].values,d['lat'].values)
-    xx,yy = m(lons_grid, lats_grid)
-    
-    H = d['ship_density'].values
-    
-    # Rotate and flip H... ----------------------------------------------------------------------------
-    H = np.rot90(H)
-    H = np.flipud(H)
-     
-    # Mask zeros
-    Hmasked = np.ma.masked_where(H<info.maps.mask_below,H)
-     
-    # Log H for better display
-    Hmasked = np.log10(Hmasked)
-    
-
-    # Make colormap
-    fig = plt.gcf()
-    ax = plt.gca()
-    
-    if cmap == 'Default':
-        cmapcolor = load_my_cmap('my_cmap_amber2red')
-    elif cmap == 'red2black':
-        cmapcolor = load_my_cmap('my_cmap_red2black')
-    else:
-        cmapcolor =plt.get_cmap(cmap)
-       
-    cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
+#    # Create grid for mapping
+#    lons_grid, lats_grid = np.meshgrid(d['lon'].values,d['lat'].values)
+#    xx,yy = m(lons_grid, lats_grid)
+#    
+#    H = d['ship_density'].values
+#    
+#    # Rotate and flip H... ----------------------------------------------------------------------------
+#    H = np.rot90(H)
+#    H = np.flipud(H)
+#     
+#    # Mask zeros
+#    Hmasked = np.ma.masked_where(H<info.maps.mask_below,H)
+#     
+#    # Log H for better display
+#    Hmasked = np.log10(Hmasked)
+#    
+#
+#    # Make colormap
+#    fig = plt.gcf()
+#    ax = plt.gca()
+#    
+#    if cmap == 'Default':
+#        cmapcolor = load_my_cmap('my_cmap_amber2red')
+#    elif cmap == 'red2black':
+#        cmapcolor = load_my_cmap('my_cmap_red2black')
+#    else:
+#        cmapcolor =plt.get_cmap(cmap)
+#       
+#    cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
 #    
 #    #scalebar
 #    sblon = info.grid.minlon + ((info.grid.maxlon-info.grid.minlon)/10)
