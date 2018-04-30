@@ -214,7 +214,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=Tru
             labels.append(str(int(log_label_value)))
         
         cbar.ax.set_xticklabels(labels)
-        cbar.ax.set_xlabel('No. of vessels within grid-cell', size=9, color='#808080')
+        cbar.ax.set_xlabel('No. of vessels within grid-cell', size=9, color='#808080') 
                            
                            
                            
