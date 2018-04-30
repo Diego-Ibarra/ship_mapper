@@ -11,7 +11,11 @@ import numpy as np
 import xarray as xr
 import os
 import ship_mapper as sm
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 
 
 def gridder(info, data_in, file_name, overwrite=False):

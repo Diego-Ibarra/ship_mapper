@@ -93,7 +93,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=Tru
         cmapcolor = load_my_cmap('my_cmap_red2black')
     else:
         cmapcolor =plt.get_cmap(cmap)
-        
+       
     cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
     
     #scalebar
