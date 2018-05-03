@@ -18,11 +18,11 @@ import matplotlib.pyplot as plt
 
 
 
-def gridder(info, data_in, file_name, overwrite=False):
+def gridder(info, data_in, filename_out, overwrite=False):
     
     print('gridder ---------------------------------------------')
     
-    file_out = os.path.join(str(info.dirs.gridded_data), file_name  + '.nc')
+    file_out = os.path.join(str(info.dirs.gridded_data), filename_out  + '.nc')
     
     if not os.path.isfile(file_out) or overwrite:
         
@@ -218,7 +218,7 @@ def gridder(info, data_in, file_name, overwrite=False):
 
 
 
-def grid_merger(info, files=None):
+def grid_merger(info, files=None, filename_out='auto'):
     
     print('grid_merger ---------------------------------------------')
     
@@ -243,7 +243,13 @@ def grid_merger(info, files=None):
             
     # Save merged file
     sm.checkDir(str(info.dirs.merged_grid))
-    file_out = os.path.join(str(info.dirs.merged_grid), 'merged_grid.nc')
+    
+    if filename_out == 'auto':
+        filename_OUT = 'merged_grid.nc'
+    else:
+        filename_OUT = filename_out
+        
+    file_out = os.path.join(str(info.dirs.merged_grid), filename_OUT)
     D.to_netcdf(path=file_out)
     
     data0.close()

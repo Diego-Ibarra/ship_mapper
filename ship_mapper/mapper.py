@@ -26,13 +26,17 @@ import netCDF4
 
 
 
-def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=True, save=True):
+def map_density(info, file_in=None, cmap='Default', sidebar=False,
+                to_screen=True, save=True,
+                filename_out='auto',filedir_out='auto'):
     
     print('map_density ------------------------------------------------------')
     
     # Load data
     if file_in == None:
         file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
+        
+    print(file_in)
         
     d = xr.open_dataset(file_in)
     
@@ -247,16 +251,19 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False, to_screen=Tru
     
     # Save map as png
     if save:
-        filedir = str(info.dirs.pngs)
+        if filedir_out == 'auto':
+            filedir = str(info.dirs.pngs)
+        else:
+            filedir = filedir_out
+            
+        if filename_out == 'auto':
+            filename = info.run_name + '__' + sm.get_filename_from_fullpath(file_in) + '.png'
+        else:
+            filename = filename_out
+            
         sm.checkDir(filedir)
-        filename = info.run_name + '__' + sm.get_filename_from_fullpath(file_in) + '.png'
-        print(filedir)
-        print(filename)
-#        if info.maps.title == 'auto':
-#            filename = info.project_name + '_' + str(info.grid.bin_number) + '.png'
-#        else:
-#            filename = info.maps.title + '.png'
         plt.savefig(os.path.join(filedir,filename), dpi=300)
+            
     
     # Close netCDF file
     d.close()
@@ -512,10 +519,10 @@ def make_basemap(info,project_path,spatial,sidebar=False):
 
     parallels = np.arange(minlat,maxlat,info.maps.parallels)
     # labels = [left,right,top,bottom]
-    par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[1,2],color='#00a3cc', zorder=25)
+    par = m.drawparallels(parallels,labels=[True,False,False,False],dashes=[20,20],color='#00a3cc', linewidth=0.2, zorder=25)
     setcolor(par,'#00a3cc')                      
     meridians = np.arange(minlon,maxlon,info.maps.meridians)
-    mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[1,2],color='#00a3cc', zorder=25)
+    mers =  m.drawmeridians(meridians,labels=[False,False,False,True],dashes=[20,20],color='#00a3cc', linewidth=0.2, zorder=25)
     setcolor(mers,'#00a3cc') 
 
     ax = plt.gca()
