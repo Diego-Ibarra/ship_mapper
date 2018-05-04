@@ -22,7 +22,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
     
     print('gridder ---------------------------------------------')
     
-    file_out = os.path.join(str(info.dirs.gridded_data), filename_out  + '.nc')
+    file_out = os.path.join(str(info.dirs.gridded_data), filename_out)
     
     if not os.path.isfile(file_out) or overwrite:
         
@@ -72,7 +72,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
                 singleship_trip = singleship.sel(Dindex=index_gap)
                 
                 # Split data into "time_bins"
-                time_bin = 1/144#info.grid.bin_size / (60*24) # units are converted to: days
+                time_bin = info.grid.time_bin#info.grid.bin_size / (60*24) # units are converted to: days
                 
                 MinSeqNum = np.nanmin(singleship_trip['SeqNum'].values)
                 MaxSeqNum = np.nanmax(singleship_trip['SeqNum'].values) + time_bin

@@ -290,7 +290,7 @@ def make_legend_text(info):
              'EPGS code: ' + str(info.grid.epsg_code) + '\n' +
              'Interpolation: ' + info.sidebar.interpolation + '\n' +
              'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
-             'Time bin: ' + str(info.sidebar.time_bin) +  ' minutes\n' +
+             'Time bin: ' + str(round(info.grid.time_bin*1440,1)) +  ' minutes\n' +
              'Mask below: ' + str(info.maps.mask_below) + ' vessels per grid'
              )
     
