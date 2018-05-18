@@ -5,10 +5,11 @@ import pandas as pd
 import numpy as np
 import datetime
 import xarray as xr
+import yaml
 
 import ship_mapper as sm
 
-def convert(file_in,file_out):
+def convert(file_in, file_out, data_info_file):
     '''
     test
     '''
@@ -108,7 +109,7 @@ def convert(file_in,file_out):
                 SeqNum.append(singleship['SeqNum'][idx2])
                 DateFlag.append(singleship['DateFlag'][idx2])
                 
-    
+    dinfo = yaml.load(open(data_info_file, 'r'))
     
     D = xr.Dataset({'ship_id_vrn':(['Dindex'],VRN),
                     'latitude':(['Dindex'],LATITUDE),
@@ -117,7 +118,8 @@ def convert(file_in,file_out):
                     'SeqNum':(['Dindex'],SeqNum),
                     'ApparentSpeed':(['Dindex'],ApparentSpeed)},
 
-                coords={'Dindex':(['Dindex'],pd.Series(VRN).index)})
+                coords={'Dindex':(['Dindex'],pd.Series(VRN).index)},
+                attrs=dinfo)
     
     
     encoding = {}
