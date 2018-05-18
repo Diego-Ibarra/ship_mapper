@@ -300,7 +300,7 @@ def grid_merger(info, files=None, filename_out='auto'):
     
     return D
 
-
+ 
 
         
 def getWKT_PRJ (epsg_code):
