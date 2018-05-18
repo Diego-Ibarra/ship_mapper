@@ -109,7 +109,10 @@ def convert(file_in, file_out, data_info_file):
                 SeqNum.append(singleship['SeqNum'][idx2])
                 DateFlag.append(singleship['DateFlag'][idx2])
                 
+    # Metadata
     dinfo = yaml.load(open(data_info_file, 'r'))
+    dinfo['startdate'] = min(DateTime).strftime('%Y-%m-%d %H:%M:%S')
+    dinfo['enddate'] = max(DateTime).strftime('%Y-%m-%d %H:%M:%S')
     
     D = xr.Dataset({'ship_id_vrn':(['Dindex'],VRN),
                     'latitude':(['Dindex'],LATITUDE),

@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 import os
+import copy
 import ship_mapper as sm
 
 import matplotlib
@@ -26,7 +27,10 @@ def gridder(info, data_in, filename_out, overwrite=False):
     
     if not os.path.isfile(file_out) or overwrite:
         
-        ship_id = info.ship_id
+        print('^^^^^^^^^^^^^^^^^^^^^^^')
+        print(data_in.attrs)
+        
+        ship_id = data_in.attrs['ship_id']
     
         data = data_in
     
@@ -121,7 +125,8 @@ def gridder(info, data_in, filename_out, overwrite=False):
                             # Estimate distance and velocity
                             dist = sm.distance(lat1,lon1,lat2,lon2)
                             
-                            if dist < (40 * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
+                            interp_threshold = 40
+                            if dist < (interp_threshold * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
                                 
                                 x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
                                 x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
@@ -172,7 +177,27 @@ def gridder(info, data_in, filename_out, overwrite=False):
         D = xr.Dataset({'ship_density':(['x','y'],H0)},
                 coords={'lon':(['x'],x),
                         'lat':(['y'],y)})
-                    
+    
+        # Metadata
+        D.attrs = copy.deepcopy(data.attrs)
+        # delete irrelevants
+        del(D.attrs['ship_id'])
+        # add new ones
+        D.attrs['minlat'] = info.grid.minlat
+        D.attrs['maxlat'] = info.grid.maxlat
+        D.attrs['minlon'] = info.grid.minlon
+        D.attrs['maxlon'] = info.grid.maxlon
+        D.attrs['bin_number'] = info.grid.bin_number
+        D.attrs['bin_size'] = info.grid.bin_size
+        D.attrs['time_bin'] = info.grid.time_bin
+        D.attrs['interpolation'] = 'Linear'
+        D.attrs['interp_threshold'] = interp_threshold
+        D.attrs['units'] = 'No. of vessels within grid-cell test'
+        D.attrs['unit_description'] = ('Number of vessels inside\n' + 
+                                    'a gricell within the time range of\n' + 
+                                    'observations (note it is LOG scale)')
+#        D = sm.write_info2data(D,info)
+        
 #        # MAP --------------------------------------------------------------
 #        import matplotlib.pyplot as plt
 #        from mpl_toolkits.basemap import Basemap
@@ -230,19 +255,36 @@ def grid_merger(info, files=None, filename_out='auto'):
     # Process 1st grid
     data0 = xr.open_dataset(all_files[0])
     H0 = data0['ship_density'].values
+    
+
+    startdate = min(data0['DateTime'])
+    enddate = max(data0['DateTime'])
+    
+    #Pre-build metadata
+    metadata = data0.attrs
+    
 
     # Process the rest of the grid files
     for file_in in all_files[1:]:
-        H = xr.open_dataset(file_in)['ship_density'].values
+        dataX = xr.open_dataset(file_in)
+        startdate = min(startdate, min(dataX['DateTime']))
+        enddate = max(enddate, max(dataX['DateTime']))
+        H = dataX['ship_density'].values
         H0 = H0 + H
             
     # Create dataset
     D = xr.Dataset({'ship_density':(['x','y'],H0)},
             coords={'lon':(['x'],data0['lon'].values),
                     'lat':(['y'],data0['lat'].values)})
-            
+    
+    #Save metadata
+    D.attrs = metadata
+    D.attrs['startdate']=startdate
+    D.attrs['enddate']=enddate
+    
     # Save merged file
     sm.checkDir(str(info.dirs.merged_grid))
+  
     
     if filename_out == 'auto':
         filename_OUT = 'merged_grid.nc'

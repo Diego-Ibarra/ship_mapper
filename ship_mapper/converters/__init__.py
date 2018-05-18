@@ -56,7 +56,7 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
         dir_to_converter = os.path.split(__file__)[0]
         converter_filename = converter + '.py'
         dir_in  = Path(path_to_data_in)
-        yaml_in = os.path.join(Path(path_to_data_in),'data_info.yaml')
+        yaml_in = os.path.join(Path(path_to_data_in),'..','data_info.yaml')
     else:
         # This case is when 'converter' is actually a 'info' object
         print('Case5')
