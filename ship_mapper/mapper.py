@@ -47,18 +47,24 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         minlon = d['lon'].values.min()
         maxlon = d['lon'].values.max()
     else:
-        minlat = info.grid.minlat
-        maxlat = info.grid.maxlat
-        minlon = info.grid.minlon
-        maxlon = info.grid.maxlon
+        minlat = d.attrs['minlat']
+        maxlat = d.attrs['maxlat']
+        minlon = d.attrs['minlon']
+        maxlon = d.attrs['maxlon']
     
-    # Some address
-    path_to_basemap = info.dirs.project_path / 'ancillary'
+#    # Some address
+#    path_to_basemap = info.dirs.project_path / 'ancillary'
+#    
+#    if sidebar:
+#        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
+#    else:
+#        basemap_file = str(path_to_basemap / 'basemap.p')
+        
+    settings = sm.load_settings()
     
-    if sidebar:
-        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
-    else:
-        basemap_file = str(path_to_basemap / 'basemap.p')
+    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
+                                                   info.grid.region,'ancillary',
+                                                   info.grid.basemap + '.basemap'))
     
     
     # Check for basemap.p and, if doesn;t exist, make it
@@ -81,7 +87,8 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     H = np.flipud(H)
      
     # Mask zeros
-    Hmasked = np.ma.masked_where(H<info.maps.mask_below,H)
+    d.attrs['mask_below'] = info.maps.mask_below
+    Hmasked = np.ma.masked_where(H<d.attrs['mask_below'],H)
      
     # Log H for better display
     Hmasked = np.log10(Hmasked)
@@ -101,10 +108,10 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
     
     #scalebar
-    sblon = info.grid.minlon + ((info.grid.maxlon-info.grid.minlon)/10)
-    sblat = info.grid.minlat + ((info.grid.maxlat-info.grid.minlat)/20)
+    sblon = minlon + ((maxlon-minlon)/10)
+    sblat = minlat + ((maxlat-minlat)/20)
     m.drawmapscale(sblon, sblat,
-           info.grid.minlon, info.grid.minlat,
+           minlon, minlat,
            info.maps.scalebar_km, barstyle='fancy',
            units='km', fontsize=8,
            fontcolor='#808080',
@@ -124,7 +131,8 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 #  
 #    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
 #              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
-
+    
+#    info.sidebar.unit_description = d.attrs['unit_description']
 
 
     if not sidebar:
@@ -159,7 +167,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 #    ax2 = fig.add_axes([0,0,0.2,1])
     if sidebar:
         
-        text1, text2, text3, text4 = make_legend_text(info)
+        text1, text2, text3, text4 = make_legend_text(info,d.attrs)
         
         ax2 = plt.subplot2grid((1,24),(0,0),colspan=4)
                 
@@ -274,24 +282,26 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     return
 
 
-def make_legend_text(info):
+def make_legend_text(info,md):
     import datetime
     
-    alat = (info.grid.maxlat - info.grid.minlat)/2
+    alat = (md['maxlat'] - md['minlat'])/2
     
     text1 = 'VESSEL DENSITY HEATMAP'
+    print(info)
     # --------------------------------------------------------
-    text2 = ('Unit description: ' + info.sidebar.unit_description + '\n\n' +
-             'Data source: ' + info.sidebar.data_source + '\n\n' +
-             'Data source description: ' + info.sidebar.data_description + '\n\n' +
+    text2 = ('Unit description: ' + md['unit_description'] + '\n\n' +
+             'Data source: ' + md['data_source'] + '\n\n' +
+             'Data source description:\n' + md['data_description'] + '\n\n' +
              'Time range: ' + info.sidebar.time_range + '\n\n' +
-             'Included speeds: ' + info.sidebar.included_speeds + '\n\n' +
-             'Grid size: ' + str(info.grid.bin_size) + ' degrees (~' + str(int(round(sm.degrees_to_meters(info.grid.bin_size, alat))))+ ' m)\n' +
-             'EPGS code: ' + str(info.grid.epsg_code) + '\n' +
-             'Interpolation: ' + info.sidebar.interpolation + '\n' +
-             'Interpolation threshold: ' + str(info.grid.interp_threshold) + ' knots\n' +
-             'Time bin: ' + str(round(info.grid.time_bin*1440,1)) +  ' minutes\n' +
-             'Mask below: ' + str(info.maps.mask_below) + ' vessels per grid'
+             'Included speeds: ' + info.sidebar.included_speeds + '\n' +
+             'Included vessels: ' + info.sidebar.included_vessel_types + '\n\n' +
+             'Grid size: ' + str(md['bin_size']) + ' degrees (~' + str(int(round(sm.degrees_to_meters(md['bin_size'], alat))))+ ' m)\n' +
+             'EPGS code: ' + md['epsg_code'] + '\n' +
+             'Interpolation: ' + md['interpolation'] + '\n' +
+             'Interpolation threshold: ' + str(md['interp_threshold']) + ' knots\n' +
+             'Time bin: ' + str(round(md['time_bin']*1440,1)) +  ' minutes\n' +
+             'Mask below: ' + str(md['mask_below']) + ' vessels per grid'
              )
     
     text3 = ('Creation date: ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\n' + 
@@ -448,11 +458,15 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
-def make_basemap(info,project_path,spatial,sidebar=False):
+def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
     print('Mapping...')
     # -----------------------------------------------------------------------------
     
-    path_to_map = Path(project_path) / 'ancillary'
+    if path_to_map == 'auto':
+        path_to_map = info.dirs.ancillary
+    else:
+        path_to_map = path_to_map
+    
     sm.checkDir(str(path_to_map))
     
 
@@ -552,9 +566,10 @@ def make_basemap(info,project_path,spatial,sidebar=False):
         basemap_name = 'basemap.p'
     
     # Save basemap
-    picklename = str(path_to_map / basemap_name)
-    pickle.dump(m,open(picklename,'wb'),-1)
-    print('!!! Pickle just made: ' + picklename)
+    save_basemap(m,info,path_to_map=path_to_map)
+#    picklename = str(path_to_map / basemap_name)
+#    pickle.dump(m,open(picklename,'wb'),-1)
+#    print('!!! Pickle just made: ' + picklename)
 #    
 ##    pngDir = 'C:\\Users\\IbarraD\\Documents\\VMS\\png\\'
 ##    plt.savefig(datadir[0:-5] + 'png\\' + filename + '- Grid' + str(BinNo) + ' - Filter' +str(downLim) + '-' + str(upLim) + '.png')
@@ -616,3 +631,32 @@ def load_my_cmap(name):
 
     return  my_cmap
 
+
+def save_basemap(m,info,path_to_map='auto'):
+    '''
+    Saves basemap (and correspoding info.grid) to a pickle file
+    '''
+#    
+#    basemap = [grid, m]
+#    f = open(str(path_to_map / (info.grid.basemap + '.p')),'w')
+#    pickle.dump(grid, f)
+#    pickle.dump(m, f)
+#    f.close()
+    
+#    picklename = str(path_to_map / (info.grid.basemap + '.p'))
+#    pickle.dump(basemap, open(picklename, 'wb'), -1)
+#    print('!!! Pickle just made: ' + picklename)
+    
+    if path_to_map == 'auto':
+        path_to_map = info.dirs.ancillary
+    else:
+        path_to_map = path_to_map
+    
+    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
+    pickle.dump(m, open(basemap_picklename, 'wb'), -1)
+    
+    info_picklename = str(path_to_map / (info.grid.basemap + '.grid'))
+    pickle.dump(info, open(info_picklename, 'wb'), -1)
+    
+    print('!!! Pickles were just made: ' +  basemap_picklename)
+    return

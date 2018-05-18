@@ -103,6 +103,8 @@ def spatial_filter(file_in, info):
         
     filtered_data = all_data.sel(Dindex=indx)
     
+    print(filtered_data)
+    
 
     
     return filtered_data
@@ -194,3 +196,20 @@ def degrees_to_meters(degrees, reference_latitude):
 
 
 
+def write_info2data(D,info):
+    
+    import types
+
+    for row in info.__dict__.keys():
+        if type(info.__dict__[row]) != types.SimpleNamespace:
+            exec("D.attrs['" + row + "'] = info." + row)
+        if type(info.__dict__[row]) == types.SimpleNamespace:
+            for subrow in info.__dict__[row].__dict__.keys():
+                exec("D.attrs['" + row + "." + subrow + "'] = info." + row + "." + subrow)
+    return D
+
+
+def stop(message):
+    import sys
+    sys.exit(message)
+    return
