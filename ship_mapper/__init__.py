@@ -17,12 +17,13 @@ from .info_object import info, load_info, grid_to_info, data_to_info, info_to_at
 
 
 
-def load_settings(path_to_settings=None):
+def load_settings(info, path_to_settings=None):
     import imp
     from pathlib import Path
     
     if path_to_settings == None:
-        path2settings = Path('../')
+#        path2settings = Path('../')
+        Path(info.dirs.project_path / '../')
     else:
         path2settings=path_to_settings
     

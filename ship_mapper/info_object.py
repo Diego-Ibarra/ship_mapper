@@ -232,7 +232,7 @@ def grid_to_info(info, region, basemapName):
     if os.path.isdir(region):
         basemap_file = os.path.abspath(os.path.join(region,basemapName + '.grid'))
     else:
-        settings = sm.load_settings()
+        settings = sm.load_settings(info)
         basemap_file = os.path.abspath(os.path.join(settings.GRIDS,region,'ancillary',basemapName + '.grid'))
     
     print('Loading grid: ' + basemap_file)
@@ -273,7 +273,7 @@ def data_to_info(info, data_source):
     import ship_mapper as sm
     import yaml
     
-    settings = sm.load_settings()
+    settings = sm.load_settings(info)
     
     dinfo = yaml.load(open(os.path.join(settings.DATA, data_source,'data_info.yaml'), 'r'))
     

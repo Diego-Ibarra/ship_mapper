@@ -60,7 +60,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 #    else:
 #        basemap_file = str(path_to_basemap / 'basemap.p')
         
-    settings = sm.load_settings()
+    settings = sm.load_settings(info)
     
     basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
                                                    info.grid.region,'ancillary',
