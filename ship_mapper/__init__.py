@@ -23,7 +23,7 @@ def load_settings(info, path_to_settings=None):
     
     if path_to_settings == None:
 #        path2settings = Path('../')
-        Path(info.dirs.project_path / '../')
+        path2settings = Path(info.dirs.project_path / '../')
     else:
         path2settings=path_to_settings
     
