@@ -86,7 +86,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
                 
                 # Loop over each ship's time_bin
                 for i in range(1,len(time_bins)):
-                    iix, iiy = [], []
+                    iix, iiy, iit = [], [], []
                     
                     indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
                             (singleship_trip['SeqNum'] <= time_bins[i]))
@@ -97,30 +97,25 @@ def gridder(info, data_in, filename_out, overwrite=False):
                     # Get lat/lons
                     lons = singleship_trip_bin['longitude'].values.tolist()
                     lats = singleship_trip_bin['latitude'].values.tolist()
+                    seqNums = singleship_trip_bin['SeqNum'].values.tolist()
                     
                     #Insert last bin's lat/lon
                     if i > 1 and len(lons) > 0:
                         lons.insert(0, last_lon)
                         lats.insert(0, last_lat)
+                        seqNums.insert(0, last_seqNums)
                     
                     num_of_pings = len(lons)
                     
                 
-                    if num_of_pings == 0:
-                        pass
-                    elif num_of_pings == 1:
-                        lon2 = lons[0]
-                        lat2 = lats[0]
-                        x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
-                        iix.append(x2)
-                        iiy.append(y2) 
-                    elif num_of_pings > 1: 
+                    if num_of_pings > 1: 
                         for j in range(1,num_of_pings): 
                             # Iterpolate bewtween known points
                             lon1 = lons[j-1]
                             lat1 = lats[j-1]
                             lon2 = lons[j]
                             lat2 = lats[j]
+                            elapsed_days = seqNums[j] - seqNums[j-1]
                             
                             # Estimate distance and velocity
                             dist = sm.distance(lat1,lon1,lat2,lon2)
@@ -133,8 +128,11 @@ def gridder(info, data_in, filename_out, overwrite=False):
                                 
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
+                                days_per_cell = elapsed_days / len(ix)
+                                
                                 iix.extend(ix)
                                 iiy.extend(iy)
+                                iit.extend([days_per_cell] * len(ix))
                                 
 
                                            
@@ -145,17 +143,14 @@ def gridder(info, data_in, filename_out, overwrite=False):
                     # Append
                     iiix.extend(df['x'].tolist())
                     iiiy.extend(df['y'].tolist())
+                    iiit.exted()
 
                     
                     #Save last lat/lon
                     if len(lats) > 0:
                         last_lat = lats[-1]
                         last_lon = lons[-1]
-                        
-
-
-                    
-
+                        last_seqNums = seqNums[-1]
 
 #                    plt.cla()
 #                    plt.plot(iiix,iiiy,'.')
@@ -364,7 +359,46 @@ def mergedgrid_to_shp(info, file_in=None):
 
 
 
-
+def calculate_gridcell_areas(info):
+    '''
+    Output in km^2
+    '''
+    import ship_mapper as sm
+    
+    x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
+    y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
+    
+    u = np.empty((len(x)+1,))
+    v = np.empty((len(y)+1,))
+    areas = np.empty((len(x),len(y)))
+    
+    for i in range(1,len(x)):
+        u[i] = x[i] - ((x[i] - x[i-1])/2)
+    u[0] = x[0] - ((x[1] - x[0])/2)
+    u[-1] = x[-1] + ((x[-1] - x[-2])/2)
+    
+    for i in range(1,len(y)):
+        v[i] = y[i] - ((y[i] - y[i-1])/2)
+    v[0] = y[0] - ((y[1] - y[0])/2)
+    v[-1] = y[-1] + ((y[-1] - y[-2])/2)
+    
+    for i in range(0,len(x)):
+        for j in range(0,len(y)):
+            # areas = ((a+b)/2)*h
+            a = sm.distance(v[j+1],u[i],v[j+1],u[i+1])/1000 #divided by 1000 to convert to km
+            b = sm.distance(v[j],u[i],v[j],u[i+1])/1000 #divided by 1000 to convert to km
+            h = sm.distance(v[j],x[i],v[j+1],x[i])/1000 #divided by 1000 to convert to km
+            areas[i,j] = ((a + b)/2)*h
+            
+        info.grid.areas = areas
+        
+#        import matplotlib.pyplot as plt
+#        lons, lats = np.meshgrid(y,x)
+#        plt.pcolormesh(lats, lons, areas)
+#        plt.colorbar()
+#        plt.show()
+    
+    return info
 
 
 
