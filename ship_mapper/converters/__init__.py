@@ -94,3 +94,31 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
                 print('Processing: ' + file_in)
                 convert.convert(file_in,file_out,yaml_in)
     return
+
+
+def bulk_update_attributes(attrs, path_to_data_in, path_to_data_out, overwrite=False):
+    import xarray as xr
+    import os
+    import pandas as pd 
+
+    for root, dirs, files in os.walk(path_to_data_in):
+        for file in files:
+            
+            file_in  = os.path.join(path_to_data_in, file)
+            file_out = os.path.join(path_to_data_out, file)
+            
+            if not os.path.isfile(file_out) or overwrite:
+                print(file)
+                
+                d = xr.open_dataset(file_in)
+                
+                attrs['startdate'] = pd.to_datetime(str(min(d['DateTime'].values))).strftime('%Y-%m-%d %H:%M:%S')
+                attrs['enddate'] = pd.to_datetime(str(max(d['DateTime'].values))).strftime('%Y-%m-%d %H:%M:%S')
+                
+                d.attrs = attrs
+                
+                
+                
+                d.to_netcdf(file_out,format='NETCDF4',engine='netcdf4')
+    
+    return

@@ -293,7 +293,7 @@ def make_legend_text(info,md):
     text2 = ('Unit description: ' + md['unit_description'] + '\n\n' +
              'Data source: ' + md['data_source'] + '\n\n' +
              'Data source description:\n' + md['data_description'] + '\n\n' +
-             'Time range: ' + info.sidebar.time_range + '\n\n' +
+             'Time range: \n' + md['startdate'][0:-3] + ' to ' + md['enddate'][0:-3] + '\n\n' +
              'Included speeds: ' + info.sidebar.included_speeds + '\n' +
              'Included vessels: ' + info.sidebar.included_vessel_types + '\n\n' +
              'Grid size: ' + str(md['bin_size']) + ' degrees (~' + str(int(round(sm.degrees_to_meters(md['bin_size'], alat))))+ ' m)\n' +

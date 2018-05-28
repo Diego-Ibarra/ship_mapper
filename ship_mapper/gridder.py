@@ -163,7 +163,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
 #                    fig8.canvas.draw()
 #                    plt.pause(0.01)
 
-
+        interp_threshold = 40
 
                 
         # Project pings to grid        
@@ -245,7 +245,10 @@ def gridder(info, data_in, filename_out, overwrite=False):
 
 def grid_merger(info, files=None, filename_out='auto'):
     
+    from datetime import datetime
+    
     print('grid_merger ---------------------------------------------')
+
     
     if files == None:
         all_files = sm.get_all_files(info.dirs.gridded_data)
@@ -255,10 +258,10 @@ def grid_merger(info, files=None, filename_out='auto'):
     # Process 1st grid
     data0 = xr.open_dataset(all_files[0])
     H0 = data0['ship_density'].values
-    
+   
 
-    startdate = min(data0['DateTime'])
-    enddate = max(data0['DateTime'])
+    startdate = datetime.strptime(data0.attrs['startdate'], '%Y-%m-%d %H:%M:%S')
+    enddate = datetime.strptime(data0.attrs['enddate'], '%Y-%m-%d %H:%M:%S')
     
     #Pre-build metadata
     metadata = data0.attrs
@@ -266,11 +269,15 @@ def grid_merger(info, files=None, filename_out='auto'):
 
     # Process the rest of the grid files
     for file_in in all_files[1:]:
-        dataX = xr.open_dataset(file_in)
-        startdate = min(startdate, min(dataX['DateTime']))
-        enddate = max(enddate, max(dataX['DateTime']))
-        H = dataX['ship_density'].values
-        H0 = H0 + H
+        try:
+            print(file_in)
+            dataX = xr.open_dataset(file_in)
+            startdate = min(startdate, datetime.strptime(dataX.attrs['startdate'], '%Y-%m-%d %H:%M:%S'))
+            enddate = max(enddate, datetime.strptime(dataX.attrs['enddate'], '%Y-%m-%d %H:%M:%S'))
+            H = dataX['ship_density'].values
+            H0 = H0 + H
+        except:
+            pass
             
     # Create dataset
     D = xr.Dataset({'ship_density':(['x','y'],H0)},
@@ -279,8 +286,8 @@ def grid_merger(info, files=None, filename_out='auto'):
     
     #Save metadata
     D.attrs = metadata
-    D.attrs['startdate']=startdate
-    D.attrs['enddate']=enddate
+    D.attrs['startdate']=startdate.strftime('%Y-%m-%d %H:%M:%S')
+    D.attrs['enddate']=enddate.strftime('%Y-%m-%d %H:%M:%S')
     
     # Save merged file
     sm.checkDir(str(info.dirs.merged_grid))

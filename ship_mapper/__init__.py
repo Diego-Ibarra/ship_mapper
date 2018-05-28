@@ -1,7 +1,7 @@
 '''
 Below are functions that will be loaded when calling: import ship_mapper as sm
 '''
-from .converters import convert_to_nc, bulk_convert_to_nc
+from .converters import convert_to_nc, bulk_convert_to_nc, bulk_update_attributes
 
 from .utils import (distance, estimate_velocity, elapsed_days,
                     align_with_grid, interp2d, spatial_filter,
