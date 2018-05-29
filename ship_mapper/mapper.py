@@ -88,7 +88,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
      
     # Mask zeros
     d.attrs['mask_below'] = info.maps.mask_below
-    Hmasked = np.ma.masked_where(H<d.attrs['mask_below'],H)
+    Hmasked = np.ma.masked_where(H<=d.attrs['mask_below'],H)
      
     # Log H for better display
     Hmasked = np.log10(Hmasked)
@@ -147,8 +147,8 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
             labels.append(str(int(log_label_value)))
         
         cbar.ax.set_yticklabels(labels)
-        cbar.ax.set_xlabel('No. of vessels within grid-cell')
-    
+        cbar.ax.set_xlabel(d.attrs['units'])
+   
     
 #    legend_content = ('--- Vessel Density Map ---\n\n' +
 #                      'Test'
@@ -226,7 +226,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
             labels.append(str(int(log_label_value)))
         
         cbar.ax.set_xticklabels(labels)
-        cbar.ax.set_xlabel('No. of vessels within grid-cell', size=9, color='#808080') 
+        cbar.ax.set_xlabel(d.attrs['units'], size=9, color='#808080') 
                            
                            
                            

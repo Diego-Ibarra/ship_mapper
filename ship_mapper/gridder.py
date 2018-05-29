@@ -48,7 +48,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
         unis = pd.unique(data[ship_id].values)
         print('Number of Unique Ships = ' + str(len(unis)))
         
-        iiix, iiiy, iiit = [], [], []
+        iix, iiy, iit = [], [], []
         counter = 0
 
         for ship in unis:
@@ -75,46 +75,38 @@ def gridder(info, data_in, filename_out, overwrite=False):
                 
                 singleship_trip = singleship.sel(Dindex=index_gap)
                 
-                # Split data into "time_bins"
-                time_bin = info.grid.time_bin#info.grid.bin_size / (60*24) # units are converted to: days
+                # Get lat/lons/seqNums
+                lons = singleship_trip['longitude'].values.tolist()
+                lats = singleship_trip['latitude'].values.tolist()
+                seqNums = singleship_trip['SeqNum'].values.tolist()
+     
+                num_of_pings = len(lons)
                 
-                MinSeqNum = np.nanmin(singleship_trip['SeqNum'].values)
-                MaxSeqNum = np.nanmax(singleship_trip['SeqNum'].values) + time_bin
+                pings_in_same_cell = False
                 
-                time_bins = np.arange(MinSeqNum, MaxSeqNum, time_bin) # 1/144 = once every 10 minutes
-                
-                
-                # Loop over each ship's time_bin
-                for i in range(1,len(time_bins)):
-                    iix, iiy, iit = [], [], []
+                if num_of_pings > 1: 
                     
-                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
-                            (singleship_trip['SeqNum'] <= time_bins[i]))
-             
-                    
-                    singleship_trip_bin = singleship_trip.sel(Dindex=indx)
+                    for j in range(1,num_of_pings): 
+                        lon1 = lons[j-1]
+                        lat1 = lats[j-1]
+                        lon2 = lons[j]
+                        lat2 = lats[j]
+                        x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
+                        x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
+                        startdate = seqNums[j-1]
 
-                    # Get lat/lons
-                    lons = singleship_trip_bin['longitude'].values.tolist()
-                    lats = singleship_trip_bin['latitude'].values.tolist()
-                    seqNums = singleship_trip_bin['SeqNum'].values.tolist()
-                    
-                    #Insert last bin's lat/lon
-                    if i > 1 and len(lons) > 0:
-                        lons.insert(0, last_lon)
-                        lats.insert(0, last_lat)
-                        seqNums.insert(0, last_seqNums)
-                    
-                    num_of_pings = len(lons)
-                    
-                
-                    if num_of_pings > 1: 
-                        for j in range(1,num_of_pings): 
+                        if x1 == x2 and y1 == y2:
+                            pings_in_same_cell = True
+                            enddate = seqNums[j]
+                        else:
+                            
+                            if pings_in_same_cell:
+                                iix.append(x1)
+                                iiy.append(y1)
+                                iit.append((enddate - startdate)*1440)
+                                pings_in_same_cell = False
+
                             # Iterpolate bewtween known points
-                            lon1 = lons[j-1]
-                            lat1 = lats[j-1]
-                            lon2 = lons[j]
-                            lat2 = lats[j]
                             elapsed_days = seqNums[j] - seqNums[j-1]
                             
                             # Estimate distance and velocity
@@ -123,57 +115,27 @@ def gridder(info, data_in, filename_out, overwrite=False):
                             interp_threshold = 40
                             if dist < (interp_threshold * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
                                 
-                                x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
-                                x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
-                                
                                 ix, iy = sm.interp2d(x1, y1, x2, y2)
                                 
-                                days_per_cell = elapsed_days / len(ix)
+                                minutes_per_cell = elapsed_days / len(ix) * 1440
                                 
                                 iix.extend(ix)
                                 iiy.extend(iy)
-#                                iit.extend([days_per_cell] * len(ix))
-                                iit.extend([1] * len(ix))
+                                iit.extend([minutes_per_cell] * len(ix))
+#                                iit.extend([1] * len(ix))
                                 
-
-                                           
-#                    #drop duplicates
-#                    df = {}
-#                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
-#                    
-#                    # Append
-#                    iiix.extend(df['x'].tolist())
-#                    iiiy.extend(df['y'].tolist())
-                    # Append
-                    iiix.extend(iix)
-                    iiiy.extend(iiy)
-                    iiit.extend(iit)
-                    
-                    #Save last lat/lon
-                    if len(lats) > 0:
-                        last_lat = lats[-1]
-                        last_lon = lons[-1]
-                        last_seqNums = seqNums[-1]
-
-#                    plt.cla()
-#                    plt.plot(iiix,iiiy,'.')
-#                    fig8.show()
-#                    fig8.canvas.draw()
-#                    plt.pause(0.01)
 
         interp_threshold = 40
 
-                
-        # Project pings to grid        
-        H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
+        # Project pings to grid     
+        H0, xedges, yedges = np.histogram2d(iix,iiy,bins=info.grid.bin_number,
                                             range=[[0, info.grid.bin_number[0]],
                                                    [0, info.grid.bin_number[1]]],
-                                                   weights=iiit)
-#        # Rotate and flip H...
-#        H0 = np.rot90(H0)
-#        H0 = np.flipud(H0)
+                                                   weights=iit)
+        
+        ship_density = H0 / info.grid.areas
                 
-        D = xr.Dataset({'ship_density':(['x','y'],H0)},
+        D = xr.Dataset({'ship_density':(['x','y'],ship_density)},
                 coords={'lon':(['x'],x),
                         'lat':(['y'],y)})
     
@@ -191,10 +153,10 @@ def gridder(info, data_in, filename_out, overwrite=False):
         D.attrs['time_bin'] = info.grid.time_bin
         D.attrs['interpolation'] = 'Linear'
         D.attrs['interp_threshold'] = interp_threshold
-        D.attrs['units'] = 'No. of vessels within grid-cell test'
-        D.attrs['unit_description'] = ('Number of vessels inside\n' + 
-                                    'a gricell within the time range of\n' + 
-                                    'observations (note it is LOG scale)')
+        D.attrs['units'] = 'Ship minutes per km$^2$'
+        D.attrs['unit_description'] = ('Minutes spent by vessels\n' + 
+                                    'inside the area of a gricell\n' + 
+                                    '(note it is LOG scale)')
 #        D = sm.write_info2data(D,info)
         
 #        # MAP --------------------------------------------------------------
