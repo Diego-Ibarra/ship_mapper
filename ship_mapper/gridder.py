@@ -48,7 +48,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
         unis = pd.unique(data[ship_id].values)
         print('Number of Unique Ships = ' + str(len(unis)))
         
-        iiix, iiiy = [], []
+        iiix, iiiy, iiit = [], [], []
         counter = 0
 
         for ship in unis:
@@ -132,19 +132,22 @@ def gridder(info, data_in, filename_out, overwrite=False):
                                 
                                 iix.extend(ix)
                                 iiy.extend(iy)
-                                iit.extend([days_per_cell] * len(ix))
+#                                iit.extend([days_per_cell] * len(ix))
+                                iit.extend([1] * len(ix))
                                 
 
                                            
-                    #drop duplicates
-                    df = {}
-                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
-                    
+#                    #drop duplicates
+#                    df = {}
+#                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
+#                    
+#                    # Append
+#                    iiix.extend(df['x'].tolist())
+#                    iiiy.extend(df['y'].tolist())
                     # Append
-                    iiix.extend(df['x'].tolist())
-                    iiiy.extend(df['y'].tolist())
-                    iiit.exted()
-
+                    iiix.extend(iix)
+                    iiiy.extend(iiy)
+                    iiit.extend(iit)
                     
                     #Save last lat/lon
                     if len(lats) > 0:
@@ -164,7 +167,8 @@ def gridder(info, data_in, filename_out, overwrite=False):
         # Project pings to grid        
         H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
                                             range=[[0, info.grid.bin_number[0]],
-                                                   [0, info.grid.bin_number[1]]])
+                                                   [0, info.grid.bin_number[1]]],
+                                                   weights=iiit)
 #        # Rotate and flip H...
 #        H0 = np.rot90(H0)
 #        H0 = np.flipud(H0)
