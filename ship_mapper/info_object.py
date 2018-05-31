@@ -52,6 +52,8 @@ class info:
         grid['interp_threshold'] = 40 #knots
         grid['time_bin'] = 10 #minutes
         grid['epsg_code'] = None
+        grid['areas'] = None
+        
         
         filt ={}
         filt['speed_low'] = None
