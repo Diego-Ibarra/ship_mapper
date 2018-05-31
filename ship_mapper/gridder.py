@@ -25,6 +25,8 @@ def gridder(info, data_in, filename_out, overwrite=False):
     
     file_out = os.path.join(str(info.dirs.gridded_data), filename_out)
     
+    interp_threshold = 40
+    
     if not os.path.isfile(file_out) or overwrite:
         
         print('^^^^^^^^^^^^^^^^^^^^^^^')
@@ -58,8 +60,6 @@ def gridder(info, data_in, filename_out, overwrite=False):
             indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
             
-            
-           
             # Determine "trips"
             indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
@@ -82,8 +82,6 @@ def gridder(info, data_in, filename_out, overwrite=False):
      
                 num_of_pings = len(lons)
                 
-                pings_in_same_cell = False
-                
                 if num_of_pings > 1: 
                     
                     for j in range(1,num_of_pings): 
@@ -93,39 +91,24 @@ def gridder(info, data_in, filename_out, overwrite=False):
                         lat2 = lats[j]
                         x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
                         x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
-                        startdate = seqNums[j-1]
 
-                        if x1 == x2 and y1 == y2:
-                            pings_in_same_cell = True
-                            enddate = seqNums[j]
-                        else:
+                        # Iterpolate bewtween known points
+                        elapsed_days = abs(seqNums[j] - seqNums[j-1])
+                        
+                        # Estimate distance and velocity
+                        dist = sm.distance(lat1,lon1,lat2,lon2)
+                        
+                        
+                        if dist < (interp_threshold * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
                             
-                            if pings_in_same_cell:
-                                iix.append(x1)
-                                iiy.append(y1)
-                                iit.append((enddate - startdate)*1440)
-                                pings_in_same_cell = False
+                            ix, iy = sm.interp2d(x1, y1, x2, y2)
+                            
+                            minutes_per_cell = elapsed_days / len(ix) * 1440
+                            
+                            iix.extend(ix)
+                            iiy.extend(iy)
+                            iit.extend([minutes_per_cell] * len(ix))
 
-                            # Iterpolate bewtween known points
-                            elapsed_days = seqNums[j] - seqNums[j-1]
-                            
-                            # Estimate distance and velocity
-                            dist = sm.distance(lat1,lon1,lat2,lon2)
-                            
-                            interp_threshold = 40
-                            if dist < (interp_threshold * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
-                                
-                                ix, iy = sm.interp2d(x1, y1, x2, y2)
-                                
-                                minutes_per_cell = elapsed_days / len(ix) * 1440
-                                
-                                iix.extend(ix)
-                                iiy.extend(iy)
-                                iit.extend([minutes_per_cell] * len(ix))
-#                                iit.extend([1] * len(ix))
-                                
-
-        interp_threshold = 40
 
         # Project pings to grid     
         H0, xedges, yedges = np.histogram2d(iix,iiy,bins=info.grid.bin_number,

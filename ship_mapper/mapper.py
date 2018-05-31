@@ -90,8 +90,40 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     d.attrs['mask_below'] = info.maps.mask_below
     Hmasked = np.ma.masked_where(H<=d.attrs['mask_below'],H)
      
+    # Set vman and vmin
+    print('Min: ' + str(np.min(Hmasked)))
+    print('Max: ' + str(np.max(Hmasked)))
+    print('Mean: ' + str(np.nanmean(Hmasked)))
+    print('Std: ' + str(Hmasked.std()))
+    
+    if info.maps.cbarmax == 'auto':
+#        vmax = (np.median(Hmasked)) + (4*Hmasked.std())
+        vmax = (np.max(Hmasked)) - (2*Hmasked.std())
+    elif info.maps.cbarmax != None:
+        vmax = info.maps.cbarmax
+    else:
+        vmax = None
+        
+    if info.maps.cbarmin == 'auto':
+#        vmin = (np.median(Hmasked)) - (4*Hmasked.std())
+        alat = (d.attrs['maxlat'] - d.attrs['minlat'])/2
+        cellsize = sm.degrees_to_meters(d.attrs['bin_size'], alat)
+#        max_speed = 616.66 # m/min ...roughly 20 knots
+        max_speed = 316.66 # m/min ...roughly 20 knots
+        vmin = cellsize / max_speed
+    elif info.maps.cbarmin != None:
+        vmin = info.maps.cbarmin
+    else:
+        vmin = None
+    
+    
+    
     # Log H for better display
     Hmasked = np.log10(Hmasked)
+    if vmin != None:
+        vmin = np.log10(vmin)
+    if vmax != None:
+        vmax = np.log10(vmax)
     
 
     # Make colormap
@@ -104,8 +136,11 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         cmapcolor = load_my_cmap('my_cmap_red2black')
     else:
         cmapcolor =plt.get_cmap(cmap)
-       
-    cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10)
+        
+
+
+        
+    cs = m.pcolor(xx,yy,Hmasked, cmap=cmapcolor, zorder=10, vmin=vmin, vmax=vmax)
     
     #scalebar
     sblon = minlon + ((maxlon-minlon)/10)
@@ -217,10 +252,10 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         
         # Change colorbar labels for easier interpreting
         label_values = cbar._tick_data_values
-        print("values")
-        print(label_values)
+#        print("values")
+#        print(label_values)
         log_label_values = np.round(10 ** label_values,decimals=0)
-        print(log_label_values)
+#        print(log_label_values)
         labels = []
         for log_label_value in log_label_values:
             labels.append(str(int(log_label_value)))
@@ -288,7 +323,7 @@ def make_legend_text(info,md):
     alat = (md['maxlat'] - md['minlat'])/2
     
     text1 = 'VESSEL DENSITY HEATMAP'
-    print(info)
+#    print(info)
     # --------------------------------------------------------
     text2 = ('Unit description: ' + md['unit_description'] + '\n\n' +
              'Data source: ' + md['data_source'] + '\n\n' +
@@ -359,7 +394,7 @@ def map_dots(info, file_in, sidebar=False, save=True):
         basemap_file = str(path_to_basemap / 'basemap.p')
     
     if not os.path.exists(basemap_file):
-        m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
+        m = sm.make_basemap(info,[minlat,maxlat,minlon,maxlon])
     else:
         print('Found basemap...')
         m = pickle.load(open(basemap_file,'rb'))
