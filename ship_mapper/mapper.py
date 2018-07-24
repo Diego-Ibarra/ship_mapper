@@ -65,6 +65,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
                                                    info.grid.region,'ancillary',
                                                    info.grid.basemap + '.basemap'))
+    print(basemap_file)
     
     
     # Check for basemap.p and, if doesn;t exist, make it
