@@ -30,6 +30,6 @@ setup(name='ship_mapper',
       packages=find_packages(),
       install_requires=['xarray>=0.10.0',
                         'matplotlib>=2.1.2',
-                        'basemap>=1.0.7']
+                        'cmocean>=1.2']
       )
 
