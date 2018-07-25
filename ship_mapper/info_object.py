@@ -44,6 +44,7 @@ class info:
         grid ={}
         grid['region'] = None
         grid['basemap'] = None
+        grid['location'] = None
         grid['bin_number'] = None
         grid['minlat'] = None
         grid['maxlat'] = None
@@ -225,17 +226,27 @@ def load_info(run_name, path_to_info=None):
 #    return info
     
 
-def grid_to_info(info, region, basemapName):
+def grid_to_info(info, region, basemapName, grid_location='settings.GRIDS'):
     import _pickle as pickle
     import os
     from pathlib import Path
     import ship_mapper as sm
     
-    if os.path.isdir(region):
-        basemap_file = os.path.abspath(os.path.join(region,basemapName + '.grid'))
-    else:
+    info.grid.location= grid_location
+    
+#    if os.path.isdir(region): 
+    if info.grid.location == 'project_path':
+        print('Using LOCAL grid...')
+        basemap_file = os.path.join(info.dirs.project_path,region,'ancillary',basemapName + '.grid')
+        info.dirs.basemap = basemap_file
+    elif info.grid.location == 'settings.GRIDS':
+        print('Using GLOBAL grid...')
         settings = sm.load_settings(info)
         basemap_file = os.path.abspath(os.path.join(settings.GRIDS,region,'ancillary',basemapName + '.grid'))
+        info.dirs.basemap = basemap_file
+    else:
+        raise ValueError('info.grid.location can only be "project_path" or "settings.GRIDS"')
+        
     
     print('Loading grid: ' + basemap_file)
     

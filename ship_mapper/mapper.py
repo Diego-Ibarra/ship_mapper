@@ -60,12 +60,14 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 #    else:
 #        basemap_file = str(path_to_basemap / 'basemap.p')
         
-    settings = sm.load_settings(info)
+#    settings = sm.load_settings(info)
     
-    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
-                                                   info.grid.region,'ancillary',
-                                                   info.grid.basemap + '.basemap'))
-    print(basemap_file)
+#    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
+#                                                   info.grid.region,'ancillary',
+#                                                   info.grid.basemap + '.basemap'))
+    
+    basemap_file = info.dirs.basemap
+    print('Basemap file: ' + basemap_file)
     
     
     # Check for basemap.p and, if doesn;t exist, make it
@@ -296,8 +298,10 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     # Save map as png
     if save:
         if filedir_out == 'auto':
+            print('yes1!!!!!!!!!')
             filedir = str(info.dirs.pngs)
         else:
+            print('nope!')
             filedir = filedir_out
             
         if filename_out == 'auto':
@@ -495,13 +499,18 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
-    print('Mapping...')
+    print('Making basemap...')
     # -----------------------------------------------------------------------------
     
     if path_to_map == 'auto':
-        path_to_map = info.dirs.ancillary
+        if info.grid.location == 'project_path':
+            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
+        elif info.grid.location == 'settings.GRIDS':
+            settings = sm.load_settings(info)
+            path_to_map = os.path.abspath(os.path.join(settings.GRIDS,info.grid.region,'ancillary'))
     else:
         path_to_map = path_to_map
+    
     
     sm.checkDir(str(path_to_map))
     
@@ -520,8 +529,9 @@ def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
     # TOPO
     # Read data from: http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.html
     # using the netCDF output option
-    bathymetry_file = str(path_to_map / 'usgsCeSrtm30v6.nc')
-    
+#    bathymetry_file = str(path_to_map / 'usgsCeSrtm30v6.nc')
+    bathymetry_file = os.path.join(path_to_map, 'usgsCeSrtm30v6.nc')
+
     if not os.path.isfile(bathymetry_file):
         isub = 1
         base_url='http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.nc?'
@@ -684,14 +694,21 @@ def save_basemap(m,info,path_to_map='auto'):
 #    print('!!! Pickle just made: ' + picklename)
     
     if path_to_map == 'auto':
-        path_to_map = info.dirs.ancillary
+        if info.grid.location == 'project_path':
+            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
+        elif info.grid.location == 'settings.GRIDS':
+            settings = sm.load_settings(info)
+            path_to_map = os.path.abspath(os.path.join(settings.GRIDS,info.grid.region,'ancillary'))
     else:
         path_to_map = path_to_map
+        
     
-    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
+#    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
+    basemap_picklename = os.path.join(path_to_map,info.grid.basemap + '.basemap')
     pickle.dump(m, open(basemap_picklename, 'wb'), -1)
     
-    info_picklename = str(path_to_map / (info.grid.basemap + '.grid'))
+#    info_picklename = str(path_to_map / (info.grid.basemap + '.grid'))
+    info_picklename = os.path.join(path_to_map, info.grid.basemap + '.grid')
     pickle.dump(info, open(info_picklename, 'wb'), -1)
     
     print('!!! Pickles were just made: ' +  basemap_picklename)
