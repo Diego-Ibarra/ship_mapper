@@ -28,6 +28,7 @@ from setuptools import setup, find_packages
 setup(name='ship_mapper',
       version='0.1',
       packages=find_packages(),
-      install_requires=['xarray>=0.10.0']
+      install_requires=['xarray>=0.10.0',
+                        'matplotlib>=2.1.2']
       )
 
