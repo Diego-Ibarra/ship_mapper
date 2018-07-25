@@ -27,6 +27,13 @@ from setuptools import setup, find_packages
 
 setup(name='ship_mapper',
       version='0.1',
-      packages=find_packages()
+      packages=find_packages(),
+      install_requires=['xarray',
+                        'pandas'
+                        'numpy',
+                        'pytest',
+                        'xlrd',
+                        'cmocean',
+                        'matplotlib']
       )
 
