@@ -187,6 +187,201 @@ def gridder(info, data_in, filename_out, overwrite=False):
 
 
 
+
+
+
+
+
+
+
+
+
+def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
+    
+    print('gridder ---------------------------------------------')
+    
+    file_out = os.path.join(str(info.dirs.gridded_data), file_name  + '.nc')
+    
+    interp_threshold = 40
+    
+    if not os.path.isfile(file_out) or overwrite:
+        
+        ship_id = info.ship_id
+    
+        data = data_in
+    
+        # Make grid
+#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
+#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
+        
+        x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
+        y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
+        
+        info.grid.bin_number = (np.ceil((info.grid.maxlon - info.grid.minlon)/info.grid.bin_size),
+                                np.ceil((info.grid.maxlat - info.grid.minlat)/info.grid.bin_size))
+
+        # Find unique ships
+        unis = pd.unique(data[ship_id].values)
+        print('Number of Unique Ships = ' + str(len(unis)))
+        
+        iiix, iiiy = [], []
+        counter = 0
+
+        for ship in unis:
+            counter += 1
+            print('Ship: ' + str(counter) + ' (id:'+ str(ship) + ')')
+            
+            indxship = (data[ship_id] == ship)
+            singleship = data.sel(Dindex=indxship)
+            
+            
+           
+            # Determine "trips"
+            indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
+            trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
+            trip_gaps = np.insert(trip_gaps, 0, 0)
+            trip_gaps = np.append(trip_gaps,singleship['Dindex'].values[-1]+1)
+                
+            # Loop over trips
+            for k in range(1,len(trip_gaps)):
+                print(k)
+                
+                index_gap = ((singleship['Dindex'] >= trip_gaps[k-1]) &
+                             (singleship['Dindex'] < trip_gaps[k]))
+                
+                singleship_trip = singleship.sel(Dindex=index_gap)
+                
+                # Split data into "time_bins"
+                time_bin = 1/144#info.grid.bin_size / (60*24) # units are converted to: days
+                
+                MinSeqNum = singleship_trip['SeqNum'].values.min()
+                MaxSeqNum = singleship_trip['SeqNum'].values.max() + time_bin
+                
+                time_bins = np.arange(MinSeqNum, MaxSeqNum, time_bin) # 1/144 = once every 10 minutes
+                
+                # Loop over each ship's time_bin
+                for i in range(1,len(time_bins)):
+                    iix, iiy = [], []
+                    
+                    indx = ((singleship_trip['SeqNum'] >= time_bins[i-1]) &
+                            (singleship_trip['SeqNum'] <= time_bins[i]))
+             
+                    
+                    singleship_trip_bin = singleship_trip.sel(Dindex=indx)
+
+                    # Get lat/lons
+                    lons = singleship_trip_bin['longitude'].values.tolist()
+                    lats = singleship_trip_bin['latitude'].values.tolist()
+                    
+                    #Insert last bin's lat/lon
+                    if i > 1 and len(lons) > 0:
+                        lons.insert(0, last_lon)
+                        lats.insert(0, last_lat)
+                    
+                    num_of_pings = len(lons)
+                    
+                
+                    if num_of_pings == 0:
+                        pass
+                    elif num_of_pings == 1:
+                        lon2 = lons[0]
+                        lat2 = lats[0]
+                        x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
+                        iix.append(x2)
+                        iiy.append(y2) 
+                    elif num_of_pings > 1: 
+                        for j in range(1,num_of_pings): 
+                            # Iterpolate bewtween known points
+                            lon1 = lons[j-1]
+                            lat1 = lats[j-1]
+                            lon2 = lons[j]
+                            lat2 = lats[j]
+                            
+                            # Estimate distance and velocity
+                            dist = sm.distance(lat1,lon1,lat2,lon2)
+                            
+                            if dist < (interp_threshold * 1.852 * 1000): # knots * knots_to_km/h conversion * km_to_m conversion (= meters)
+                                
+                                x1, y1 = sm.align_with_grid(x, y, lon1, lat1)
+                                x2, y2 = sm.align_with_grid(x, y, lon2, lat2)
+                                
+                                ix, iy = sm.interp2d(x1, y1, x2, y2)
+                                
+                                iix.extend(ix)
+                                iiy.extend(iy)                   
+
+                                           
+                    #drop duplicates
+                    df = {}
+                    df = pd.DataFrame({'x':iix,'y':iiy}).drop_duplicates(keep='last')
+                    
+                    # Append
+                    iiix.extend(df['x'].tolist())
+                    iiiy.extend(df['y'].tolist())
+                    
+                    #Save last lat/lon
+                    if len(lats) > 0:
+                        last_lat = lats[-1]
+                        last_lon = lons[-1]
+
+
+                
+        # Project pings to grid        
+        H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
+                                            range=[[0, info.grid.bin_number[0]],
+                                                   [0, info.grid.bin_number[1]]])
+#        # Rotate and flip H...
+#        H0 = np.rot90(H0)
+#        H0 = np.flipud(H0)
+                
+        D = xr.Dataset({'ship_density':(['x','y'],H0)},
+                coords={'lon':(['x'],x),
+                        'lat':(['y'],y)})
+                    
+        # Metadata
+        D.attrs = copy.deepcopy(data.attrs)
+        # delete irrelevants
+        del(D.attrs['ship_id'])
+        # add new ones
+        D.attrs['minlat'] = info.grid.minlat
+        D.attrs['maxlat'] = info.grid.maxlat
+        D.attrs['minlon'] = info.grid.minlon
+        D.attrs['maxlon'] = info.grid.maxlon
+        D.attrs['bin_number'] = info.grid.bin_number
+        D.attrs['bin_size'] = info.grid.bin_size
+        D.attrs['time_bin'] = info.grid.time_bin
+        D.attrs['interpolation'] = 'Linear'
+        D.attrs['interp_threshold'] = interp_threshold
+        D.attrs['units'] = 'No. of vessels within grid-cell'
+        D.attrs['unit_description'] = ('Number of vessels inside\n' + 
+                                    'a gridcell within the time range of\n' + 
+                                    'observations (note it is LOG scale)')
+        
+        # Print NetCDF file
+        sm.checkDir(str(info.dirs.gridded_data))
+        print('Writting...')
+        print('...' + file_out)    
+        D.to_netcdf(path=file_out)
+    
+    return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def grid_merger(info, files=None, filename_out='auto'):
     
     from datetime import datetime
