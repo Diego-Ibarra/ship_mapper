@@ -13,13 +13,13 @@ import os
 import copy
 import ship_mapper as sm
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 
 
 
 def gridder(info, data_in, filename_out, overwrite=False):
+    '''
+    Counts "pings" inside a gridcell and computes "Ship minutes per km2"
+    '''
     
     print('gridder ---------------------------------------------')
     
@@ -29,17 +29,11 @@ def gridder(info, data_in, filename_out, overwrite=False):
     
     if not os.path.isfile(file_out) or overwrite:
         
-        print('^^^^^^^^^^^^^^^^^^^^^^^')
-        print(data_in.attrs)
-        
         ship_id = data_in.attrs['ship_id']
     
         data = data_in
     
-        # Make grid
-#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
-#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
-        
+        # Make grid      
         x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
         y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
         
@@ -140,42 +134,6 @@ def gridder(info, data_in, filename_out, overwrite=False):
         D.attrs['unit_description'] = ('Minutes spent by vessels\n' + 
                                     'inside the area of a gricell\n' + 
                                     '(note it is LOG scale)')
-#        D = sm.write_info2data(D,info)
-        
-#        # MAP --------------------------------------------------------------
-#        import matplotlib.pyplot as plt
-#        from mpl_toolkits.basemap import Basemap
-##        minlat = data['latitude'].values.min()
-##        maxlat = data['latitude'].values.max()
-##        minlon = data['longitude'].values.min()
-##        maxlon = data['longitude'].values.max()
-#        minlat = info.grid.minlat
-#        maxlat = info.grid.maxlat
-#        minlon = info.grid.minlon
-#        maxlon = info.grid.maxlon
-#        
-#        m = Basemap(projection='mill', llcrnrlat=minlat,urcrnrlat=maxlat,
-#        llcrnrlon=minlon, urcrnrlon=maxlon,resolution='i')
-#        
-#        xdots, ydots = m(singleship['longitude'].values,singleship['latitude'].values) 
-#                
-#        cs = m.scatter(xdots,ydots,1,marker='.',color='r', zorder=15)
-#        
-#        # ------------
-##        x = np.linspace(minlon, maxlon, num=info.grid.bin_number)
-##        y = np.linspace(minlat, maxlat, num=info.grid.bin_number)
-#
-#        xx, yy = m(x,y)
-#
-#        print(H0)
-#        Hmasked = np.ma.masked_where(H0<1,H0)
-#
-#        cs2 = m.pcolor(xx,yy,Hmasked,cmap=plt.get_cmap('copper_r'),alpha=0.5, zorder=10)
-#        cbar = plt.colorbar(extend='both')
-#        m.drawcoastlines(linewidth=0.5,zorder=25)
-#    #    
-#        plt.show()
-#        # MAP --------------------------------------------------------------
         
         # Print NetCDF file
         sm.checkDir(str(info.dirs.gridded_data))
@@ -197,6 +155,9 @@ def gridder(info, data_in, filename_out, overwrite=False):
 
 
 def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
+    '''
+    Counts "pings" inside a gridcell and computes "No. of vessels within grid-cell"
+    '''
     
     print('gridder_pingsPerCell ----------------------------')
     
@@ -210,10 +171,7 @@ def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
     
         data = data_in
     
-        # Make grid
-#        x = np.linspace(info.grid.minlon, info.grid.maxlon, num=info.grid.bin_number)
-#        y = np.linspace(info.grid.minlat, info.grid.maxlat, num=info.grid.bin_number)
-        
+        # Make grid       
         x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
         y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
         
@@ -234,8 +192,7 @@ def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
             indxship = (data[ship_id] == ship)
             singleship = data.sel(Dindex=indxship)
             
-            
-           
+                     
             # Determine "trips"
             indxtrip = (singleship['SeqNum'].diff('Dindex') > 1) #find > 1-day gaps
             trip_gaps = indxtrip[indxtrip==True]['Dindex'].values
@@ -324,7 +281,6 @@ def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
                         last_lat = lats[-1]
                         last_lon = lons[-1]
 
-
                 
         # Project pings to grid        
         H0, xedges, yedges = np.histogram2d(iiix,iiiy,bins=info.grid.bin_number,
@@ -374,15 +330,10 @@ def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
 
 
 
-
-
-
-
-
-
-
-
 def grid_merger(info, files=None, filename_out='auto'):
+    '''
+    Combines several gridded files into one
+    '''
     
     from datetime import datetime
     
@@ -450,6 +401,9 @@ def grid_merger(info, files=None, filename_out='auto'):
 
         
 def getWKT_PRJ (epsg_code):
+    '''
+    Downloads and returns geospatial parameters given a epsg code
+    '''
     import urllib.request
     wkt = urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/prettywkt/".format(epsg_code))
     wkt_bytes = wkt.read()
@@ -461,7 +415,9 @@ def getWKT_PRJ (epsg_code):
 
 
 def mergedgrid_to_shp(info, file_in=None):
-    
+    '''
+    Converts a gridded file into a shapefile
+    '''
     import shapefile
     
     print('mergedgrid_to_shp ------------------------------------------------')
@@ -498,6 +454,7 @@ def mergedgrid_to_shp(info, file_in=None):
     epsg = getWKT_PRJ(info.grid.epsg_code)
     prj.write(epsg)
     prj.close()
+    return
     
 
 
@@ -535,12 +492,6 @@ def calculate_gridcell_areas(info):
             areas[i,j] = ((a + b)/2)*h
             
         info.grid.areas = areas
-        
-#        import matplotlib.pyplot as plt
-#        lons, lats = np.meshgrid(y,x)
-#        plt.pcolormesh(lats, lons, areas)
-#        plt.colorbar()
-#        plt.show()
     
     return info
 

@@ -8,6 +8,9 @@ class info:
     
     
     def __init__(self, calling_file='.', run_name='auto', dir_data_original=None, grid_type=None):
+        '''
+        Initializes an "info" object
+        '''
         import os
         from pathlib import Path
         from types import SimpleNamespace
@@ -44,13 +47,6 @@ class info:
         grid ={}
         grid['region'] = None
         grid['basemap'] = None
-        
-#        if grid_type == 'one-off':
-#            grid['type'] = grid_type
-#        elif grid_type == 'generic':
-#            grid['type'] = grid_type
-#        else:
-#            raise ValueError('grid_type can only be "one-off" or "generic"')
         grid['type'] = None    
         grid['bin_number'] = None
         grid['minlat'] = None
@@ -61,7 +57,6 @@ class info:
         grid['time_bin'] = 10 #minutes
         grid['epsg_code'] = None
         grid['areas'] = None
-        
         
         filt ={}
         filt['speed_low'] = None
@@ -74,7 +69,6 @@ class info:
         maps['resolution'] = 'i'
         maps['parallels'] = 1 # Deegres between lines
         maps['meridians'] = 1# Deegres between lines
-
         
         sidebar = {}
         sidebar['units'] = ''
@@ -92,32 +86,8 @@ class info:
         self.dirs = SimpleNamespace(**dirs)
         self.maps = SimpleNamespace(**maps)
         self.sidebar = SimpleNamespace(**sidebar)
-        
         return
-    
-    
-    
-#    def __repr__(self):
-#        to_screen = ('*** Project information***' + '\n' +
-#                     'project_name: ' + self.project_name + '\n' +
-#                     'run_name: ' + self.run_name + '\n' +
-#                     'grid.bin_number: ' + str(self.grid.bin_number) + '\n' +
-#                     'grid.minlat: ' + str(self.grid.minlat) + '\n' +
-#                     'grid.maxlat: ' + str(self.grid.maxlat) + '\n' +
-#                     'grid.minlon: ' + str(self.grid.minlon) + '\n' +
-#                     'grid.maxlon: ' + str(self.grid.maxlon) + '\n' +
-#                     'filt.speed_low: ' + str(self.filt.speed_low) + '\n' +
-#                     'filt.speed_high: ' + str(self.filt.speed_high) + '\n' +
-#                     'dirs.top: ' + str(self.dirs.top) + '\n' +
-#                     'dirs.project_path: ' + str(self.dirs.project_path) + '\n' +
-#                     'dirs.data_original: ' + str(self.dirs.data_nc) + '\n' +
-#                     'dirs.data_nc: ' + str(self.dirs.data_nc) + '\n' +
-#                     'dirs.ancillary: ' + str(self.dirs.ancillary) + '\n' +
-#                     'dirs.gridded_data: ' + str(self.dirs.gridded_data) + '\n' +
-#                     'dirs.merged_grid: ' + str(self.dirs.merged_grid) + '\n' +    
-#                     'dirs.pngs: ' + str(self.dirs.pngs)
-#                     )
-#        return to_screen
+
     
     
     def __repr__(self):
@@ -140,7 +110,7 @@ class info:
     
     def save(self):
         '''
-        Save info into pickle
+        Saves info into pickle
         '''
         import _pickle as pickle
         import os
@@ -169,7 +139,6 @@ def load_info(run_name, path_to_info=None):
     import _pickle as pickle
     import os
     from pathlib import Path
-    import ship_mapper as sm
     import inspect
     
 ##    inspect.stack()
@@ -186,57 +155,13 @@ def load_info(run_name, path_to_info=None):
         info_file = os.path.abspath(os.path.join(os.path.dirname( path_to_info ), 'ancillary','info_' + run_name + '.p'))
       
     info = pickle.load(open(info_file,'rb'))
-    
-    # Update run_name
-#    info.run_name = os.path.split(filedash)[1][:-3] 
-#    
-#    info.dirs.gridded_data = Path(os.path.join(str(info.dirs.project_path),'gridded_data',str(info.run_name)))
-#    info.dirs.merged_grid = Path(os.path.join(str(info.dirs.project_path),'merged_grid',str(info.run_name)))
-#    info.dirs.pngs = Path(os.path.join(str(info.dirs.project_path),'pngs',str(info.run_name)))
-#    info.dirs.shapefiles = Path(os.path.join(str(info.dirs.project_path),'shapefiles',str(info.run_name)))
-    
-    
-#            str(info.dirs.project_path) / 'gridded_data' / str(info.run_name))
-#    info.dirs['merged_grid'] = Path(str(info.dirs.project_path) / 'merged_grid' / str(info.run_name))
-#    info.dirs['pngs'] = Path(str(info.dirs.project_path) / 'pngs' / str(info.run_name))
-#    info.dirs['shapefiles'] = Path(str(info.dirs.project_path) / 'shapefiles' / str(info.run_name))
-
-#    import _pickle as pickle
-#    import os
-#    from pathlib import Path
-#    
-#    path_to_info = os.path.abspath(os.path.join(os.path.dirname( filedash ), 'ancillary','info.p'))
-#    
-#    if not os.path.exists(path_to_info):
-#        path_to_info = filedash
-#    
-#    info = pickle.load(open(path_to_info,'rb'))
-
-
-
     return info
 
-
-#def load_grid_info(grid_name):
-#    import _pickle as pickle
-#    import os
-#    import ship_mapper as sm
-#    
-#    settings = sm.load_settings()
-#    
-#    path_to_info = os.path.abspath(os.path.join(settings.GRIDS,grid_name,'ancillary','info.p'))
-#    
-#    print('Loading ' + grid_name + ' grid info...')
-#    
-#    info = pickle.load(open(path_to_info,'rb'))
-#    
-#    return info
     
 
 def grid_to_info(info, region, basemapName, grid_type=None):
     import _pickle as pickle
     import os
-    from pathlib import Path
     import ship_mapper as sm
     
     info.grid.type = grid_type
@@ -272,16 +197,6 @@ def grid_to_info(info, region, basemapName, grid_type=None):
     info.maps.parallels = grid_info.maps.parallels
     info.maps.meridians = grid_info.maps.meridians
     info.maps.scalebar_km = grid_info.maps.scalebar_km
-    
-    # Update "info" with the new project path
-#    info.run_name = os.path.split(filedash)[1][:-3]
-#    info.dirs.project_path = Path(os.path.split(filedash)[0])
-#    info.dirs.ancillary = Path(info.dirs.project_path / 'ancillary')
-#    info.dirs.gridded_data = Path(os.path.join(str(info.dirs.project_path),'gridded_data',str(info.run_name)))
-#    info.dirs.merged_grid = Path(os.path.join(str(info.dirs.project_path),'merged_grid',str(info.run_name)))
-#    info.dirs.pngs = Path(os.path.join(str(info.dirs.project_path),'pngs',str(info.run_name)))
-#    info.dirs.shapefiles = Path(os.path.join(str(info.dirs.project_path),'shapefiles',str(info.run_name)))
-    
     return info
 
 
@@ -338,22 +253,6 @@ def attrs_to_info(attrs):
                 exec('info.' + row + '.' + subrow + '=attrs[row][subrow]')
     
     return info
-
-
-
-
-
-
-
-#        import types
-#        to_screen = ''    
-#        for row in self.__dict__.keys():
-#            if type(self.__dict__[row]) != types.SimpleNamespace:
-#                to_screen = to_screen + row + ': ' + str(self.__dict__[row]) + '\n'
-#            if type(self.__dict__[row]) == types.SimpleNamespace:
-#                to_screen = to_screen + row + '\n'
-#                for subrow in self.__dict__[row].__dict__.keys():
-#                    to_screen = to_screen + '    ' + subrow + ': ' + str(self.__dict__[row].__dict__[subrow]) + '\n'
 
 
 

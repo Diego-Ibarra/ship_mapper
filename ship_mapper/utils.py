@@ -1,9 +1,7 @@
-
 import math
 import numpy as np
 import os
 
-# distance -------------------------------------------------------
 def distance(lat1,lon1,lat2,lon2):
     '''
     Estimates distance between 2 points on Earth.
@@ -54,12 +52,14 @@ def align_with_grid(lon_grid_vector, lat_grid_vector, lon_point, lat_point):
     '''
     x = np.argmin(np.sqrt((lon_grid_vector - lon_point)**2))
     y = np.argmin(np.sqrt((lat_grid_vector - lat_point)**2))
-
     return x, y
 
 
 
 def interp2d(x1, y1, x2, y2):
+    '''
+    Interpolated between 2 points
+    '''
     xdiff = x2 - x1
     ydiff = y2 - y1
     delta = max(abs(xdiff),abs(ydiff))
@@ -85,6 +85,9 @@ def interp2d(x1, y1, x2, y2):
 
 
 def spatial_filter(file_in, info):
+    '''
+    Returns only the "pings" within a defined box
+    '''
     import xarray as xr
     
     print('spatial_filter ---------------------------------------------------')
@@ -102,11 +105,7 @@ def spatial_filter(file_in, info):
             (all_data['latitude']<= maxlat))
         
     filtered_data = all_data.sel(Dindex=indx)
-    
-    print(filtered_data)
-    
 
-    
     return filtered_data
 
 
@@ -150,7 +149,9 @@ def make_mydirs(top_dir, data_nc_dir, filedash):
 
 
 def get_all_files(dir_in):
-    
+    '''
+    Returns all files within a directory
+    '''
     all_files =[]
     # Do all files in all directories within dir_in
     for root, dirs, files in os.walk(dir_in):
@@ -161,14 +162,19 @@ def get_all_files(dir_in):
 
 
 def get_filename_from_fullpath(fullpath):
-    
+    '''
+    Returns the filename given a fullpath to a file
+    '''
     return os.path.splitext(os.path.split(fullpath)[1])[0]
 
 
 
 def get_path_from_fullpath(fullpath):
-    
+    '''
+    Returns the path to a file given a fullpath to the file
+    '''
     return os.path.splitext(os.path.split(fullpath)[0])[0]
+
 
 
 def degrees_to_meters(degrees, reference_latitude):
@@ -182,14 +188,12 @@ def degrees_to_meters(degrees, reference_latitude):
     
     Source: http://pordlabs.ucsd.edu/matlab/coord.htm
     '''
-    
     import math
     
     rlat = reference_latitude * math.pi/180;
     m = 111132.09 * 1 - 566.05 * math.cos(2 * rlat) + 1.2 * math.cos(4 * rlat);
     dy = degrees * m
     
-
     p = 111415.13 * math.cos(rlat) - 94.55 * math.cos(3 * rlat);
     dx = degrees * p
     return (dx+dy)/2
@@ -197,7 +201,6 @@ def degrees_to_meters(degrees, reference_latitude):
 
 
 def write_info2data(D,info):
-    
     import types
 
     for row in info.__dict__.keys():
@@ -207,6 +210,7 @@ def write_info2data(D,info):
             for subrow in info.__dict__[row].__dict__.keys():
                 exec("D.attrs['" + row + "." + subrow + "'] = info." + row + "." + subrow)
     return D
+
 
 
 def stop(message):

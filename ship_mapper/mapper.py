@@ -28,6 +28,9 @@ import netCDF4
 def map_density(info, file_in=None, cmap='Default', sidebar=False,
                 to_screen=True, save=True,
                 filename_out='auto',filedir_out='auto'):
+    '''
+    Plots a map using a gridded (or merged) file
+    '''
     
     print('map_density ------------------------------------------------------')
     
@@ -51,26 +54,11 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         minlon = d.attrs['minlon']
         maxlon = d.attrs['maxlon']
     
-#    # Some address
-#    path_to_basemap = info.dirs.project_path / 'ancillary'
-#    
-#    if sidebar:
-#        basemap_file = str(path_to_basemap / 'basemap_sidebar.p')
-#    else:
-#        basemap_file = str(path_to_basemap / 'basemap.p')
-        
-#    settings = sm.load_settings(info)
-    
-#    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
-#                                                   info.grid.region,'ancillary',
-#                                                   info.grid.basemap + '.basemap'))
-    
     basemap_file = info.dirs.basemap
     print('Basemap file: ' + basemap_file)
     
     
     # Check for basemap.p and, if doesn;t exist, make it
-#    if not os.path.exists(str(path_to_basemap / 'basemap.p')):
     if not os.path.exists(basemap_file):
         m = sm.make_basemap(info,info.dirs.project_path,[minlat,maxlat,minlon,maxlon])
     else:
@@ -157,20 +145,6 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
            yoffset = (0.01*(m.ymax-m.ymin)),
            labelstyle='simple',zorder=60)
 
-    
-
-#    if info.maps.title == 'auto':
-#        plot_title = info.run_name
-#    else:
-#        plot_title = info.maps.title
-#
-#    plt.title(plot_title)
-#  
-#    plt.title('Vessels density (' + str(BinNo,) + ' X ' + str(BinNo,) + ' grid) from file:' + filename +
-#              '\n Filter: Apparent speed between ' + str(downLim) + ' and ' + str(upLim) + ' knots')
-    
-#    info.sidebar.unit_description = d.attrs['unit_description']
-
 
     if not sidebar:
         cbaxes2 = fig.add_axes([0.70, 0.18, 0.2, 0.03],zorder=60)
@@ -186,22 +160,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         cbar.ax.set_yticklabels(labels)
         cbar.ax.set_xlabel(d.attrs['units'])
    
-    
-#    legend_content = ('--- Vessel Density Map ---\n\n' +
-#                      'Test'
-#            )
-    
-    
 
-#    props = dict( facecolor='#e6e6e6', alpha=1,edgecolor='#a6a6a6',boxstyle="Square,pad=0.5",zorder=1)  
-#    plt.figtext(0.85, 0.1,
-#                legend_content,
-#                linespacing=1.0,
-#                bbox=props,
-#                zorder=0)
-
-#    ax2 = fig.add_axes([0.80,0,1,1])
-#    ax2 = fig.add_axes([0,0,0.2,1])
     if sidebar:
         
         text1, text2, text3, text4 = make_legend_text(info,d.attrs)
@@ -265,24 +224,7 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
         cbar.ax.set_xticklabels(labels)
         cbar.ax.set_xlabel(d.attrs['units'], size=9, color='#808080') 
                            
-                           
-                           
-                           
 
-
-        
-        
-    #    plt.text(-0.04, 0.95, " Regular Plot:      plt.plot(...)\n Just a test",
-    #            horizontalalignment='left',
-    #            verticalalignment='top',
-    #            size='xx-large',
-    #            transform=plt.gca().transAxes)
-        
-    #    ax2.text(left, bottom, 'left top',
-    #            horizontalalignment='left',
-    #            verticalalignment='top',
-    #            transform=ax.transAxes)
-    #    
     
     
     # TODO: maybe delete this?

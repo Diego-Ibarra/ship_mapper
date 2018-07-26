@@ -1,7 +1,8 @@
 '''
 Below are functions that will be loaded when calling: import ship_mapper as sm
 '''
-from .converters import convert_to_nc, bulk_convert_to_nc, bulk_update_attributes
+from .converters import (convert_to_nc, bulk_convert_to_nc,
+                         bulk_update_attributes)
 
 from .utils import (distance, estimate_velocity, elapsed_days,
                     align_with_grid, interp2d, spatial_filter,
@@ -9,15 +10,22 @@ from .utils import (distance, estimate_velocity, elapsed_days,
                     get_filename_from_fullpath, get_path_from_fullpath,
                     degrees_to_meters,write_info2data, stop)
 
-from .gridder import gridder, gridder_pingsPerCell, grid_merger, mergedgrid_to_shp, calculate_gridcell_areas
+from .gridder import (gridder, gridder_pingsPerCell, grid_merger, 
+                      mergedgrid_to_shp, calculate_gridcell_areas)
 
-from .mapper import map_density, map_dots, make_basemap, map_dots_one_ship, save_basemap
+from .mapper import (map_density, map_dots, make_basemap, map_dots_one_ship,
+                     save_basemap)
 
-from .info_object import info, load_info, grid_to_info, data_to_info, info_to_attrs, attrs_to_info
+from .info_object import (info, load_info, grid_to_info, data_to_info, 
+                          info_to_attrs, attrs_to_info)
+
 
 
 
 def load_settings(info, path_to_settings=None):
+    '''
+    Loads the contents of settings.py (usially located in the projects folder)
+    '''
     import imp
     from pathlib import Path
     
