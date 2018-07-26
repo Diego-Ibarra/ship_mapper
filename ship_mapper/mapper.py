@@ -496,21 +496,23 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
+def define_path_to_map(info, path_to_basemap='auto'):
+    if path_to_basemap == 'auto':
+        if info.grid.type == 'one-off':
+            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
+        elif info.grid.type == 'generic':
+            path_to_map = os.path.abspath(os.path.join(info.dirs.project_path,'ancillary'))
+    else:
+        path_to_map = path_to_basemap
+    return path_to_map
 
 
-def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
+
+def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
     print('Making basemap...')
     # -----------------------------------------------------------------------------
     
-    if path_to_map == 'auto':
-        if info.grid.location == 'project_path':
-            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
-        elif info.grid.location == 'settings.GRIDS':
-            settings = sm.load_settings(info)
-            path_to_map = os.path.abspath(os.path.join(settings.GRIDS,info.grid.region,'ancillary'))
-    else:
-        path_to_map = path_to_map
-    
+    path_to_map = define_path_to_map(info, path_to_basemap=path_to_basemap)
     
     sm.checkDir(str(path_to_map))
     
@@ -612,7 +614,7 @@ def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
         basemap_name = 'basemap.p'
     
     # Save basemap
-    save_basemap(m,info,path_to_map=path_to_map)
+    save_basemap(m,info,path_to_basemap=path_to_map)
 #    picklename = str(path_to_map / basemap_name)
 #    pickle.dump(m,open(picklename,'wb'),-1)
 #    print('!!! Pickle just made: ' + picklename)
@@ -678,7 +680,7 @@ def load_my_cmap(name):
     return  my_cmap
 
 
-def save_basemap(m,info,path_to_map='auto'):
+def save_basemap(m,info,path_to_basemap='auto'):
     '''
     Saves basemap (and correspoding info.grid) to a pickle file
     '''
@@ -693,16 +695,8 @@ def save_basemap(m,info,path_to_map='auto'):
 #    pickle.dump(basemap, open(picklename, 'wb'), -1)
 #    print('!!! Pickle just made: ' + picklename)
     
-    if path_to_map == 'auto':
-        if info.grid.location == 'project_path':
-            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
-        elif info.grid.location == 'settings.GRIDS':
-            settings = sm.load_settings(info)
-            path_to_map = os.path.abspath(os.path.join(settings.GRIDS,info.grid.region,'ancillary'))
-    else:
-        path_to_map = path_to_map
+    path_to_map = define_path_to_map(info, path_to_basemap=path_to_basemap)
         
-    
 #    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
     basemap_picklename = os.path.join(path_to_map,info.grid.basemap + '.basemap')
     pickle.dump(m, open(basemap_picklename, 'wb'), -1)
