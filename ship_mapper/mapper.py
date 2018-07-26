@@ -25,7 +25,6 @@ import urllib.request
 import netCDF4
 
 
-
 def map_density(info, file_in=None, cmap='Default', sidebar=False,
                 to_screen=True, save=True,
                 filename_out='auto',filedir_out='auto'):
