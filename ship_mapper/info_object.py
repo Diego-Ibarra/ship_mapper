@@ -7,7 +7,7 @@ class info:
     """
     
     
-    def __init__(self, calling_file='.', run_name='auto', dir_data_original=None):
+    def __init__(self, calling_file='.', run_name='auto', dir_data_original=None, grid_type=None):
         import os
         from pathlib import Path
         from types import SimpleNamespace
@@ -44,6 +44,14 @@ class info:
         grid ={}
         grid['region'] = None
         grid['basemap'] = None
+        
+#        if grid_type == 'one-off':
+#            grid['type'] = grid_type
+#        elif grid_type == 'generic':
+#            grid['type'] = grid_type
+#        else:
+#            raise ValueError('grid_type can only be "one-off" or "generic"')
+        grid['type'] = None    
         grid['bin_number'] = None
         grid['minlat'] = None
         grid['maxlat'] = None
@@ -225,17 +233,26 @@ def load_info(run_name, path_to_info=None):
 #    return info
     
 
-def grid_to_info(info, region, basemapName):
+def grid_to_info(info, region, basemapName, grid_type=None):
     import _pickle as pickle
     import os
     from pathlib import Path
     import ship_mapper as sm
     
-    if os.path.isdir(region):
-        basemap_file = os.path.abspath(os.path.join(region,basemapName + '.grid'))
-    else:
+    info.grid.type = grid_type
+
+    if info.grid.type == 'one-off':
+        print('Using LOCAL grid (one-off)...')
+        basemap_file = os.path.join(info.dirs.project_path,region,'ancillary',basemapName + '.grid')
+        info.dirs.basemap = os.path.join(info.dirs.project_path,region,'ancillary',basemapName + '.basemap')
+    elif info.grid.type == 'generic':
+        print('Using GENERIC grid (settings.GRIDS)...')
         settings = sm.load_settings(info)
         basemap_file = os.path.abspath(os.path.join(settings.GRIDS,region,'ancillary',basemapName + '.grid'))
+        info.dirs.basemap = os.path.abspath(os.path.join(settings.GRIDS,region,'ancillary',basemapName + '.basemap'))
+    else:
+        raise ValueError('info.grid.type can only be "one-off" or "generic"')
+        
     
     print('Loading grid: ' + basemap_file)
     

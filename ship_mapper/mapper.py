@@ -60,12 +60,14 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 #    else:
 #        basemap_file = str(path_to_basemap / 'basemap.p')
         
-    settings = sm.load_settings(info)
+#    settings = sm.load_settings(info)
     
-    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
-                                                   info.grid.region,'ancillary',
-                                                   info.grid.basemap + '.basemap'))
-    print(basemap_file)
+#    basemap_file = os.path.abspath(os.path.join(settings.GRIDS,
+#                                                   info.grid.region,'ancillary',
+#                                                   info.grid.basemap + '.basemap'))
+    
+    basemap_file = info.dirs.basemap
+    print('Basemap file: ' + basemap_file)
     
     
     # Check for basemap.p and, if doesn;t exist, make it
@@ -296,8 +298,10 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     # Save map as png
     if save:
         if filedir_out == 'auto':
+            print('yes1!!!!!!!!!')
             filedir = str(info.dirs.pngs)
         else:
+            print('nope!')
             filedir = filedir_out
             
         if filename_out == 'auto':
@@ -492,16 +496,23 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 
+def define_path_to_map(info, path_to_basemap='auto'):
+    if path_to_basemap == 'auto':
+        if info.grid.type == 'one-off':
+            path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
+        elif info.grid.type == 'generic':
+            path_to_map = os.path.abspath(os.path.join(info.dirs.project_path,'ancillary'))
+    else:
+        path_to_map = path_to_basemap
+    return path_to_map
 
 
-def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
-    print('Mapping...')
+
+def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
+    print('Making basemap...')
     # -----------------------------------------------------------------------------
     
-    if path_to_map == 'auto':
-        path_to_map = info.dirs.ancillary
-    else:
-        path_to_map = path_to_map
+    path_to_map = define_path_to_map(info, path_to_basemap=path_to_basemap)
     
     sm.checkDir(str(path_to_map))
     
@@ -520,8 +531,9 @@ def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
     # TOPO
     # Read data from: http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.html
     # using the netCDF output option
-    bathymetry_file = str(path_to_map / 'usgsCeSrtm30v6.nc')
-    
+#    bathymetry_file = str(path_to_map / 'usgsCeSrtm30v6.nc')
+    bathymetry_file = os.path.join(path_to_map, 'usgsCeSrtm30v6.nc')
+
     if not os.path.isfile(bathymetry_file):
         isub = 1
         base_url='http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.nc?'
@@ -602,7 +614,7 @@ def make_basemap(info,spatial,path_to_map='auto', sidebar=False):
         basemap_name = 'basemap.p'
     
     # Save basemap
-    save_basemap(m,info,path_to_map=path_to_map)
+    save_basemap(m,info,path_to_basemap=path_to_map)
 #    picklename = str(path_to_map / basemap_name)
 #    pickle.dump(m,open(picklename,'wb'),-1)
 #    print('!!! Pickle just made: ' + picklename)
@@ -668,7 +680,7 @@ def load_my_cmap(name):
     return  my_cmap
 
 
-def save_basemap(m,info,path_to_map='auto'):
+def save_basemap(m,info,path_to_basemap='auto'):
     '''
     Saves basemap (and correspoding info.grid) to a pickle file
     '''
@@ -683,15 +695,14 @@ def save_basemap(m,info,path_to_map='auto'):
 #    pickle.dump(basemap, open(picklename, 'wb'), -1)
 #    print('!!! Pickle just made: ' + picklename)
     
-    if path_to_map == 'auto':
-        path_to_map = info.dirs.ancillary
-    else:
-        path_to_map = path_to_map
-    
-    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
+    path_to_map = define_path_to_map(info, path_to_basemap=path_to_basemap)
+        
+#    basemap_picklename = str(path_to_map / (info.grid.basemap + '.basemap'))
+    basemap_picklename = os.path.join(path_to_map,info.grid.basemap + '.basemap')
     pickle.dump(m, open(basemap_picklename, 'wb'), -1)
     
-    info_picklename = str(path_to_map / (info.grid.basemap + '.grid'))
+#    info_picklename = str(path_to_map / (info.grid.basemap + '.grid'))
+    info_picklename = os.path.join(path_to_map, info.grid.basemap + '.grid')
     pickle.dump(info, open(info_picklename, 'wb'), -1)
     
     print('!!! Pickles were just made: ' +  basemap_picklename)
