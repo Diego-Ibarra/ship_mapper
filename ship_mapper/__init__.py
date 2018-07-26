@@ -31,4 +31,3 @@ def load_settings(info, path_to_settings=None):
     file, pathname, description = imp.find_module('settings',[path2settings])   
     settings = imp.load_module('settings', file, pathname, description)
     return settings 
-
