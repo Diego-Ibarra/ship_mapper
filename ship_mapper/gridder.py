@@ -198,15 +198,15 @@ def gridder(info, data_in, filename_out, overwrite=False):
 
 def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
     
-    print('gridder ---------------------------------------------')
+    print('gridder_pingsPerCell ----------------------------')
     
-    file_out = os.path.join(str(info.dirs.gridded_data), file_name  + '.nc')
+    file_out = os.path.join(str(info.dirs.gridded_data), file_name)
     
     interp_threshold = 40
     
     if not os.path.isfile(file_out) or overwrite:
         
-        ship_id = info.ship_id
+        ship_id = data_in.attrs['ship_id']
     
         data = data_in
     
