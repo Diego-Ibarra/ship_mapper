@@ -120,3 +120,5 @@ ENV/
 *.nc
 
 *.csv
+
+examples/grids/Maritimes/ancillary/

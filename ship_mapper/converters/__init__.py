@@ -67,6 +67,8 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
 
   
     # Load converter as module
+    print(converter_filename)
+    print(dir_to_converter)
     file, pathname, description = imp.find_module(converter_filename[:-3],[Path(dir_to_converter)])   
     convert = imp.load_module('convert', file, pathname, description)
 
@@ -94,6 +96,7 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
                 print('Processing: ' + file_in)
                 convert.convert(file_in,file_out,yaml_in)
     return
+
 
 
 def bulk_update_attributes(attrs, path_to_data_in, path_to_data_out, overwrite=False):

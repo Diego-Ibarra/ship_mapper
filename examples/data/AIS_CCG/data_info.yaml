@@ -1,0 +1,8 @@
+# data_info.yaml is a file containing metadata about the data product
+# in this directory
+
+converter: 'AIS_CCG'
+ship_id: 'MMSI'
+data_source: 'AIS_CCG'
+data_description: 'Terrestrial Automated Identification System'
+epsg_code: '4326'
