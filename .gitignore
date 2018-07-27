@@ -122,3 +122,15 @@ ENV/
 *.csv
 
 examples/grids/Maritimes/ancillary/
+
+examples/data/VMS_DFO/data_nc/
+
+examples/grids/St_Anns_Bank/ancillary/
+
+examples/projects/example2_Halifax_AIS/gridded_data/
+
+examples/projects/example3_St_Anns_Banks_AIS/gridded_data/
+
+examples/projects/example4_Maritimes_VMS/gridded_data/
+
+examples/projects/example2_Halifax_AIS/Halifax_Area/ancillary/

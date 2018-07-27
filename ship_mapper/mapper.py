@@ -239,10 +239,8 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     # Save map as png
     if save:
         if filedir_out == 'auto':
-            print('yes1!!!!!!!!!')
             filedir = str(info.dirs.pngs)
         else:
-            print('nope!')
             filedir = filedir_out
             
         if filename_out == 'auto':

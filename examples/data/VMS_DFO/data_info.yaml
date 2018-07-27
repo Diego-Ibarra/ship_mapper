@@ -1,0 +1,8 @@
+# data_info.yaml is a file containing metadata about the data product
+# in this directory
+
+converter: 'VMS_DFO'
+ship_id: 'ship_id_vrn'
+data_source: 'VMS_DFO'
+data_description: 'Vessel Monitoring System'
+epsg_code: '4326'
