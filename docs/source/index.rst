@@ -5,6 +5,8 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
 
 WARNING: This project is in VERY early development stages. Don't use just yet
 
+;)
+
 
 .. toctree::
    :maxdepth: 2
