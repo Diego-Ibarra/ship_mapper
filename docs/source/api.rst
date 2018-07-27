@@ -3,7 +3,7 @@ API
 
 TEST! 
 
-.. automodule:: converters
+.. automodule:: mapper
    :members:
    
    
