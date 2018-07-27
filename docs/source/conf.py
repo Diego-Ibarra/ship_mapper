@@ -14,8 +14,7 @@
 #
 import os
 import sys
-import matplotlib
-matplotlib.use('agg')
+
 
 sys.path.insert(0, os.path.abspath('../../ship_mapper'))
 
@@ -23,8 +22,8 @@ sys.path.insert(0, os.path.abspath('../../ship_mapper'))
 for root, dirName, files in os.walk('../../ship_mapper'):
     sys.path.insert(0, os.path.abspath(root))
     
-#autodoc_mock_imports = ['matplotlib']
-
+autodoc_mock_imports = ['matplotlib']
+autodoc_mock_imports = ['mpl_toolkits']
 
 # -- Project information -----------------------------------------------------
 
