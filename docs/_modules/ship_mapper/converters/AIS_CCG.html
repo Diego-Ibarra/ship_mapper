@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper.converters.AIS_CCG &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="ship_mapper.converters" href="../converters.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../ship_mapper.html">ship_mapper</a> &raquo;</li>
+        
+          <li><a href="../converters.html">ship_mapper.converters</a> &raquo;</li>
+        
+      <li>ship_mapper.converters.AIS_CCG</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ship_mapper.converters.AIS_CCG</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terrestrial)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../../ship_mapper.converters.html#ship_mapper.converters.AIS_CCG.convert">[docs]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">file_out</span><span class="p">,</span> <span class="n">data_info_file</span><span class="p">):</span>
+
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+    <span class="kn">import</span> <span class="nn">datetime</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">yaml</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
+<span class="c1">#    file_in = &#39;C:\\Users\\IbarraD\\Documents\\GitHub\\ship_mapper\\examples\\data\\CCG_AIS\\data_original\\CCG_AIS_Dynamic_Data_2017-06-01.csv&#39;</span>
+    
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1">#csvS = pd.read_table(Sfilename, sep=&#39;,&#39;)</span>
+       
+    <span class="n">originTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">&#39;1/1/1980 00:00&#39;</span><span class="p">,</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y %H:%M&quot;</span><span class="p">)</span>
+        
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;year&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="s1">&#39;month&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="s1">&#39;day&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="s1">&#39;hour&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;hour&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="s1">&#39;minute&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;minute&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="s1">&#39;second&#39;</span><span class="p">:</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;second&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">})</span>
+
+    <span class="n">timeObject</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+    <span class="n">SeqNum</span> <span class="o">=</span> <span class="p">(</span><span class="n">timeObject</span> <span class="o">-</span> <span class="n">originTime</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;timedelta64[s]&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="p">)</span>
+
+    
+                
+    <span class="c1"># Metadata</span>
+    <span class="n">dinfo</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">data_info_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+    <span class="n">dinfo</span><span class="p">[</span><span class="s1">&#39;startdate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">timeObject</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">dinfo</span><span class="p">[</span><span class="s1">&#39;enddate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">timeObject</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    
+    
+    <span class="n">D</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;Region&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Region&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Station_Location&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Station_Location&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;AIS_Channel&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;AIS_Channel&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;year&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;month&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;day&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;hour&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;hour&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;minute&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;minute&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;second&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;second&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;TimeZone&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;TimeZone&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;DateTime&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">timeObject</span><span class="p">),</span>
+                    <span class="s1">&#39;SeqNum&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">SeqNum</span><span class="p">),</span>
+                    <span class="s1">&#39;ID&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;AIS_Class&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;AIS_Class&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Message_Type&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Message_Type&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Repeat_Indicator&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Repeat_Indicator&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;MMSI&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;MMSI&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Speed_Over_Ground_SOG_knots&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Speed_Over_Ground_SOG_knots&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Position_Accuracy&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Position_Accuracy&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;longitude&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Longitude_decimal_degrees&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;latitude&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Latitude_decimal_degrees&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Course_Over_Ground_COG_degrees&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Course_Over_Ground_COG_degrees&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;True_heading_HDG_degrees&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;True_heading_HDG_degrees&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;Navigation_Status&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;Navigation_Status&#39;</span><span class="p">]),</span>
+                    <span class="s1">&#39;TimeStamp_s&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="p">[</span><span class="s1">&#39;TimeStamp_s&#39;</span><span class="p">])},</span>
+                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Dindex&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">csv</span><span class="o">.</span><span class="n">index</span><span class="p">)},</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">dinfo</span><span class="p">)</span>
+    
+    
+    <span class="n">encoding</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Region&#39;</span><span class="p">:{</span><span class="s1">&#39;dtype&#39;</span><span class="p">:</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Station_Location&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;AIS_Channel&#39;</span><span class="p">:{</span><span class="s1">&#39;dtype&#39;</span><span class="p">:</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;year&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;month&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;day&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;minute&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;second&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;TimeZone&#39;</span><span class="p">:{</span><span class="s1">&#39;dtype&#39;</span><span class="p">:</span><span class="s1">&#39;S3&#39;</span><span class="p">,</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;DateTime&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;SeqNum&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;AIS_Class&#39;</span><span class="p">:{</span><span class="s1">&#39;dtype&#39;</span><span class="p">:</span><span class="s1">&#39;S1&#39;</span><span class="p">,</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Message_Type&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Repeat_Indicator&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;MMSI&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Speed_Over_Ground_SOG_knots&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Position_Accuracy&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;longitude&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;latitude&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Course_Over_Ground_COG_degrees&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;True_heading_HDG_degrees&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;Navigation_Status&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;TimeStamp_s&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}}</span>
+    
+    <span class="n">D</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">file_out</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span><span class="n">engine</span><span class="o">=</span><span class="s1">&#39;netcdf4&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">((</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="p">))</span>
+    
+    
+    
+    <span class="k">return</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

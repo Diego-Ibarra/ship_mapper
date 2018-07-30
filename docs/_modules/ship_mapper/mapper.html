@@ -1,0 +1,871 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper.mapper &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="ship_mapper" href="../ship_mapper.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../ship_mapper.html">ship_mapper</a> &raquo;</li>
+        
+      <li>ship_mapper.mapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ship_mapper.mapper</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Tue Feb 20 10:51:50 2018</span>
+
+<span class="sd">@author: IbarraD</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="k">import</span> <span class="n">FancyBboxPatch</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="k">import</span> <span class="n">LinearSegmentedColormap</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.basemap</span> <span class="k">import</span> <span class="n">Basemap</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># Suppress matplotlib warnings</span>
+<span class="n">np</span><span class="o">.</span><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">cmocean</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">netCDF4</span>
+
+
+<div class="viewcode-block" id="map_density"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.map_density">[docs]</a><span class="k">def</span> <span class="nf">map_density</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">to_screen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span><span class="n">filedir_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Plots a map using a gridded (or merged) file</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;map_density ------------------------------------------------------&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Load data</span>
+    <span class="k">if</span> <span class="n">file_in</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">merged_grid</span><span class="p">),</span><span class="s1">&#39;merged_grid.nc&#39;</span><span class="p">)</span>
+        
+    <span class="nb">print</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+        
+    <span class="n">d</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
+    <span class="c1"># Define boundaries</span>
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>  
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;minlat&#39;</span><span class="p">]</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;maxlat&#39;</span><span class="p">]</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;minlon&#39;</span><span class="p">]</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;maxlon&#39;</span><span class="p">]</span>
+    
+    <span class="n">basemap_file</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">basemap</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Basemap file: &#39;</span> <span class="o">+</span> <span class="n">basemap_file</span><span class="p">)</span>
+    
+    
+    <span class="c1"># Check for basemap.p and, if doesn;t exist, make it</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">basemap_file</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,[</span><span class="n">minlat</span><span class="p">,</span><span class="n">maxlat</span><span class="p">,</span><span class="n">minlon</span><span class="p">,</span><span class="n">maxlon</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found basemap...&#39;</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">basemap_file</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+
+    
+    <span class="c1"># Create grid for mapping</span>
+    <span class="n">lons_grid</span><span class="p">,</span> <span class="n">lats_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">xx</span><span class="p">,</span><span class="n">yy</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">lons_grid</span><span class="p">,</span> <span class="n">lats_grid</span><span class="p">)</span>
+    
+    <span class="n">H</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;ship_density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    
+    <span class="c1"># Rotate and flip H... ----------------------------------------------------------------------------</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+     
+    <span class="c1"># Mask zeros</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;mask_below&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">mask_below</span>
+    <span class="n">Hmasked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="n">H</span><span class="o">&lt;=</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;mask_below&#39;</span><span class="p">],</span><span class="n">H</span><span class="p">)</span>
+     
+    <span class="c1"># Set vman and vmin</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Min: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Hmasked</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Hmasked</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">Hmasked</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Std: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Hmasked</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
+    
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="c1">#        vmax = (np.median(Hmasked)) + (4*Hmasked.std())</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Hmasked</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Hmasked</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+<span class="c1">#        vmin = (np.median(Hmasked)) - (4*Hmasked.std())</span>
+        <span class="n">alat</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;maxlat&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;minlat&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">cellsize</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">degrees_to_meters</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;bin_size&#39;</span><span class="p">],</span> <span class="n">alat</span><span class="p">)</span>
+<span class="c1">#        max_speed = 616.66 # m/min ...roughly 20 knots</span>
+        <span class="n">max_speed</span> <span class="o">=</span> <span class="mf">316.66</span> <span class="c1"># m/min ...roughly 20 knots</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">cellsize</span> <span class="o">/</span> <span class="n">max_speed</span>
+    <span class="k">elif</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    
+    
+    <span class="c1"># Log H for better display</span>
+    <span class="n">Hmasked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">Hmasked</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">vmin</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">vmin</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">vmax</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">vmax</span><span class="p">)</span>
+    
+
+    <span class="c1"># Make colormap</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">cmap</span> <span class="o">==</span> <span class="s1">&#39;Default&#39;</span><span class="p">:</span>
+        <span class="n">cmapcolor</span> <span class="o">=</span> <span class="n">load_my_cmap</span><span class="p">(</span><span class="s1">&#39;my_cmap_amber2red&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">cmap</span> <span class="o">==</span> <span class="s1">&#39;red2black&#39;</span><span class="p">:</span>
+        <span class="n">cmapcolor</span> <span class="o">=</span> <span class="n">load_my_cmap</span><span class="p">(</span><span class="s1">&#39;my_cmap_red2black&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cmapcolor</span> <span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span>
+        
+
+
+        
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span><span class="n">Hmasked</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmapcolor</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    
+    <span class="c1">#scalebar</span>
+    <span class="n">sblon</span> <span class="o">=</span> <span class="n">minlon</span> <span class="o">+</span> <span class="p">((</span><span class="n">maxlon</span><span class="o">-</span><span class="n">minlon</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">sblat</span> <span class="o">=</span> <span class="n">minlat</span> <span class="o">+</span> <span class="p">((</span><span class="n">maxlat</span><span class="o">-</span><span class="n">minlat</span><span class="p">)</span><span class="o">/</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">drawmapscale</span><span class="p">(</span><span class="n">sblon</span><span class="p">,</span> <span class="n">sblat</span><span class="p">,</span>
+           <span class="n">minlon</span><span class="p">,</span> <span class="n">minlat</span><span class="p">,</span>
+           <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">scalebar_km</span><span class="p">,</span> <span class="n">barstyle</span><span class="o">=</span><span class="s1">&#39;fancy&#39;</span><span class="p">,</span>
+           <span class="n">units</span><span class="o">=</span><span class="s1">&#39;km&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+           <span class="n">fontcolor</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span>
+           <span class="n">fillcolor1</span> <span class="o">=</span> <span class="s1">&#39;#cccccc&#39;</span><span class="p">,</span>
+           <span class="n">fillcolor2</span> <span class="o">=</span> <span class="s1">&#39;#a6a6a6&#39;</span><span class="p">,</span>
+           <span class="n">yoffset</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="o">*</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ymax</span><span class="o">-</span><span class="n">m</span><span class="o">.</span><span class="n">ymin</span><span class="p">)),</span>
+           <span class="n">labelstyle</span><span class="o">=</span><span class="s1">&#39;simple&#39;</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">sidebar</span><span class="p">:</span>
+        <span class="n">cbaxes2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.70</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">],</span><span class="n">zorder</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">cax</span> <span class="o">=</span> <span class="n">cbaxes2</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Change colorbar labels for easier interpreting</span>
+        <span class="n">label_values</span> <span class="o">=</span> <span class="n">cbar</span><span class="o">.</span><span class="n">_tick_data_values</span>
+        <span class="n">log_label_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="n">label_values</span><span class="p">,</span><span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">log_label_value</span> <span class="ow">in</span> <span class="n">log_label_values</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">log_label_value</span><span class="p">)))</span>
+        
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">])</span>
+   
+
+    <span class="k">if</span> <span class="n">sidebar</span><span class="p">:</span>
+        
+        <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span> <span class="o">=</span> <span class="n">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span>
+        
+        <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">24</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">colspan</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+                
+        <span class="c1"># Turn off tick labels</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">FancyBboxPatch</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                                <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;square,pad=0&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;#e6e6e6&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#a6a6a6&#39;</span><span class="p">,</span>
+                                <span class="n">transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">transAxes</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="n">text1</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span> <span class="s1">&#39;#737373&#39;</span><span class="p">,</span>
+                <span class="n">transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.83</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span> <span class="s1">&#39;#808080&#39;</span><span class="p">,</span>
+                <span class="n">transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.145</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span> <span class="s1">&#39;#808080&#39;</span><span class="p">,</span>
+                <span class="n">transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">text4</span><span class="p">,</span>
+                <span class="n">style</span><span class="o">=</span><span class="s1">&#39;italic&#39;</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span> <span class="s1">&#39;#808080&#39;</span><span class="p">,</span>
+                <span class="n">transform</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+        
+        
+        <span class="n">cbaxes2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.019</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">],</span><span class="n">zorder</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">cax</span> <span class="o">=</span> <span class="n">cbaxes2</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">)</span> 
+        
+        <span class="c1"># Change colorbar labels for easier interpreting</span>
+        <span class="n">label_values</span> <span class="o">=</span> <span class="n">cbar</span><span class="o">.</span><span class="n">_tick_data_values</span>
+<span class="c1">#        print(&quot;values&quot;)</span>
+<span class="c1">#        print(label_values)</span>
+        <span class="n">log_label_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="n">label_values</span><span class="p">,</span><span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1">#        print(log_label_values)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">log_label_value</span> <span class="ow">in</span> <span class="n">log_label_values</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">log_label_value</span><span class="p">)))</span>
+        
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">)</span> 
+                           
+
+    
+    
+    <span class="c1"># TODO: maybe delete this?</span>
+<span class="c1">#    mng = plt.get_current_fig_manager()</span>
+<span class="c1">#    mng.frame.Maximize(True)</span>
+<span class="c1">#</span>
+<span class="c1">#    fig.tight_layout()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    
+    <span class="c1"># Save map as png</span>
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filedir_out</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="n">filedir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">pngs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filedir</span> <span class="o">=</span> <span class="n">filedir_out</span>
+            
+        <span class="k">if</span> <span class="n">filename_out</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">run_name</span> <span class="o">+</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="n">sm</span><span class="o">.</span><span class="n">get_filename_from_fullpath</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename_out</span>
+            
+        <span class="n">sm</span><span class="o">.</span><span class="n">checkDir</span><span class="p">(</span><span class="n">filedir</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span><span class="n">filename</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+            
+    
+    <span class="c1"># Close netCDF file</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">to_screen</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="make_legend_text"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.make_legend_text">[docs]</a><span class="k">def</span> <span class="nf">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">md</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">datetime</span>
+    
+    <span class="n">alat</span> <span class="o">=</span> <span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;maxlat&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;minlat&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+    
+    <span class="n">text1</span> <span class="o">=</span> <span class="s1">&#39;VESSEL DENSITY HEATMAP&#39;</span>
+<span class="c1">#    print(info)</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="n">text2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Unit description: &#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;unit_description&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Data source: &#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;data_source&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Data source description:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;data_description&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Time range: </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;startdate&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; to &#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;enddate&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Included speeds: &#39;</span> <span class="o">+</span> <span class="n">info</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">included_speeds</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Included vessels: &#39;</span> <span class="o">+</span> <span class="n">info</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">included_vessel_types</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Grid size: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;bin_size&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; degrees (~&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">degrees_to_meters</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;bin_size&#39;</span><span class="p">],</span> <span class="n">alat</span><span class="p">))))</span><span class="o">+</span> <span class="s1">&#39; m)</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;EPGS code: &#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;epsg_code&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Interpolation: &#39;</span> <span class="o">+</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;interpolation&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Interpolation threshold: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;interp_threshold&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; knots</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Time bin: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;time_bin&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">1440</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span>  <span class="s1">&#39; minutes</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Mask below: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;mask_below&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; vessels per grid&#39;</span>
+             <span class="p">)</span>
+    
+    <span class="n">text3</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Creation date: &#39;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> 
+             <span class="s1">&#39;Creation script: &#39;</span> <span class="o">+</span> <span class="n">info</span><span class="o">.</span><span class="n">run_name</span> <span class="o">+</span> <span class="s1">&#39;.py</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Software: ship mapper v0.1</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Created by:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Oceans and Coastal Management Division</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Ecosystem Management Branch</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Fisheries and Oceans Canada – Maritimes Region</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;Bedford Institute of Oceanography</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;PO Box 1006, Dartmouth, NS, Canada, B2Y 4A2&#39;</span>
+         <span class="p">)</span>
+    
+    <span class="n">text4</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;---------------------------------------------------------------</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;WARNING: This is a preliminary data product.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;We cannot ​guarantee the validity, accuracy, </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;or quality of this product. ​Data is provided</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;on an &quot;AS IS&quot; basis. ​USE AT YOUR OWN RISK.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span>
+             <span class="s1">&#39;---------------------------------------------------------------</span><span class="se">\n</span><span class="s1">&#39;</span>
+         <span class="p">)</span>
+    
+    
+    
+    <span class="k">return</span> <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span></div>
+
+
+
+<div class="viewcode-block" id="map_dots"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.map_dots">[docs]</a><span class="k">def</span> <span class="nf">map_dots</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
+    <span class="c1"># -----------------------------------------------------------------------------</span>
+        
+    <span class="n">d</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
+    <span class="c1"># Define boundaries</span>
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>  
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span>
+    
+    
+    
+    <span class="n">path_to_basemap</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;ancillary&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------------------------------------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------------------------------------------&#39;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">sidebar</span><span class="p">:</span>
+        <span class="n">basemap_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_to_basemap</span> <span class="o">/</span> <span class="s1">&#39;basemap_sidebar.p&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">basemap_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path_to_basemap</span> <span class="o">/</span> <span class="s1">&#39;basemap.p&#39;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">basemap_file</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,[</span><span class="n">minlat</span><span class="p">,</span><span class="n">maxlat</span><span class="p">,</span><span class="n">minlon</span><span class="p">,</span><span class="n">maxlon</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found basemap...&#39;</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">basemap_file</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>  <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">#    </span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="c1">#    # Save map as png</span>
+<span class="c1">#    if save:</span>
+<span class="c1">#        filedir = str(info.dirs.pngs)</span>
+<span class="c1">#        sm.checkDir(filedir)</span>
+<span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
+<span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
+   
+    <span class="k">return</span></div>
+
+
+
+
+<div class="viewcode-block" id="map_dots_one_ship"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.map_dots_one_ship">[docs]</a><span class="k">def</span> <span class="nf">map_dots_one_ship</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">Ship_No</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
+    <span class="c1"># -----------------------------------------------------------------------------</span>
+        
+    <span class="n">d</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
+    <span class="c1"># Define boundaries</span>
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>  
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">minlat</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span>
+        <span class="n">maxlat</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span>
+        <span class="n">minlon</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span>
+        <span class="n">maxlon</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span>
+    
+    
+    
+    <span class="n">path_to_basemap</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;ancillary&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------------------------------------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------------------------------------------&#39;</span><span class="p">)</span>
+    
+<span class="c1">#    basemap_file = str(path_to_basemap / &#39;basemap_spots.p&#39;)</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,[</span><span class="n">minlat</span><span class="p">,</span><span class="n">maxlat</span><span class="p">,</span><span class="n">minlon</span><span class="p">,</span><span class="n">maxlon</span><span class="p">])</span>
+    
+<span class="c1">#    if not os.path.exists(str(path_to_basemap / &#39;basemap.p&#39;)):</span>
+<span class="c1">#        m = sm.make_basemap(info.dirs.project_path,[minlat,maxlat,minlon,maxlon])</span>
+<span class="c1">#    else:</span>
+<span class="c1">#        print(&#39;Found basemap...&#39;)</span>
+<span class="c1">#        m = pickle.load(open(basemap_file,&#39;rb&#39;))</span>
+        
+    <span class="n">indx</span> <span class="o">=</span> <span class="p">((</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">&gt;</span>  <span class="n">minlon</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">&lt;=</span> <span class="n">maxlon</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">&gt;</span>  <span class="n">minlat</span><span class="p">)</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">&lt;=</span> <span class="n">maxlat</span><span class="p">))</span>
+        
+    <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">Dindex</span><span class="o">=</span><span class="n">indx</span><span class="p">)</span>
+
+    <span class="n">ship_id</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">ship_id</span>
+    <span class="n">unis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">[</span><span class="n">ship_id</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">ship</span> <span class="o">=</span> <span class="n">unis</span><span class="p">[</span><span class="n">Ship_No</span><span class="p">]</span>
+    <span class="n">indxship</span> <span class="o">=</span> <span class="p">(</span><span class="n">filtered_data</span><span class="p">[</span><span class="n">ship_id</span><span class="p">]</span> <span class="o">==</span> <span class="n">ship</span><span class="p">)</span>
+    <span class="n">singleship</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">Dindex</span><span class="o">=</span><span class="n">indxship</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ship id:&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ship</span><span class="p">))</span>
+    
+<span class="c1">#    print(singleship[&#39;longitude&#39;].values)</span>
+<span class="c1">#    print(singleship[&#39;latitude&#39;].values)</span>
+    
+        
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="c1">#    x, y = m(d[&#39;longitude&#39;].values,d[&#39;latitude&#39;].values)</span>
+    
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    
+<span class="c1">#    fig = plt.figure()</span>
+<span class="c1">#    plt.plot(filtered_data[&#39;longitude&#39;].values,filtered_data[&#39;latitude&#39;].values,&#39;.&#39;)</span>
+<span class="c1">#    </span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="c1">#    # Save map as png</span>
+<span class="c1">#    if save:</span>
+<span class="c1">#        filedir = str(info.dirs.pngs)</span>
+<span class="c1">#        sm.checkDir(filedir)</span>
+<span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
+<span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
+   
+    <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="define_path_to_map"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.define_path_to_map">[docs]</a><span class="k">def</span> <span class="nf">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">path_to_basemap</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;one-off&#39;</span><span class="p">:</span>
+            <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;generic&#39;</span><span class="p">:</span>
+            <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">path_to_basemap</span>
+    <span class="k">return</span> <span class="n">path_to_map</span></div>
+
+
+
+<div class="viewcode-block" id="make_basemap"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.make_basemap">[docs]</a><span class="k">def</span> <span class="nf">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">spatial</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Making basemap...&#39;</span><span class="p">)</span>
+    <span class="c1"># -----------------------------------------------------------------------------</span>
+    
+    <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="n">path_to_basemap</span><span class="p">)</span>
+    
+    <span class="n">sm</span><span class="o">.</span><span class="n">checkDir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path_to_map</span><span class="p">))</span>
+    
+
+    <span class="n">minlat</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">maxlat</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">minlon</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">maxlon</span> <span class="o">=</span> <span class="n">spatial</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="c1"># Create map</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Basemap</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;mill&#39;</span><span class="p">,</span> <span class="n">llcrnrlat</span><span class="o">=</span><span class="n">minlat</span><span class="p">,</span><span class="n">urcrnrlat</span><span class="o">=</span><span class="n">maxlat</span><span class="p">,</span>
+                <span class="n">llcrnrlon</span><span class="o">=</span><span class="n">minlon</span><span class="p">,</span> <span class="n">urcrnrlon</span><span class="o">=</span><span class="n">maxlon</span><span class="p">,</span><span class="n">resolution</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
+
+
+    
+    <span class="c1"># TOPO</span>
+    <span class="c1"># Read data from: http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.html</span>
+    <span class="c1"># using the netCDF output option</span>
+<span class="c1">#    bathymetry_file = str(path_to_map / &#39;usgsCeSrtm30v6.nc&#39;)</span>
+    <span class="n">bathymetry_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_to_map</span><span class="p">,</span> <span class="s1">&#39;usgsCeSrtm30v6.nc&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">):</span>
+        <span class="n">isub</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s1">&#39;http://coastwatch.pfeg.noaa.gov/erddap/griddap/usgsCeSrtm30v6.nc?&#39;</span>
+        <span class="n">query</span><span class="o">=</span><span class="s1">&#39;topo[(</span><span class="si">%f</span><span class="s1">):</span><span class="si">%d</span><span class="s1">:(</span><span class="si">%f</span><span class="s1">)][(</span><span class="si">%f</span><span class="s1">):</span><span class="si">%d</span><span class="s1">:(</span><span class="si">%f</span><span class="s1">)]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">maxlat</span><span class="p">,</span><span class="n">isub</span><span class="p">,</span><span class="n">minlat</span><span class="p">,</span><span class="n">minlon</span><span class="p">,</span><span class="n">isub</span><span class="p">,</span><span class="n">maxlon</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">base_url</span><span class="o">+</span><span class="n">query</span>
+        <span class="c1"># store data in NetCDF file</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">bathymetry_file</span><span class="p">)</span>
+    <span class="c1"># open NetCDF data in </span>
+    <span class="n">nc</span> <span class="o">=</span> <span class="n">netCDF4</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">)</span>
+    <span class="n">ncv</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">ncv</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">][:]</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">ncv</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">][:]</span>
+    <span class="n">lons</span><span class="p">,</span> <span class="n">lats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">)</span>
+    <span class="n">topo</span> <span class="o">=</span> <span class="n">ncv</span><span class="p">[</span><span class="s1">&#39;topo&#39;</span><span class="p">][:,:]</span>
+<span class="c1">#    </span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+    
+<span class="c1">#    ax = fig.add_axes([0.05,0.05,0.80,1])</span>
+<span class="c1">#    ax = fig.add_axes([0,0,0.80,1])</span>
+    
+
+
+    
+<span class="c1">#    ax = fig.add_axes([0.23,0.035,0.85,0.9])</span>
+    <span class="k">if</span> <span class="n">sidebar</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">24</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">colspan</span><span class="o">=</span><span class="mi">19</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.94</span><span class="p">,</span><span class="mf">0.94</span><span class="p">])</span>
+    
+    <span class="n">TOPOmasked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">(</span><span class="n">topo</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="n">topo</span><span class="p">)</span>
+
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span><span class="n">lats</span><span class="p">,</span><span class="n">TOPOmasked</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">load_my_cmap</span><span class="p">(</span><span class="s1">&#39;my_cmap_lightblue&#39;</span><span class="p">),</span><span class="n">latlon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">#    m.drawcoastlines(color=&#39;#A27D0C&#39;,linewidth=0.5,zorder=25)</span>
+<span class="c1">#    m.fillcontinents(color=&#39;#E1E1A0&#39;,zorder=23)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">drawcoastlines</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#a6a6a6&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">fillcontinents</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#e6e6e6&#39;</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">23</span><span class="p">)</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">drawmapboundary</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">setcolor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+         <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                 <span class="n">t</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+
+    <span class="n">parallels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minlat</span><span class="p">,</span><span class="n">maxlat</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">parallels</span><span class="p">)</span>
+    <span class="c1"># labels = [left,right,top,bottom]</span>
+    <span class="n">par</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">drawparallels</span><span class="p">(</span><span class="n">parallels</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">],</span><span class="n">dashes</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">setcolor</span><span class="p">(</span><span class="n">par</span><span class="p">,</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span>                      
+    <span class="n">meridians</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minlon</span><span class="p">,</span><span class="n">maxlon</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">meridians</span><span class="p">)</span>
+    <span class="n">mers</span> <span class="o">=</span>  <span class="n">m</span><span class="o">.</span><span class="n">drawmeridians</span><span class="p">(</span><span class="n">meridians</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">],</span><span class="n">dashes</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">setcolor</span><span class="p">(</span><span class="n">mers</span><span class="p">,</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span> 
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="c1">#    ax.axhline(linewidth=4, color=&quot;#00a3cc&quot;)        </span>
+<span class="c1">#    ax.axvline(linewidth=4, color=&quot;#00a3cc&quot;) </span>
+<span class="c1">#    </span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;#00a3cc&#39;</span><span class="p">)</span>
+             
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1">#ax.spines is a dictionary</span>
+        <span class="n">spine</span><span class="o">.</span><span class="n">set_zorder</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span>    
+
+<span class="c1">#    ax.spines[&#39;top&#39;].set_visible(False)</span>
+<span class="c1">#    ax.spines[&#39;right&#39;].set_visible(False)</span>
+<span class="c1">#    ax.spines[&#39;bottom&#39;].set_visible(False)</span>
+<span class="c1">#    ax.spines[&#39;left&#39;].set_visible(False)</span>
+  
+<span class="c1">#    fig.tight_layout(pad=0.25)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="o">.</span><span class="mi">99</span><span class="p">,</span><span class="o">.</span><span class="mi">99</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">sidebar</span><span class="p">:</span>
+        <span class="n">basemap_name</span> <span class="o">=</span> <span class="s1">&#39;basemap_sidebar.p&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">basemap_name</span> <span class="o">=</span> <span class="s1">&#39;basemap.p&#39;</span>
+    
+    <span class="c1"># Save basemap</span>
+    <span class="n">save_basemap</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="n">path_to_map</span><span class="p">)</span>
+<span class="c1">#    picklename = str(path_to_map / basemap_name)</span>
+<span class="c1">#    pickle.dump(m,open(picklename,&#39;wb&#39;),-1)</span>
+<span class="c1">#    print(&#39;!!! Pickle just made: &#39; + picklename)</span>
+<span class="c1">#    </span>
+<span class="c1">##    pngDir = &#39;C:\\Users\\IbarraD\\Documents\\VMS\\png\\&#39;</span>
+<span class="c1">##    plt.savefig(datadir[0:-5] + &#39;png\\&#39; + filename + &#39;- Grid&#39; + str(BinNo) + &#39; - Filter&#39; +str(downLim) + &#39;-&#39; + str(upLim) + &#39;.png&#39;)</span>
+<span class="c1">#    plt.savefig(&#39;test.png&#39;)</span>
+    
+    <span class="k">return</span> <span class="n">m</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="load_my_cmap"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.load_my_cmap">[docs]</a><span class="k">def</span> <span class="nf">load_my_cmap</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="c1">#    cdict = {&#39;red&#39;: ((0.0, 0.0, 0.0),</span>
+<span class="c1">#                     (1.0, 0.7, 0.7)),</span>
+<span class="c1">#           &#39;green&#39;: ((0.0, 0.25, 0.25),</span>
+<span class="c1">#                     (1.0, 0.85, 0.85)),</span>
+<span class="c1">#            &#39;blue&#39;: ((0.0, 0.5, 0.5),</span>
+<span class="c1">#                     (1.0, 1.0, 1.0))}</span>
+<span class="c1">#    my_cmap = LinearSegmentedColormap(&#39;my_colormap&#39;,cdict,256)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;my_cmap_lightblue&#39;</span><span class="p">:</span>
+        <span class="n">cdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Dark</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)),</span> <span class="c1"># Light</span>
+               <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)),</span>
+                <span class="s1">&#39;blue&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))}</span>
+        <span class="n">my_cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span><span class="n">cdict</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;my_cmap_amber2red&#39;</span><span class="p">:</span>
+    <span class="c1">#    cdict = {&#39;red&#39;: ((0.0, 1.0, 1.0),</span>
+    <span class="c1">#                     (1.0, 0.5, 0.5)),</span>
+    <span class="c1">#           &#39;green&#39;: ((0.0, 1.0, 1.0),</span>
+    <span class="c1">#                     (1.0, 0.0, 0.0)),</span>
+    <span class="c1">#            &#39;blue&#39;: ((0.0, 0.0, 0.0),</span>
+    <span class="c1">#                     (1.0, 0.0, 0.0))}</span>
+    <span class="c1">#    my_cmap_yellow2red = LinearSegmentedColormap(&#39;my_colormap&#39;,cdict,256)</span>
+        <span class="n">cdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span>
+               <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)),</span>
+                <span class="s1">&#39;blue&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))}</span>
+        <span class="n">my_cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span><span class="n">cdict</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;my_cmap_red2black&#39;</span><span class="p">:</span>
+        
+<span class="c1">#        c1 = np.array([252,142,110])/256 #RGB/256</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">250</span><span class="p">,</span><span class="mi">59</span><span class="p">,</span><span class="mi">59</span><span class="p">])</span><span class="o">/</span><span class="mi">256</span> <span class="c1">#RGB/256</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">103</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">13</span><span class="p">])</span><span class="o">/</span><span class="mi">256</span> <span class="c1">#RGB/256</span>
+        
+        <span class="n">cdict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">c1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c1</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">c2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c2</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span>
+               <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">c1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c1</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">c2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c2</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span>
+                <span class="s1">&#39;blue&#39;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">c1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">c1</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                         <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">c2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">c2</span><span class="p">[</span><span class="mi">2</span><span class="p">]))}</span>
+        <span class="n">my_cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="p">(</span><span class="s1">&#39;my_colormap&#39;</span><span class="p">,</span><span class="n">cdict</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cmap name does not match any of the available cmaps&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span>  <span class="n">my_cmap</span></div>
+
+
+<div class="viewcode-block" id="save_basemap"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.mapper.save_basemap">[docs]</a><span class="k">def</span> <span class="nf">save_basemap</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Saves basemap (and correspoding info.grid) to a pickle file</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="c1">#    </span>
+<span class="c1">#    basemap = [grid, m]</span>
+<span class="c1">#    f = open(str(path_to_map / (info.grid.basemap + &#39;.p&#39;)),&#39;w&#39;)</span>
+<span class="c1">#    pickle.dump(grid, f)</span>
+<span class="c1">#    pickle.dump(m, f)</span>
+<span class="c1">#    f.close()</span>
+    
+<span class="c1">#    picklename = str(path_to_map / (info.grid.basemap + &#39;.p&#39;))</span>
+<span class="c1">#    pickle.dump(basemap, open(picklename, &#39;wb&#39;), -1)</span>
+<span class="c1">#    print(&#39;!!! Pickle just made: &#39; + picklename)</span>
+    
+    <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="n">path_to_basemap</span><span class="p">)</span>
+        
+<span class="c1">#    basemap_picklename = str(path_to_map / (info.grid.basemap + &#39;.basemap&#39;))</span>
+    <span class="n">basemap_picklename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_to_map</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">basemap</span> <span class="o">+</span> <span class="s1">&#39;.basemap&#39;</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">basemap_picklename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="c1">#    info_picklename = str(path_to_map / (info.grid.basemap + &#39;.grid&#39;))</span>
+    <span class="n">info_picklename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_to_map</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">basemap</span> <span class="o">+</span> <span class="s1">&#39;.grid&#39;</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">info_picklename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! Pickles were just made: &#39;</span> <span class="o">+</span>  <span class="n">basemap_picklename</span><span class="p">)</span>
+    <span class="k">return</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
