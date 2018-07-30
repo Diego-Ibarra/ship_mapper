@@ -1,12 +1,21 @@
-name: tutorials2
+name: tutorials
 channels:
   - defaults
 dependencies:
-  - certifi=2018.4.16
-  - pip=10.0.1
-  - python=3.5.5
-  - setuptools=39.2.0
-  - vc=14.1
-  - vs2015_runtime=15.5.2
-  - wheel=0.31.1
-  - wincertstore=0.2
+  - ca-certificates=2018.03.07=0
+  - certifi=2018.4.16=py35_0
+  - libedit=3.1.20170329=h6b74fdf_2
+  - libffi=3.2.1=hd88cf55_4
+  - libgcc-ng=7.2.0=hdf63c60_3
+  - libstdcxx-ng=7.2.0=hdf63c60_3
+  - ncurses=6.1=hf484d3e_0
+  - openssl=1.0.2o=h20670df_0
+  - pip=10.0.1=py35_0
+  - python=3.5.5=hc3d631a_4
+  - readline=7.0=ha6073c6_4
+  - setuptools=39.2.0=py35_0
+  - sqlite=3.24.0=h84994c4_0
+  - tk=8.6.7=hc745277_3
+  - wheel=0.31.1=py35_0
+  - xz=5.2.4=h14c3975_4
+  - zlib=1.2.11=ha838bed_2
