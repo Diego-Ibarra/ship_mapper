@@ -1,12 +1,14 @@
 API
 =========
 
+Code is divided into the following modules:
 
-.. automodule:: gridder
-   :members:
-   
-.. automodule:: mapper
-   :members:
-   
-   
-.. autofunction:: converters.bulk_convert_to_nc
+
+.. toctree::
+   :maxdepth: 3
+
+   ./gridder
+   ./mapper
+   ./info_object
+   ./utils
+   ./converters

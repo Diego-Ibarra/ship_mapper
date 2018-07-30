@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; ship_mapper 0.1 documentation</title>
+  <title>Info_object &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -34,8 +34,11 @@
   
         <link rel="index" title="Index"
               href="genindex.html"/>
-        <link rel="search" title="Search" href="#"/>
-    <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/> 
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/>
+        <link rel="up" title="API" href="api.html"/>
+        <link rel="next" title="Utils" href="utils.html"/>
+        <link rel="prev" title="Mapper" href="mapper.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +70,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -85,11 +88,18 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gridder.html">Gridder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapper.html">Mapper</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Info_object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,10 +144,16 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+      <li>Info_object</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/info_object.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -149,19 +165,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="module-info_object">
+<span id="info-object"></span><h1>Info_object<a class="headerlink" href="#module-info_object" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="info_object.info">
+<em class="property">class </em><code class="descclassname">info_object.</code><code class="descname">info</code><span class="sig-paren">(</span><em>calling_file='.'</em>, <em>run_name='auto'</em>, <em>dir_data_original=None</em>, <em>grid_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>info class makes and ‘info object’ which contains all the metadata
+needed to run a project.</p>
+<dl class="method">
+<dt id="info_object.info.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#info.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.info.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves info into pickle</p>
+</dd></dl>
 
-  
-  <div id="search-results">
-  
-  </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="info_object.load_info">
+<code class="descclassname">info_object.</code><code class="descname">load_info</code><span class="sig-paren">(</span><em>run_name</em>, <em>path_to_info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#load_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.load_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads “info” file</p>
+<p>Input is full-path to a info.p file or, 
+if None, it will look for ./ancillary/info.p</p>
+</dd></dl>
+
+</div>
+
 
            </div>
            <div class="articleComments">
@@ -169,6 +197,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utils.html" class="btn btn-neutral float-right" title="Utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mapper.html" class="btn btn-neutral" title="Mapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -207,7 +244,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -223,14 +259,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

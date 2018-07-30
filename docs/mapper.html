@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; ship_mapper 0.1 documentation</title>
+  <title>Mapper &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -34,8 +34,11 @@
   
         <link rel="index" title="Index"
               href="genindex.html"/>
-        <link rel="search" title="Search" href="#"/>
-    <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/> 
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/>
+        <link rel="up" title="API" href="api.html"/>
+        <link rel="next" title="Info_object" href="info_object.html"/>
+        <link rel="prev" title="Gridder" href="gridder.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +70,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -85,11 +88,18 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gridder.html">Gridder</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="info_object.html">Info_object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,10 +144,16 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+      <li>Mapper</li>
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/mapper.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
     
@@ -149,19 +165,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="module-mapper">
+<span id="mapper"></span><h1>Mapper<a class="headerlink" href="#module-mapper" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="mapper.map_density">
+<code class="descclassname">mapper.</code><code class="descname">map_density</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em>, <em>cmap='Default'</em>, <em>sidebar=False</em>, <em>to_screen=True</em>, <em>save=True</em>, <em>filename_out='auto'</em>, <em>filedir_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#map_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.map_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a map using a gridded (or merged) file</p>
+</dd></dl>
 
-  
-  <div id="search-results">
-  
-  </div>
+<dl class="function">
+<dt id="mapper.save_basemap">
+<code class="descclassname">mapper.</code><code class="descname">save_basemap</code><span class="sig-paren">(</span><em>m</em>, <em>info</em>, <em>path_to_basemap='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#save_basemap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.save_basemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves basemap (and correspoding info.grid) to a pickle file</p>
+</dd></dl>
+
+</div>
+
 
            </div>
            <div class="articleComments">
@@ -169,6 +188,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="info_object.html" class="btn btn-neutral float-right" title="Info_object" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gridder.html" class="btn btn-neutral" title="Gridder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -207,7 +235,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -223,14 +250,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>

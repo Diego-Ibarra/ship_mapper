@@ -89,6 +89,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
@@ -154,7 +155,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for converters</h1><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">convert_to_nc</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_to_nc"><a class="viewcode-back" href="../converters.html#converters.convert_to_nc">[docs]</a><span></span><span class="k">def</span> <span class="nf">convert_to_nc</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">     Import appropiate converter, which is a file in folder &quot;converters&quot; within</span>
 <span class="sd">     this module, or a customade file in the &quot;path&quot; folder </span>
@@ -174,11 +175,11 @@
     
     <span class="c1"># call converter function from approatie converter file</span>
     <span class="nb">eval</span><span class="p">(</span><span class="n">converter</span> <span class="o">+</span> <span class="s1">&#39;.convert(data_in, data_out)&#39;</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
 
-<div class="viewcode-block" id="bulk_convert_to_nc"><a class="viewcode-back" href="../api.html#converters.bulk_convert_to_nc">[docs]</a><span class="k">def</span> <span class="nf">bulk_convert_to_nc</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_yaml</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="bulk_convert_to_nc"><a class="viewcode-back" href="../converters.html#converters.bulk_convert_to_nc">[docs]</a><span class="k">def</span> <span class="nf">bulk_convert_to_nc</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_yaml</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Just s test docs</span>
 <span class="sd">    &#39;&#39;&#39;</span>

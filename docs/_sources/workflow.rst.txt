@@ -2,4 +2,4 @@ Workflow
 ========
 
 
-.. image:: ./_static/flow_diagram.png
+.. image:: ./_images/flow_diagram.png

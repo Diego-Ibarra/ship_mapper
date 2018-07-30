@@ -1,5 +1,3 @@
-
-
 class info:
     """
     info class makes and 'info object' which contains all the metadata
