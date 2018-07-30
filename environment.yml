@@ -2,11 +2,11 @@ name: tutorials2
 channels:
   - defaults
 dependencies:
-  - certifi=2018.4.16=py35_0
-  - pip=10.0.1=py35_0
-  - python=3.5.5=h0c2934d_2
-  - setuptools=39.2.0=py35_0
-  - vc=14.1=h0510ff6_3
-  - vs2015_runtime=15.5.2=3
-  - wheel=0.31.1=py35_0
-  - wincertstore=0.2=py35hfebbdb8_0
+  - certifi=2018.4.16
+  - pip=10.0.1
+  - python=3.5.5
+  - setuptools=39.2.0
+  - vc=14.1
+  - vs2015_runtime=15.5.2
+  - wheel=0.31.1
+  - wincertstore=0.2
