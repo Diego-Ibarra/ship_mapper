@@ -1,8 +1,10 @@
 API
 =========
 
-TEST! !!
 
+.. automodule:: gridder
+   :members:
+   
 .. automodule:: mapper
    :members:
    

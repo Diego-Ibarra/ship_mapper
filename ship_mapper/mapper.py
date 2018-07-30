@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Feb 20 10:51:50 2018
-
-@author: IbarraD
-"""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

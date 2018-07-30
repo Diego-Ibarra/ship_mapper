@@ -153,12 +153,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api">
-<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<p>TEST! !!</p>
-<span class="target" id="module-mapper"></span><p>Created on Tue Feb 20 10:51:50 2018</p>
+  <div class="section" id="module-gridder">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-gridder" title="Permalink to this headline">¶</a></h1>
+<p>Created on Thu Feb 15 09:19:49 2018</p>
 <p>&#64;author: IbarraD</p>
 <dl class="function">
+<dt id="gridder.calculate_gridcell_areas">
+<code class="descclassname">gridder.</code><code class="descname">calculate_gridcell_areas</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#calculate_gridcell_areas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.calculate_gridcell_areas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output in km^2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridder.getWKT_PRJ">
+<code class="descclassname">gridder.</code><code class="descname">getWKT_PRJ</code><span class="sig-paren">(</span><em>epsg_code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#getWKT_PRJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.getWKT_PRJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads and returns geospatial parameters given a epsg code</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridder.grid_merger">
+<code class="descclassname">gridder.</code><code class="descname">grid_merger</code><span class="sig-paren">(</span><em>info</em>, <em>files=None</em>, <em>filename_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#grid_merger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.grid_merger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines several gridded files into one</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridder.gridder">
+<code class="descclassname">gridder.</code><code class="descname">gridder</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>filename_out</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#gridder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.gridder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts “pings” inside a gridcell and computes “Ship minutes per km2”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridder.gridder_pingsPerCell">
+<code class="descclassname">gridder.</code><code class="descname">gridder_pingsPerCell</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>file_name</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#gridder_pingsPerCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.gridder_pingsPerCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gridder.mergedgrid_to_shp">
+<code class="descclassname">gridder.</code><code class="descname">mergedgrid_to_shp</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#mergedgrid_to_shp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.mergedgrid_to_shp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a gridded file into a shapefile</p>
+</dd></dl>
+
+<span class="target" id="module-mapper"></span><dl class="function">
 <dt id="mapper.map_density">
 <code class="descclassname">mapper.</code><code class="descname">map_density</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em>, <em>cmap='Default'</em>, <em>sidebar=False</em>, <em>to_screen=True</em>, <em>save=True</em>, <em>filename_out='auto'</em>, <em>filedir_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#map_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.map_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a map using a gridded (or merged) file</p>
