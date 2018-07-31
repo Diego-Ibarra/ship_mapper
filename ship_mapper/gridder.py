@@ -22,8 +22,11 @@ def gridder(info, data_in, filename_out, overwrite=False):
     :param info info: `info` object containing metadata
     :param xarray.DataSet data_in: Data
     :param str filename_out: Name of file that will be writen as output
-    :param boolean overwrite: If true older files will be overwritten. 
-                              If False, only new files will be processed
+    :param boolean overwrite: If ``True`` older files will be overwritten. If ``False``, only new files will be processed
+                              
+    .. seealso::
+        
+        .. function:: gridder_pingsPerCell
     '''
     
     print('gridder ---------------------------------------------')
