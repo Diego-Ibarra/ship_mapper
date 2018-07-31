@@ -6,4 +6,4 @@ Tutorials: Table of Contents
 #. `Whero to Python? Console/Spyder/Jypyter-Notebook <https://google.ca>`_
 #. `Python Environments <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Python_environments.ipynb>`_
 #. `How to install modules <https://google.ca>`_
-#. `Install ship_mapper <https://google.ca>`_
+#. `Install ship_mapper <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Install_ship_mapper.ipynb>`_
