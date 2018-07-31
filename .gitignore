@@ -4,7 +4,7 @@ gridded_data/*
 pngs/*
 .pypirc
 
-!/tutorials/media/
+!/tutorials/media/Maritimes_basemap.png
 !/tutorials/media/**
 
 
