@@ -7,3 +7,5 @@ Tutorials: Table of Contents
 #. `Python Environments <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Python_environments.ipynb>`_
 #. `How to install modules <https://google.ca>`_
 #. `Install ship_mapper <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Install_ship_mapper.ipynb>`_
+#. `Download ship_mapper examples <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Install_ship_mapper.ipynb>`_
+#. `Example 1: Maritimes AIS examples <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Maritimes_AIS.ipynb>`_
