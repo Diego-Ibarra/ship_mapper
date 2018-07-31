@@ -1,7 +1,8 @@
 Installation
 -------------
 
-It is recommended that you make an [environment](https://conda.io/docs/user-guide/tasks/manage-environments) dedicated to run `ship_mapper`.
+It is recommended that you make an `environment <https://conda.io/docs/user-guide/tasks/manage-environments>`_ dedicated to run `ship_mapper`.
+
 
 Then, `activate` your dedicated environment, and install a couple of dependencies that do not install by defaul:
 
