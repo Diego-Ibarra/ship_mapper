@@ -4,8 +4,6 @@ gridded_data/*
 pngs/*
 .pypirc
 
-!/tutorials/media/Maritimes_basemap.png
-!/tutorials/media/**
 
 
 *.p
@@ -13,7 +11,8 @@ pngs/*
 
 !/docs/source/_static/
 !/docs/source/_static/**
-
+!/tutorials/media/Maritimes_basemap1.png
+!/tutorials/media/**
 
 
 # Below here was created automatically by Github
