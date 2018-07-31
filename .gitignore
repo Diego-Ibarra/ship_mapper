@@ -4,6 +4,9 @@ gridded_data/*
 pngs/*
 .pypirc
 
+!/tutorials/media/
+!/tutorials/media/**
+
 
 *.p
 *.png
