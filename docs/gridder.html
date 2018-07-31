@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Mapper" href="mapper.html" />
-    <link rel="prev" title="API" href="api.html" /> 
+    <link rel="prev" title="Documentation" href="docs.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,18 +79,18 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Gridder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
 </ul>
 
             
@@ -136,8 +136,6 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="api.html">API</a> &raquo;</li>
-        
       <li>Gridder</li>
     
     
@@ -159,17 +157,43 @@
             
   <div class="section" id="module-gridder">
 <span id="gridder"></span><h1>Gridder<a class="headerlink" href="#module-gridder" title="Permalink to this headline">¶</a></h1>
-<p>Fucntions that condense a list of vessel “pings” into a 2-dimensional grid.</p>
+<p>Fucntions that condense a list “pings” (i.e. vessel positions) into a 2-dimensional grid.</p>
 <dl class="function">
 <dt id="gridder.calculate_gridcell_areas">
 <code class="descclassname">gridder.</code><code class="descname">calculate_gridcell_areas</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#calculate_gridcell_areas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.calculate_gridcell_areas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output in km^2</p>
+<dd><p>Calculates the area of each of the grid-cells in the domain (in km^2)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <cite>info</cite> object WITHOUT <cite>info.grid.areas</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><cite>info</cite> object WITH <cite>info.grid.areas</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="info_object.html#info_object.info" title="info_object.info">info</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="gridder.getWKT_PRJ">
 <code class="descclassname">gridder.</code><code class="descname">getWKT_PRJ</code><span class="sig-paren">(</span><em>epsg_code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#getWKT_PRJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.getWKT_PRJ" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads and returns geospatial parameters given a epsg code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>epsg_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Code referencing to an entry in the EPSG Geodetic Parameter Dataset,
+which is a collection of definitions of coordinate reference
+systems and coordinate transformations</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">geospatial parameters</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -181,7 +205,22 @@
 <dl class="function">
 <dt id="gridder.gridder">
 <code class="descclassname">gridder.</code><code class="descname">gridder</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>filename_out</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#gridder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.gridder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Counts “pings” inside a gridcell and computes “Ship minutes per km2”</p>
+<dd><p>Counts “pings” inside a grid-cell and computes “Ship minutes per km2”</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <cite>info</cite> object containing metadata</li>
+<li><strong>data_in</strong> (<em>xarray.DataSet</em>) – Data</li>
+<li><strong>filename_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of file that will be writen as output</li>
+<li><strong>overwrite</strong> (<em>boolean</em>) – If true older files will be overwritten. 
+If False, only new files will be processed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -209,7 +248,7 @@
         <a href="mapper.html" class="btn btn-neutral float-right" title="Mapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api.html" class="btn btn-neutral" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="docs.html" class="btn btn-neutral" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

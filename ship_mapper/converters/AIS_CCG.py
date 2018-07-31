@@ -1,14 +1,15 @@
-"""
-This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terrestrial)
-"""
-
 def convert(file_in, file_out, data_info_file):
     '''
+    This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terrestrial)
+    
     :param str file_in: Input file (.csv)
     
     :param str file_out: Output file (.nc)
     
     :param str data_info_file: YAML file describing other conversion parameters (.yml)
+    
+    :return: A netCDF file (.nc) in a format standard for "ship_mapper" 
+             containing the original data, but also containing metadata included in the data_info.yml file
     '''
     import pandas as pd
     import numpy as np

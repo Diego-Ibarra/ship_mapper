@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="Gridder" href="gridder.html" />
     <link rel="prev" title="Workflow" href="workflow.html" /> 
 
   
@@ -83,10 +83,18 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#official-documentation">Official documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#build">Build</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
 </ul>
 
             
@@ -153,12 +161,21 @@
             
   <div class="section" id="documentation">
 <h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="official-documentation">
+<h2>Official documentation<a class="headerlink" href="#official-documentation" title="Permalink to this headline">¶</a></h2>
 <p>Can be found here: <a class="reference external" href="https://diego-ibarra.github.io/ship_mapper/index.html">https://diego-ibarra.github.io/ship_mapper/index.html</a></p>
+</div>
 <div class="section" id="build">
 <h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sphinx-build -b html C:\Users\IbarraD\ship_mapper\docs\sphinx C:\Users\IbarraD\ship_mapper\docs
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The following information is <strong>only</strong> for developers and maintainers of docs.</p>
+</div>
+<p>Everytime you update the <cite>.rts</cite> documentation source files, you will need to run this in the console…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="o">-</span><span class="n">E</span> <span class="o">-</span><span class="n">a</span> <span class="o">-</span><span class="n">b</span> <span class="n">html</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">IbarraD</span>\<span class="n">ship_mapper</span>\<span class="n">docs</span>\<span class="n">sphinx</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">IbarraD</span>\<span class="n">ship_mapper</span>\<span class="n">docs</span>
 </pre></div>
 </div>
+<p>Note: Replace the paths to reflect your computer</p>
 </div>
 </div>
 
@@ -170,7 +187,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="gridder.html" class="btn btn-neutral float-right" title="Gridder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="workflow.html" class="btn btn-neutral" title="Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

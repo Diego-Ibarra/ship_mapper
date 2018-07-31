@@ -1,5 +1,5 @@
 '''
-Fucntions that condense a list of vessel "pings" into a 2-dimensional grid.
+Fucntions that condense a list "pings" (i.e. vessel positions) into a 2-dimensional grid.
 
 
 '''
@@ -17,7 +17,13 @@ import ship_mapper as sm
 
 def gridder(info, data_in, filename_out, overwrite=False):
     '''
-    Counts "pings" inside a gridcell and computes "Ship minutes per km2"
+    Counts "pings" inside a grid-cell and computes "Ship minutes per km2"
+    
+    :param info info: `info` object containing metadata
+    :param xarray.DataSet data_in: Data
+    :param str filename_out: Name of file that will be writen as output
+    :param boolean overwrite: If true older files will be overwritten. 
+                              If False, only new files will be processed
     '''
     
     print('gridder ---------------------------------------------')
@@ -402,6 +408,15 @@ def grid_merger(info, files=None, filename_out='auto'):
 def getWKT_PRJ (epsg_code):
     '''
     Downloads and returns geospatial parameters given a epsg code
+    
+    :param str epsg_code: Code referencing to an entry in the EPSG Geodetic Parameter Dataset,
+                          which is a collection of definitions of coordinate reference
+                          systems and coordinate transformations
+                          
+    :return: geospatial parameters
+    
+    :rtype: str
+                          
     '''
     import urllib.request
     wkt = urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/prettywkt/".format(epsg_code))
@@ -461,7 +476,13 @@ def mergedgrid_to_shp(info, file_in=None):
 
 def calculate_gridcell_areas(info):
     '''
-    Output in km^2
+    Calculates the area of each of the grid-cells in the domain (in km^2)
+    
+    :param info info: `info` object WITHOUT `info.grid.areas`
+    
+    :return: `info` object WITH `info.grid.areas`
+    
+    :rtype: info
     '''
     import ship_mapper as sm
     

@@ -81,7 +81,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../docs.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../converters.html">Converters</a></li>
 </ul>
 
             
@@ -145,17 +152,18 @@
            <div itemprop="articleBody">
             
   <h1>Source code for AIS_CCG</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terrestrial)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../AIS_CCG.html#AIS_CCG.convert">[docs]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">file_out</span><span class="p">,</span> <span class="n">data_info_file</span><span class="p">):</span>
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../AIS_CCG.html#AIS_CCG.convert">[docs]</a><span></span><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">file_out</span><span class="p">,</span> <span class="n">data_info_file</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terrestrial)</span>
+<span class="sd">    </span>
 <span class="sd">    :param str file_in: Input file (.csv)</span>
 <span class="sd">    </span>
 <span class="sd">    :param str file_out: Output file (.nc)</span>
 <span class="sd">    </span>
 <span class="sd">    :param str data_info_file: YAML file describing other conversion parameters (.yml)</span>
+<span class="sd">    </span>
+<span class="sd">    :return: A netCDF file (.nc) in a format standard for &quot;ship_mapper&quot; </span>
+<span class="sd">             containing the original data, but also containing metadata included in the data_info.yml file</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
     <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>

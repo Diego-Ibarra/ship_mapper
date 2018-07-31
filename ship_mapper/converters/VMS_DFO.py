@@ -1,6 +1,3 @@
-"""
-This is a csv to nc converter for VMS data
-"""
 import pandas as pd
 import numpy as np
 import datetime
@@ -11,11 +8,16 @@ import ship_mapper as sm
 
 def convert(file_in, file_out, data_info_file):
     '''
+    This is a csv to nc converter for VMS data
+    
     :param str file_in: Input file (.csv)
     
     :param str file_out: Output file (.nc)
     
     :param str data_info_file: YAML file describing other conversion parameters (.yml)
+    
+    :return: A netCDF file (.nc) in a format standard for "ship_mapper" 
+             containing the original data, but also containing metadata included in the data_info.yml file
     '''
     #Load data
     data = pd.read_html(file_in)[0]
