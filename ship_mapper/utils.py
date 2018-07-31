@@ -28,6 +28,14 @@ def distance(lat1,lon1,lat2,lon2):
 def estimate_velocity(seconds, distance):
     '''
     Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)
+    
+    
+    :param float seconds: Elapsed time (in seconds).
+        
+    :param float distance: Elapsed distance (in meters).
+    
+    :return: Estimated velocity (in knots)
+    :rtype: float
     '''
     velocity_m = distance/seconds #units: meters / second
     velocity_k = velocity_m * 1.943844 #units: knots
@@ -114,8 +122,7 @@ def checkDir(directory):
     '''
     Check if ``directory`` exists. In not, make it!
 
-    parameters:
-        directory (str): Absolute path of directory to check and/or make.
+    :param str directory: Absolute path of directory to check and/or make.
     '''
 
     if not os.path.exists(directory):

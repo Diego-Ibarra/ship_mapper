@@ -11,7 +11,11 @@ import ship_mapper as sm
 
 def convert(file_in, file_out, data_info_file):
     '''
-    test3
+    :param str file_in: Input file (.csv)
+    
+    :param str file_out: Output file (.nc)
+    
+    :param str data_info_file: YAML file describing other conversion parameters (.yml)
     '''
     #Load data
     data = pd.read_html(file_in)[0]

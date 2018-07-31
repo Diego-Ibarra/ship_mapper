@@ -1,3 +1,10 @@
+'''
+Fucntions that condense a list of vessel "pings" into a 2-dimensional grid.
+
+
+'''
+
+
 import pandas as pd
 import numpy as np
 import xarray as xr

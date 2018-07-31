@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Gridder &mdash; ship_mapper 0.1 documentation</title>
+  <title>VMS_DFO Converter &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/>
-        <link rel="up" title="API" href="api.html"/>
-        <link rel="next" title="Mapper" href="mapper.html"/>
-        <link rel="prev" title="API" href="api.html"/> 
+        <link rel="up" title="Converters" href="converters.html"/>
+        <link rel="next" title="VMS_DFO_Oracle Converter" href="VMS_DFO_Oracle.html"/>
+        <link rel="prev" title="AIS_CCG Converter" href="AIS_CCG.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -93,11 +93,16 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Gridder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gridder.html">Gridder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mapper.html">Mapper</a></li>
 <li class="toctree-l2"><a class="reference internal" href="info_object.html">Info_object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="converters.html">Converters</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">VMS_DFO Converter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="VMS_DFO_Oracle.html">VMS_DFO_Oracle Converter</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -146,13 +151,15 @@
         
           <li><a href="api.html">API</a> &raquo;</li>
         
-      <li>Gridder</li>
+          <li><a href="converters.html">Converters</a> &raquo;</li>
+        
+      <li>VMS_DFO Converter</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/gridder.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/VMS_DFO.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,43 +172,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-gridder">
-<span id="gridder"></span><h1>Gridder<a class="headerlink" href="#module-gridder" title="Permalink to this headline">¶</a></h1>
-<p>Fucntions that condense a list of vessel “pings” into a 2-dimensional grid.</p>
+  <div class="section" id="module-VMS_DFO">
+<span id="vms-dfo-converter"></span><h1>VMS_DFO Converter<a class="headerlink" href="#module-VMS_DFO" title="Permalink to this headline">¶</a></h1>
+<p>This is a csv to nc converter for VMS data</p>
 <dl class="function">
-<dt id="gridder.calculate_gridcell_areas">
-<code class="descclassname">gridder.</code><code class="descname">calculate_gridcell_areas</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#calculate_gridcell_areas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.calculate_gridcell_areas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Output in km^2</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="gridder.getWKT_PRJ">
-<code class="descclassname">gridder.</code><code class="descname">getWKT_PRJ</code><span class="sig-paren">(</span><em>epsg_code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#getWKT_PRJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.getWKT_PRJ" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads and returns geospatial parameters given a epsg code</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="gridder.grid_merger">
-<code class="descclassname">gridder.</code><code class="descname">grid_merger</code><span class="sig-paren">(</span><em>info</em>, <em>files=None</em>, <em>filename_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#grid_merger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.grid_merger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Combines several gridded files into one</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="gridder.gridder">
-<code class="descclassname">gridder.</code><code class="descname">gridder</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>filename_out</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#gridder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.gridder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Counts “pings” inside a gridcell and computes “Ship minutes per km2”</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="gridder.gridder_pingsPerCell">
-<code class="descclassname">gridder.</code><code class="descname">gridder_pingsPerCell</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>file_name</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#gridder_pingsPerCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.gridder_pingsPerCell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="gridder.mergedgrid_to_shp">
-<code class="descclassname">gridder.</code><code class="descname">mergedgrid_to_shp</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gridder.html#mergedgrid_to_shp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gridder.mergedgrid_to_shp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a gridded file into a shapefile</p>
+<dt id="VMS_DFO.convert">
+<code class="descclassname">VMS_DFO.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>file_in</em>, <em>file_out</em>, <em>data_info_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/VMS_DFO.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VMS_DFO.convert" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input file (.csv)</li>
+<li><strong>file_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Output file (.nc)</li>
+<li><strong>data_info_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – YAML file describing other conversion parameters (.yml)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -216,10 +205,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mapper.html" class="btn btn-neutral float-right" title="Mapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="VMS_DFO_Oracle.html" class="btn btn-neutral float-right" title="VMS_DFO_Oracle Converter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api.html" class="btn btn-neutral" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="AIS_CCG.html" class="btn btn-neutral" title="AIS_CCG Converter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

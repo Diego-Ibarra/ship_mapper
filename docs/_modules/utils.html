@@ -185,6 +185,14 @@
 <div class="viewcode-block" id="estimate_velocity"><a class="viewcode-back" href="../utils.html#utils.estimate_velocity">[docs]</a><span class="k">def</span> <span class="nf">estimate_velocity</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    :param float seconds: Elapsed time (in seconds).</span>
+<span class="sd">        </span>
+<span class="sd">    :param float distance: Elapsed distance (in meters).</span>
+<span class="sd">    </span>
+<span class="sd">    :return: Estimated velocity (in knots)</span>
+<span class="sd">    :rtype: float</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">velocity_m</span> <span class="o">=</span> <span class="n">distance</span><span class="o">/</span><span class="n">seconds</span> <span class="c1">#units: meters / second</span>
     <span class="n">velocity_k</span> <span class="o">=</span> <span class="n">velocity_m</span> <span class="o">*</span> <span class="mf">1.943844</span> <span class="c1">#units: knots</span>
@@ -271,8 +279,7 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Check if ``directory`` exists. In not, make it!</span>
 
-<span class="sd">    parameters:</span>
-<span class="sd">        directory (str): Absolute path of directory to check and/or make.</span>
+<span class="sd">    :param str directory: Absolute path of directory to check and/or make.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>

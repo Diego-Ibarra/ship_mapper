@@ -11,7 +11,11 @@ import ship_mapper as sm
 
 def convert(file_in, file_out, data_info_file):
     '''
-    test
+    :param str file_in: Input file (.csv)
+    
+    :param str file_out: Output file (.nc)
+    
+    :param str data_info_file: YAML file describing other conversion parameters (.yml)
     '''
     #Load data
     print(file_in)

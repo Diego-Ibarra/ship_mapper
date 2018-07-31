@@ -16,7 +16,6 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    ./api
 
 
-
 Indices and tables
 ==================
 

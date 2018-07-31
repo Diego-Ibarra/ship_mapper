@@ -3,7 +3,13 @@ This is a csv to nc converter for AIS data from the Canadian Coast Guard (Terres
 """
 
 def convert(file_in, file_out, data_info_file):
-
+    '''
+    :param str file_in: Input file (.csv)
+    
+    :param str file_out: Output file (.nc)
+    
+    :param str data_info_file: YAML file describing other conversion parameters (.yml)
+    '''
     import pandas as pd
     import numpy as np
     import xarray as xr
