@@ -1,5 +1,5 @@
 '''
-Fucntions that condense a list "pings" (i.e. vessel positions) into a 2-dimensional grid.
+Fucntions that condense a list of "pings" (i.e. vessel positions) into a 2-dimensional grid.
 
 
 '''
@@ -19,7 +19,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
     '''
     Counts "pings" inside a grid-cell and computes "Ship minutes per km2"
     
-    :param info info: `info` object containing metadata
+    :param info info: ``info`` object containing metadata
     :param xarray.DataSet data_in: Data
     :param str filename_out: Name of file that will be writen as output
     :param boolean overwrite: If ``True`` older files will be overwritten. If ``False``, only new files will be processed
@@ -410,15 +410,15 @@ def grid_merger(info, files=None, filename_out='auto'):
         
 def getWKT_PRJ (epsg_code):
     '''
-    Downloads and returns geospatial parameters given a epsg code
+    Downloads and returns geospatial parameters given an epsg code
     
-    :param str epsg_code: Code referencing to an entry in the EPSG Geodetic Parameter Dataset,
+    :param str epsg_code: Code referring to an entry in the EPSG Geodetic Parameter Dataset,
                           which is a collection of definitions of coordinate reference
                           systems and coordinate transformations
                           
     :return: geospatial parameters
     
-    :rtype: str
+    :rtype: projection object
                           
     '''
     import urllib.request
@@ -434,6 +434,8 @@ def getWKT_PRJ (epsg_code):
 def mergedgrid_to_shp(info, file_in=None):
     '''
     Converts a gridded file into a shapefile
+    
+    :param info info: ``info`` object containing metadata
     '''
     import shapefile
     
@@ -481,9 +483,9 @@ def calculate_gridcell_areas(info):
     '''
     Calculates the area of each of the grid-cells in the domain (in km^2)
     
-    :param info info: `info` object WITHOUT `info.grid.areas`
+    :param info info: ``info`` object WITHOUT `info.grid.areas`
     
-    :return: `info` object WITH `info.grid.areas`
+    :return: ``info`` object WITH `info.grid.areas`
     
     :rtype: info
     '''

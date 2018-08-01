@@ -354,7 +354,13 @@
 
 
 
-<span class="k">def</span> <span class="nf">data_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
+<div class="viewcode-block" id="data_to_info"><a class="viewcode-back" href="../info_object.html#info_object.data_to_info">[docs]</a><span class="k">def</span> <span class="nf">data_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Reads metadata from data source (i.e. data_info.yaml file)</span>
+<span class="sd">    and appends it to ``info`` object</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
     <span class="kn">import</span> <span class="nn">yaml</span>
@@ -367,13 +373,18 @@
     <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span><span class="s1">&#39;data_original&#39;</span><span class="p">)</span> 
     <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_nc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span><span class="s1">&#39;data_nc&#39;</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="n">info</span></div>
 
 
 
 
 
-<span class="k">def</span> <span class="nf">info_to_attrs</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+<div class="viewcode-block" id="info_to_attrs"><a class="viewcode-back" href="../info_object.html#info_object.info_to_attrs">[docs]</a><span class="k">def</span> <span class="nf">info_to_attrs</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Extracts `attibutes` from ``info`` object</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">types</span>
     
     <span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
@@ -386,13 +397,16 @@
             <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">attributes</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">subrow</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">subrow</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">attributes</span>
+    <span class="k">return</span> <span class="n">attributes</span></div>
 
 
 
 
 
-<span class="k">def</span> <span class="nf">attrs_to_info</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+<div class="viewcode-block" id="attrs_to_info"><a class="viewcode-back" href="../info_object.html#info_object.attrs_to_info">[docs]</a><span class="k">def</span> <span class="nf">attrs_to_info</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Appends `attributes` to ``info`` object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
 
     <span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -404,13 +418,16 @@
             <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;info.&#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">subrow</span> <span class="o">+</span> <span class="s1">&#39;=attrs[row][subrow]&#39;</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="n">info</span></div>
 
 
 
 
 
-<span class="k">def</span> <span class="nf">auto_update</span><span class="p">(</span><span class="n">filedash</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_update"><a class="viewcode-back" href="../info_object.html#info_object.auto_update">[docs]</a><span class="k">def</span> <span class="nf">auto_update</span><span class="p">(</span><span class="n">filedash</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Updates some metadata in ``info`` file</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
@@ -430,7 +447,7 @@
 <span class="c1">#    info.dirs[&#39;pngs&#39;] = Path(str(info.dirs.project_path) / &#39;pngs&#39; / str(info.run_name))</span>
 <span class="c1">#    info.dirs[&#39;shapefiles&#39;] = Path(str(info.dirs.project_path) / &#39;shapefiles&#39; / str(info.run_name))</span>
 
-    <span class="k">return</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="n">info</span></div>
 
 </pre></div>
 

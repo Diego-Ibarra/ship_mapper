@@ -201,6 +201,12 @@ def grid_to_info(info, region, basemapName, grid_type=None):
 
 
 def data_to_info(info, data_source):
+    '''
+    Reads metadata from data source (i.e. data_info.yaml file)
+    and appends it to ``info`` object
+    
+    :param info info: ``info`` object containing metadata
+    '''
     import os
     import ship_mapper as sm
     import yaml
@@ -220,6 +226,11 @@ def data_to_info(info, data_source):
 
 
 def info_to_attrs(info):
+    '''
+    Extracts `attibutes` from ``info`` object
+    
+    :param info info: ``info`` object containing metadata
+    '''
     import types
     
     attributes = {}
@@ -239,6 +250,9 @@ def info_to_attrs(info):
 
 
 def attrs_to_info(attrs):
+    '''
+    Appends `attributes` to ``info`` object
+    '''
     import ship_mapper as sm
 
     info = sm.info()
@@ -257,6 +271,9 @@ def attrs_to_info(attrs):
 
 
 def auto_update(filedash):
+    '''
+    Updates some metadata in ``info`` file
+    '''
     import _pickle as pickle
     import os
     from pathlib import Path

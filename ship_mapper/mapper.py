@@ -24,6 +24,10 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
                 filename_out='auto',filedir_out='auto'):
     '''
     Plots a map using a gridded (or merged) file
+    
+    :param info info: ``info`` object containing metadata
+    
+    :return: .png print of map (default dir is `/pngs`)
     '''
     
     print('map_density ------------------------------------------------------')
@@ -256,6 +260,13 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
 
 
 def make_legend_text(info,md):
+    '''
+    Makes text for legend in left block of map
+    
+    :param info info: ``info`` object containing metadata
+    
+    :return: text for legend
+    '''
     import datetime
     
     alat = (md['maxlat'] - md['minlat'])/2
@@ -303,6 +314,11 @@ def make_legend_text(info,md):
 
 
 def map_dots(info, file_in, sidebar=False, save=True):
+    '''
+    Creates a map of "pings" rather than gridded density
+    
+    :param info info: ``info`` object containing metadata
+    '''
     print('Mapping...')
     # -----------------------------------------------------------------------------
         
@@ -356,6 +372,11 @@ def map_dots(info, file_in, sidebar=False, save=True):
 
 
 def map_dots_one_ship(info, file_in, Ship_No, save=True):
+    '''
+    Creates a map of "pings" (i.e. not gridded density) of only one ship
+    
+    :param info info: ``info`` object containing metadata
+    '''
     import pandas as pd
     print('Mapping...')
     # -----------------------------------------------------------------------------
@@ -430,6 +451,11 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
 
 
 def define_path_to_map(info, path_to_basemap='auto'):
+    '''
+    Figures out where is the .basemap and .grid files
+    
+    :param info info: ``info`` object containing metadata
+    '''
     if path_to_basemap == 'auto':
         if info.grid.type == 'one-off':
             path_to_map = os.path.join(info.dirs.project_path,info.grid.region,'ancillary')
@@ -442,6 +468,11 @@ def define_path_to_map(info, path_to_basemap='auto'):
 
 
 def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
+    '''
+    Makes a basemap
+    
+    :param info info: ``info`` object containing metadata
+    '''
     print('Making basemap...')
     # -----------------------------------------------------------------------------
     
@@ -564,6 +595,9 @@ def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
 
 
 def load_my_cmap(name):
+    '''
+    Creates and loads custom colormap
+    '''
 #    cdict = {'red': ((0.0, 0.0, 0.0),
 #                     (1.0, 0.7, 0.7)),
 #           'green': ((0.0, 0.25, 0.25),
@@ -616,6 +650,8 @@ def load_my_cmap(name):
 def save_basemap(m,info,path_to_basemap='auto'):
     '''
     Saves basemap (and correspoding info.grid) to a pickle file
+    
+    :param info info: ``info`` object containing metadata
     '''
 #    
 #    basemap = [grid, m]

@@ -180,12 +180,13 @@
 <dl class="function">
 <dt id="utils.degrees_to_meters">
 <code class="descclassname">utils.</code><code class="descname">degrees_to_meters</code><span class="sig-paren">(</span><em>degrees</em>, <em>reference_latitude</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#degrees_to_meters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.degrees_to_meters" title="Permalink to this definition">¶</a></dt>
-<dd><p>dy   = latitude difference in meters
-dlat = latitude difference in degrees
-dx   = longitude difference in meters
-dlon = longitude difference in degrees
-alat = average latitude between the two fixes
-Reference: American Practical Navigator, Vol II, 1975 Edition, p 5</p>
+<dd><p>Converts degrees to meters</p>
+<p>dy   = latitude difference in meters;
+dlat = latitude difference in degrees;
+dx   = longitude difference in meters;
+dlon = longitude difference in degrees;
+alat = average latitude between the two fixes;</p>
+<p>Reference: American Practical Navigator, Vol II, 1975 Edition, p 5</p>
 <p>Source: <a class="reference external" href="http://pordlabs.ucsd.edu/matlab/coord.htm">http://pordlabs.ucsd.edu/matlab/coord.htm</a></p>
 </dd></dl>
 
@@ -252,9 +253,27 @@ Output is in meters</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="utils.make_mydirs">
+<code class="descclassname">utils.</code><code class="descname">make_mydirs</code><span class="sig-paren">(</span><em>top_dir</em>, <em>data_nc_dir</em>, <em>filedash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#make_mydirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.make_mydirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes directories needed for project</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="utils.spatial_filter">
 <code class="descclassname">utils.</code><code class="descname">spatial_filter</code><span class="sig-paren">(</span><em>file_in</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#spatial_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.spatial_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns only the “pings” within a defined box</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.stop">
+<code class="descclassname">utils.</code><code class="descname">stop</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.write_info2data">
+<code class="descclassname">utils.</code><code class="descname">write_info2data</code><span class="sig-paren">(</span><em>D</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#write_info2data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.write_info2data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes metadata from <code class="docutils literal notranslate"><span class="pre">info</span></code> object to the <cite>attibutes</cite> section in the data</p>
 </dd></dl>
 
 </div>

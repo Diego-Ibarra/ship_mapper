@@ -157,6 +157,33 @@
             
   <div class="section" id="module-info_object">
 <span id="info-object"></span><h1>Info_object<a class="headerlink" href="#module-info_object" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="info_object.attrs_to_info">
+<code class="descclassname">info_object.</code><code class="descname">attrs_to_info</code><span class="sig-paren">(</span><em>attrs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#attrs_to_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.attrs_to_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends <cite>attributes</cite> to <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="info_object.auto_update">
+<code class="descclassname">info_object.</code><code class="descname">auto_update</code><span class="sig-paren">(</span><em>filedash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#auto_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.auto_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates some metadata in <code class="docutils literal notranslate"><span class="pre">info</span></code> file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="info_object.data_to_info">
+<code class="descclassname">info_object.</code><code class="descname">data_to_info</code><span class="sig-paren">(</span><em>info</em>, <em>data_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#data_to_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.data_to_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads metadata from data source (i.e. data_info.yaml file)
+and appends it to <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="class">
 <dt id="info_object.info">
 <em class="property">class </em><code class="descclassname">info_object.</code><code class="descname">info</code><span class="sig-paren">(</span><em>calling_file='.'</em>, <em>run_name='auto'</em>, <em>dir_data_original=None</em>, <em>grid_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.info" title="Permalink to this definition">¶</a></dt>
@@ -168,6 +195,20 @@ needed to run a project.</p>
 <dd><p>Saves info into pickle</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="info_object.info_to_attrs">
+<code class="descclassname">info_object.</code><code class="descname">info_to_attrs</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/info_object.html#info_to_attrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#info_object.info_to_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts <cite>attibutes</cite> from <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

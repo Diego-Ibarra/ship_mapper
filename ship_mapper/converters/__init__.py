@@ -24,7 +24,7 @@ def convert_to_nc(data_in, data_out, converter, path_to_converter=None):
 
 def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, path_to_yaml=None, overwrite=False):
     '''
-    Just s test docs
+    Converts ALL files in a directory 
     '''
     import imp
     import os
@@ -100,6 +100,9 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
 
 
 def bulk_update_attributes(attrs, path_to_data_in, path_to_data_out, overwrite=False):
+    '''
+    Updates attributes in ALL files in a directory
+    '''
     import xarray as xr
     import os
     import pandas as pd 

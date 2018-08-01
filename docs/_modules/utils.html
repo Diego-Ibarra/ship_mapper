@@ -286,7 +286,10 @@
 
 
 
-<span class="k">def</span> <span class="nf">make_mydirs</span><span class="p">(</span><span class="n">top_dir</span><span class="p">,</span> <span class="n">data_nc_dir</span><span class="p">,</span> <span class="n">filedash</span><span class="p">):</span>
+<div class="viewcode-block" id="make_mydirs"><a class="viewcode-back" href="../utils.html#utils.make_mydirs">[docs]</a><span class="k">def</span> <span class="nf">make_mydirs</span><span class="p">(</span><span class="n">top_dir</span><span class="p">,</span> <span class="n">data_nc_dir</span><span class="p">,</span> <span class="n">filedash</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Makes directories needed for project</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
     
     <span class="n">project_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">filedash</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>   
@@ -305,7 +308,7 @@
     <span class="n">mydirs</span><span class="p">[</span><span class="s1">&#39;run_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run_name</span>
     <span class="n">mydirs</span><span class="p">[</span><span class="s1">&#39;gridded_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;gridded_data&#39;</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">mydirs</span>
+    <span class="k">return</span> <span class="n">mydirs</span></div>
 
 
 
@@ -340,11 +343,14 @@
 
 <div class="viewcode-block" id="degrees_to_meters"><a class="viewcode-back" href="../utils.html#utils.degrees_to_meters">[docs]</a><span class="k">def</span> <span class="nf">degrees_to_meters</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">reference_latitude</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    dy   = latitude difference in meters</span>
-<span class="sd">    dlat = latitude difference in degrees</span>
-<span class="sd">    dx   = longitude difference in meters</span>
-<span class="sd">    dlon = longitude difference in degrees</span>
-<span class="sd">    alat = average latitude between the two fixes</span>
+<span class="sd">    Converts degrees to meters</span>
+<span class="sd">        </span>
+<span class="sd">    dy   = latitude difference in meters;</span>
+<span class="sd">    dlat = latitude difference in degrees;</span>
+<span class="sd">    dx   = longitude difference in meters;</span>
+<span class="sd">    dlon = longitude difference in degrees;</span>
+<span class="sd">    alat = average latitude between the two fixes;</span>
+<span class="sd">    </span>
 <span class="sd">    Reference: American Practical Navigator, Vol II, 1975 Edition, p 5</span>
 <span class="sd">    </span>
 <span class="sd">    Source: http://pordlabs.ucsd.edu/matlab/coord.htm</span>
@@ -361,7 +367,10 @@
 
 
 
-<span class="k">def</span> <span class="nf">write_info2data</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">info</span><span class="p">):</span>
+<div class="viewcode-block" id="write_info2data"><a class="viewcode-back" href="../utils.html#utils.write_info2data">[docs]</a><span class="k">def</span> <span class="nf">write_info2data</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">info</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Writes metadata from ``info`` object to the `attibutes` section in the data</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">types</span>
 
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -370,14 +379,17 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">exec</span><span class="p">(</span><span class="s2">&quot;D.attrs[&#39;&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">subrow</span> <span class="o">+</span> <span class="s2">&quot;&#39;] = info.&quot;</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">subrow</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">D</span>
+    <span class="k">return</span> <span class="n">D</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+<div class="viewcode-block" id="stop"><a class="viewcode-back" href="../utils.html#utils.stop">[docs]</a><span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Stop</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 </pre></div>
 
            </div>

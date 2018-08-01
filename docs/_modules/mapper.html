@@ -178,6 +178,10 @@
                 <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span><span class="n">filedir_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Plots a map using a gridded (or merged) file</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    </span>
+<span class="sd">    :return: .png print of map (default dir is `/pngs`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;map_density ------------------------------------------------------&#39;</span><span class="p">)</span>
@@ -409,7 +413,14 @@
     <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">md</span><span class="p">):</span>
+<div class="viewcode-block" id="make_legend_text"><a class="viewcode-back" href="../mapper.html#mapper.make_legend_text">[docs]</a><span class="k">def</span> <span class="nf">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">md</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Makes text for legend in left block of map</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    </span>
+<span class="sd">    :return: text for legend</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">datetime</span>
     
     <span class="n">alat</span> <span class="o">=</span> <span class="p">(</span><span class="n">md</span><span class="p">[</span><span class="s1">&#39;maxlat&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">md</span><span class="p">[</span><span class="s1">&#39;minlat&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
@@ -452,11 +463,16 @@
     
     
     
-    <span class="k">return</span> <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span>
+    <span class="k">return</span> <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">map_dots</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="map_dots"><a class="viewcode-back" href="../mapper.html#mapper.map_dots">[docs]</a><span class="k">def</span> <span class="nf">map_dots</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates a map of &quot;pings&quot; rather than gridded density</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
     <span class="c1"># -----------------------------------------------------------------------------</span>
         
@@ -504,12 +520,17 @@
 <span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
 <span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
    
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
 
 
-<span class="k">def</span> <span class="nf">map_dots_one_ship</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">Ship_No</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="map_dots_one_ship"><a class="viewcode-back" href="../mapper.html#mapper.map_dots_one_ship">[docs]</a><span class="k">def</span> <span class="nf">map_dots_one_ship</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">Ship_No</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates a map of &quot;pings&quot; (i.e. not gridded density) of only one ship</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
     <span class="c1"># -----------------------------------------------------------------------------</span>
@@ -579,11 +600,16 @@
 <span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
 <span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
    
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="define_path_to_map"><a class="viewcode-back" href="../mapper.html#mapper.define_path_to_map">[docs]</a><span class="k">def</span> <span class="nf">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Figures out where is the .basemap and .grid files</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">path_to_basemap</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;one-off&#39;</span><span class="p">:</span>
             <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">)</span>
@@ -591,11 +617,16 @@
             <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">path_to_basemap</span>
-    <span class="k">return</span> <span class="n">path_to_map</span>
+    <span class="k">return</span> <span class="n">path_to_map</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">spatial</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="make_basemap"><a class="viewcode-back" href="../mapper.html#mapper.make_basemap">[docs]</a><span class="k">def</span> <span class="nf">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">spatial</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Makes a basemap</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Making basemap...&#39;</span><span class="p">)</span>
     <span class="c1"># -----------------------------------------------------------------------------</span>
     
@@ -710,14 +741,17 @@
 <span class="c1">##    plt.savefig(datadir[0:-5] + &#39;png\\&#39; + filename + &#39;- Grid&#39; + str(BinNo) + &#39; - Filter&#39; +str(downLim) + &#39;-&#39; + str(upLim) + &#39;.png&#39;)</span>
 <span class="c1">#    plt.savefig(&#39;test.png&#39;)</span>
     
-    <span class="k">return</span> <span class="n">m</span>
+    <span class="k">return</span> <span class="n">m</span></div>
 
 
 
 
 
 
-<span class="k">def</span> <span class="nf">load_my_cmap</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="load_my_cmap"><a class="viewcode-back" href="../mapper.html#mapper.load_my_cmap">[docs]</a><span class="k">def</span> <span class="nf">load_my_cmap</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates and loads custom colormap</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 <span class="c1">#    cdict = {&#39;red&#39;: ((0.0, 0.0, 0.0),</span>
 <span class="c1">#                     (1.0, 0.7, 0.7)),</span>
 <span class="c1">#           &#39;green&#39;: ((0.0, 0.25, 0.25),</span>
@@ -764,12 +798,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cmap name does not match any of the available cmaps&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span>  <span class="n">my_cmap</span>
+    <span class="k">return</span>  <span class="n">my_cmap</span></div>
 
 
 <div class="viewcode-block" id="save_basemap"><a class="viewcode-back" href="../mapper.html#mapper.save_basemap">[docs]</a><span class="k">def</span> <span class="nf">save_basemap</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Saves basemap (and correspoding info.grid) to a pickle file</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <span class="c1">#    </span>
 <span class="c1">#    basemap = [grid, m]</span>

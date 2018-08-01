@@ -133,6 +133,9 @@ def checkDir(directory):
 
 
 def make_mydirs(top_dir, data_nc_dir, filedash):
+    '''
+    Makes directories needed for project
+    '''
     from pathlib import Path
     
     project_name = os.path.split(os.path.split(filedash)[0])[1]   
@@ -186,11 +189,14 @@ def get_path_from_fullpath(fullpath):
 
 def degrees_to_meters(degrees, reference_latitude):
     '''
-    dy   = latitude difference in meters
-    dlat = latitude difference in degrees
-    dx   = longitude difference in meters
-    dlon = longitude difference in degrees
-    alat = average latitude between the two fixes
+    Converts degrees to meters
+        
+    dy   = latitude difference in meters;
+    dlat = latitude difference in degrees;
+    dx   = longitude difference in meters;
+    dlon = longitude difference in degrees;
+    alat = average latitude between the two fixes;
+    
     Reference: American Practical Navigator, Vol II, 1975 Edition, p 5
     
     Source: http://pordlabs.ucsd.edu/matlab/coord.htm
@@ -208,6 +214,9 @@ def degrees_to_meters(degrees, reference_latitude):
 
 
 def write_info2data(D,info):
+    '''
+    Writes metadata from ``info`` object to the `attibutes` section in the data
+    '''
     import types
 
     for row in info.__dict__.keys():
@@ -221,6 +230,9 @@ def write_info2data(D,info):
 
 
 def stop(message):
+    '''
+    Stop
+    '''
     import sys
     sys.exit(message)
     return

@@ -158,15 +158,111 @@
   <div class="section" id="module-mapper">
 <span id="mapper"></span><h1>Mapper<a class="headerlink" href="#module-mapper" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="mapper.define_path_to_map">
+<code class="descclassname">mapper.</code><code class="descname">define_path_to_map</code><span class="sig-paren">(</span><em>info</em>, <em>path_to_basemap='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#define_path_to_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.define_path_to_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Figures out where is the .basemap and .grid files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mapper.load_my_cmap">
+<code class="descclassname">mapper.</code><code class="descname">load_my_cmap</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#load_my_cmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.load_my_cmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and loads custom colormap</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mapper.make_basemap">
+<code class="descclassname">mapper.</code><code class="descname">make_basemap</code><span class="sig-paren">(</span><em>info</em>, <em>spatial</em>, <em>path_to_basemap='auto'</em>, <em>sidebar=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#make_basemap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.make_basemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a basemap</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mapper.make_legend_text">
+<code class="descclassname">mapper.</code><code class="descname">make_legend_text</code><span class="sig-paren">(</span><em>info</em>, <em>md</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#make_legend_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.make_legend_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes text for legend in left block of map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">text for legend</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="mapper.map_density">
 <code class="descclassname">mapper.</code><code class="descname">map_density</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em>, <em>cmap='Default'</em>, <em>sidebar=False</em>, <em>to_screen=True</em>, <em>save=True</em>, <em>filename_out='auto'</em>, <em>filedir_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#map_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.map_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a map using a gridded (or merged) file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">.png print of map (default dir is <cite>/pngs</cite>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mapper.map_dots">
+<code class="descclassname">mapper.</code><code class="descname">map_dots</code><span class="sig-paren">(</span><em>info</em>, <em>file_in</em>, <em>sidebar=False</em>, <em>save=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#map_dots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.map_dots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a map of “pings” rather than gridded density</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mapper.map_dots_one_ship">
+<code class="descclassname">mapper.</code><code class="descname">map_dots_one_ship</code><span class="sig-paren">(</span><em>info</em>, <em>file_in</em>, <em>Ship_No</em>, <em>save=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#map_dots_one_ship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.map_dots_one_ship" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a map of “pings” (i.e. not gridded density) of only one ship</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="mapper.save_basemap">
 <code class="descclassname">mapper.</code><code class="descname">save_basemap</code><span class="sig-paren">(</span><em>m</em>, <em>info</em>, <em>path_to_basemap='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mapper.html#save_basemap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapper.save_basemap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves basemap (and correspoding info.grid) to a pickle file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

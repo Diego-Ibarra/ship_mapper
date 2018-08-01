@@ -153,7 +153,7 @@
             
   <h1>Source code for gridder</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Fucntions that condense a list &quot;pings&quot; (i.e. vessel positions) into a 2-dimensional grid.</span>
+<span class="sd">Fucntions that condense a list of &quot;pings&quot; (i.e. vessel positions) into a 2-dimensional grid.</span>
 
 
 <span class="sd">&#39;&#39;&#39;</span>
@@ -173,7 +173,7 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Counts &quot;pings&quot; inside a grid-cell and computes &quot;Ship minutes per km2&quot;</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: `info` object containing metadata</span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
 <span class="sd">    :param xarray.DataSet data_in: Data</span>
 <span class="sd">    :param str filename_out: Name of file that will be writen as output</span>
 <span class="sd">    :param boolean overwrite: If ``True`` older files will be overwritten. If ``False``, only new files will be processed</span>
@@ -564,15 +564,15 @@
         
 <div class="viewcode-block" id="getWKT_PRJ"><a class="viewcode-back" href="../gridder.html#gridder.getWKT_PRJ">[docs]</a><span class="k">def</span> <span class="nf">getWKT_PRJ</span> <span class="p">(</span><span class="n">epsg_code</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Downloads and returns geospatial parameters given a epsg code</span>
+<span class="sd">    Downloads and returns geospatial parameters given an epsg code</span>
 <span class="sd">    </span>
-<span class="sd">    :param str epsg_code: Code referencing to an entry in the EPSG Geodetic Parameter Dataset,</span>
+<span class="sd">    :param str epsg_code: Code referring to an entry in the EPSG Geodetic Parameter Dataset,</span>
 <span class="sd">                          which is a collection of definitions of coordinate reference</span>
 <span class="sd">                          systems and coordinate transformations</span>
 <span class="sd">                          </span>
 <span class="sd">    :return: geospatial parameters</span>
 <span class="sd">    </span>
-<span class="sd">    :rtype: str</span>
+<span class="sd">    :rtype: projection object</span>
 <span class="sd">                          </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">urllib.request</span>
@@ -588,6 +588,8 @@
 <div class="viewcode-block" id="mergedgrid_to_shp"><a class="viewcode-back" href="../gridder.html#gridder.mergedgrid_to_shp">[docs]</a><span class="k">def</span> <span class="nf">mergedgrid_to_shp</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Converts a gridded file into a shapefile</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">shapefile</span>
     
@@ -635,9 +637,9 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calculates the area of each of the grid-cells in the domain (in km^2)</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: `info` object WITHOUT `info.grid.areas`</span>
+<span class="sd">    :param info info: ``info`` object WITHOUT `info.grid.areas`</span>
 <span class="sd">    </span>
-<span class="sd">    :return: `info` object WITH `info.grid.areas`</span>
+<span class="sd">    :return: ``info`` object WITH `info.grid.areas`</span>
 <span class="sd">    </span>
 <span class="sd">    :rtype: info</span>
 <span class="sd">    &#39;&#39;&#39;</span>
