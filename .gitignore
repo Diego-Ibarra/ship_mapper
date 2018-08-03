@@ -9,6 +9,8 @@ pngs/*
 *.p
 *.png
 
+!/docs/_images/
+!/docs/_images/**
 !/docs/source/_static/
 !/docs/source/_static/**
 !/tutorials/media/Maritimes_basemap1.png
