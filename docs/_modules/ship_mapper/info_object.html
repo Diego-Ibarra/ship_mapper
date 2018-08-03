@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper.info_object &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../converters.html">Converters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributors:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docs.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../ship_mapper.html">ship_mapper</a> &raquo;</li>
+        
+      <li>ship_mapper.info_object</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ship_mapper.info_object</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info">[docs]</a><span></span><span class="k">class</span> <span class="nc">info</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    info class makes and &#39;info object&#39; which contains all the metadata</span>
+<span class="sd">    needed to run a project.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calling_file</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">dir_data_original</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Initializes an &quot;info&quot; object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">os</span>
+        <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+        <span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">SimpleNamespace</span>
+        
+        <span class="k">if</span> <span class="n">calling_file</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">calling_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">run_name</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">calling_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span> <span class="o">=</span> <span class="n">run_name</span>
+        
+        <span class="n">project_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">calling_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">{}</span>  
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">calling_file</span> <span class="p">),</span> <span class="s1">&#39;../..&#39;</span><span class="p">))</span>
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;project_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">dir_data_original</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;data_original&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dir_data_original</span><span class="p">)</span>
+            <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;data_nc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dir_data_original</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;data_original&#39;</span><span class="p">,</span> <span class="s1">&#39;data_nc&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;data_original&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;data_nc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>          
+        
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;ancillary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;ancillary&#39;</span><span class="p">)</span>
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;gridded_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;gridded_data&#39;</span><span class="p">)</span>
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;merged_grid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;merged_grid&#39;</span><span class="p">)</span>
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;pngs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;pngs&#39;</span><span class="p">)</span>
+        <span class="n">dirs</span><span class="p">[</span><span class="s1">&#39;shapefiles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">project_path</span> <span class="o">/</span> <span class="s1">&#39;shapefiles&#39;</span><span class="p">)</span>
+        
+        <span class="n">grid</span> <span class="o">=</span><span class="p">{}</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;basemap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>    
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;bin_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;minlat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;maxlat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;minlon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;maxlon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;interp_threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1">#knots</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;time_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1">#minutes</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;epsg_code&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;areas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="n">filt</span> <span class="o">=</span><span class="p">{}</span>
+        <span class="n">filt</span><span class="p">[</span><span class="s1">&#39;speed_low&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">filt</span><span class="p">[</span><span class="s1">&#39;speed_high&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="n">maps</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;mask_below&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;scalebar_km&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;i&#39;</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;parallels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Deegres between lines</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s1">&#39;meridians&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="c1"># Deegres between lines</span>
+        
+        <span class="n">sidebar</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;units&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;unit_description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;data_source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;data_description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;time_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;included_speeds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;interpolation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Linear&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;interpolation_threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">sidebar</span><span class="p">[</span><span class="s1">&#39;time_bin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">grid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filt</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">filt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dirs</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">dirs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">maps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sidebar</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">sidebar</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    
+    
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Prints &quot;info&quot; to screen</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">types</span>
+        <span class="n">to_screen</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>    
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">!=</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">:</span>
+                <span class="n">to_screen</span> <span class="o">=</span> <span class="n">to_screen</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">:</span>
+                <span class="n">to_screen</span> <span class="o">=</span> <span class="n">to_screen</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">to_screen</span> <span class="o">=</span> <span class="n">to_screen</span> <span class="o">+</span> <span class="s1">&#39;    &#39;</span> <span class="o">+</span> <span class="n">subrow</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">subrow</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">to_screen</span>  
+        
+    
+    
+    
+<div class="viewcode-block" id="info.save"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Saves info into pickle</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+        <span class="kn">import</span> <span class="nn">os</span>
+        <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+        
+        <span class="n">sm</span><span class="o">.</span><span class="n">checkDir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">ancillary</span><span class="p">))</span>
+        <span class="n">full_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">ancillary</span><span class="p">,</span> <span class="s1">&#39;info_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span> <span class="o">+</span> <span class="s1">&#39;.p&#39;</span><span class="p">)</span>
+        
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">full_filename</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! Pickle info.p file just got saved &#39;</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+    
+    
+    
+    
+    
+    
+<div class="viewcode-block" id="load_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.load_info">[docs]</a><span class="k">def</span> <span class="nf">load_info</span><span class="p">(</span><span class="n">run_name</span><span class="p">,</span> <span class="n">path_to_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Loads &quot;info&quot; file</span>
+<span class="sd">    </span>
+<span class="sd">    Input is full-path to a info.p file or, </span>
+<span class="sd">    if None, it will look for ./ancillary/info.p</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+    <span class="kn">import</span> <span class="nn">inspect</span>
+    
+<span class="c1">##    inspect.stack()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="n">calling_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">path_to_info</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">info_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">calling_path</span><span class="p">,</span> <span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="s1">&#39;info_&#39;</span> <span class="o">+</span> <span class="n">run_name</span> <span class="o">+</span> <span class="s1">&#39;.p&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path_to_info</span><span class="p">):</span>
+        <span class="n">info_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">path_to_info</span> <span class="p">),</span> <span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="s1">&#39;info_&#39;</span> <span class="o">+</span> <span class="n">run_name</span> <span class="o">+</span> <span class="s1">&#39;.p&#39;</span><span class="p">))</span>
+      
+    <span class="n">info</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">info_file</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">info</span></div>
+
+    
+
+<div class="viewcode-block" id="grid_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.grid_to_info">[docs]</a><span class="k">def</span> <span class="nf">grid_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">basemapName</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+    
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">grid_type</span>
+
+    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;one-off&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Using LOCAL grid (one-off)...&#39;</span><span class="p">)</span>
+        <span class="n">basemap_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="n">basemapName</span> <span class="o">+</span> <span class="s1">&#39;.grid&#39;</span><span class="p">)</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">basemap</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="n">basemapName</span> <span class="o">+</span> <span class="s1">&#39;.basemap&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;generic&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Using GENERIC grid (settings.GRIDS)...&#39;</span><span class="p">)</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_settings</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="n">basemap_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">GRIDS</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="n">basemapName</span> <span class="o">+</span> <span class="s1">&#39;.grid&#39;</span><span class="p">))</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">basemap</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">GRIDS</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="n">basemapName</span> <span class="o">+</span> <span class="s1">&#39;.basemap&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;info.grid.type can only be &quot;one-off&quot; or &quot;generic&quot;&#39;</span><span class="p">)</span>
+        
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loading grid: &#39;</span> <span class="o">+</span> <span class="n">basemap_file</span><span class="p">)</span>
+    
+    <span class="n">grid_info</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">basemap_file</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+    
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">region</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">basemap</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">basemap</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">bin_number</span> <span class="o">=</span>  <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">bin_number</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">bin_size</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">bin_size</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">epsg_code</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">epsg_code</span>
+    
+    <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">resolution</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">parallels</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">parallels</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">meridians</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">meridians</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">scalebar_km</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">scalebar_km</span>
+    <span class="k">return</span> <span class="n">info</span></div>
+
+
+
+
+<div class="viewcode-block" id="data_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.data_to_info">[docs]</a><span class="k">def</span> <span class="nf">data_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Reads metadata from data source (i.e. data_info.yaml file)</span>
+<span class="sd">    and appends it to ``info`` object</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+    <span class="kn">import</span> <span class="nn">yaml</span>
+    
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_settings</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    
+    <span class="n">dinfo</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span><span class="s1">&#39;data_info.yaml&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+    
+    <span class="n">info</span><span class="o">.</span><span class="n">converter</span> <span class="o">=</span> <span class="n">dinfo</span><span class="p">[</span><span class="s1">&#39;converter&#39;</span><span class="p">]</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span><span class="s1">&#39;data_original&#39;</span><span class="p">)</span> 
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_nc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">DATA</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span><span class="s1">&#39;data_nc&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">info</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="info_to_attrs"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info_to_attrs">[docs]</a><span class="k">def</span> <span class="nf">info_to_attrs</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Extracts `attibutes` from ``info`` object</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">types</span>
+    
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">!=</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">:</span>
+            <span class="n">attributes</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">])</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">:</span>
+            <span class="n">attributes</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">attributes</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">subrow</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">subrow</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">attributes</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="attrs_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.attrs_to_info">[docs]</a><span class="k">def</span> <span class="nf">attrs_to_info</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Appends `attributes` to ``info`` object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+
+    <span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="n">row</span><span class="p">],</span><span class="nb">dict</span><span class="p">):</span>
+            <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;info.&#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s1">&#39;=attrs[row]&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">subrow</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">exec</span><span class="p">(</span><span class="s1">&#39;info.&#39;</span> <span class="o">+</span> <span class="n">row</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">subrow</span> <span class="o">+</span> <span class="s1">&#39;=attrs[row][subrow]&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">info</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="auto_update"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.auto_update">[docs]</a><span class="k">def</span> <span class="nf">auto_update</span><span class="p">(</span><span class="n">filedash</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Updates some metadata in ``info`` file</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+    <span class="n">path_to_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span> <span class="n">filedash</span> <span class="p">),</span> <span class="s1">&#39;ancillary&#39;</span><span class="p">,</span><span class="s1">&#39;info.p&#39;</span><span class="p">))</span>
+    
+    <span class="n">info</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">path_to_info</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+    
+    <span class="c1"># Update run_name</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">run_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">filedash</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> 
+    
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">gridded_data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">),</span><span class="s1">&#39;gridded_data&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">run_name</span><span class="p">)))</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">merged_grid</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">),</span><span class="s1">&#39;merged_grid&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">run_name</span><span class="p">)))</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">pngs</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">),</span><span class="s1">&#39;pngs&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">run_name</span><span class="p">)))</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">shapefiles</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">),</span><span class="s1">&#39;shapefiles&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">run_name</span><span class="p">)))</span>
+<span class="c1">#            str(info.dirs.project_path) / &#39;gridded_data&#39; / str(info.run_name))</span>
+<span class="c1">#    info.dirs[&#39;merged_grid&#39;] = Path(str(info.dirs.project_path) / &#39;merged_grid&#39; / str(info.run_name))</span>
+<span class="c1">#    info.dirs[&#39;pngs&#39;] = Path(str(info.dirs.project_path) / &#39;pngs&#39; / str(info.run_name))</span>
+<span class="c1">#    info.dirs[&#39;shapefiles&#39;] = Path(str(info.dirs.project_path) / &#39;shapefiles&#39; / str(info.run_name))</span>
+
+    <span class="k">return</span> <span class="n">info</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

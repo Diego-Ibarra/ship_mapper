@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper package &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ship_mapper.converters package" href="ship_mapper.converters.html" />
+    <link rel="prev" title="ship_mapper" href="modules.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">AUTO:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ship_mapper</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ship_mapper package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ship_mapper.converters.html">ship_mapper.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ship_mapper.tests.html">ship_mapper.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ship_mapper.gridder">ship_mapper.gridder module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ship_mapper.info_object">ship_mapper.info_object module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ship_mapper.mapper">ship_mapper.mapper module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ship_mapper.utils">ship_mapper.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ship_mapper">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ship_mapper.converters.html">ship_mapper.converters package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ship_mapper package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ship_mapper.converters.html">ship_mapper.converters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ship_mapper.tests.html">ship_mapper.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ship_mapper.gridder">ship_mapper.gridder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ship_mapper.info_object">ship_mapper.info_object module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ship_mapper.mapper">ship_mapper.mapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ship_mapper.utils">ship_mapper.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ship_mapper">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ship_mapper.tests.html">ship_mapper.tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">ship_mapper</a> &raquo;</li>
+        
+      <li>ship_mapper package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ship_mapper.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ship-mapper-package">
+<h1>ship_mapper package<a class="headerlink" href="#ship-mapper-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ship_mapper.converters.html">ship_mapper.converters package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.converters.html#module-ship_mapper.converters.AIS_CCG">ship_mapper.converters.AIS_CCG module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.converters.html#module-ship_mapper.converters.VMS_DFO">ship_mapper.converters.VMS_DFO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.converters.html#module-ship_mapper.converters.VMS_DFO_Oracle">ship_mapper.converters.VMS_DFO_Oracle module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.converters.html#module-ship_mapper.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ship_mapper.tests.html">ship_mapper.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.tests.html#module-ship_mapper.tests.test_example1">ship_mapper.tests.test_example1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ship_mapper.tests.html#module-ship_mapper.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ship_mapper.gridder">
+<span id="ship-mapper-gridder-module"></span><h2>ship_mapper.gridder module<a class="headerlink" href="#module-ship_mapper.gridder" title="Permalink to this headline">¶</a></h2>
+<p>Fucntions that condense a list of “pings” (i.e. vessel positions) into a 2-dimensional grid.</p>
+<dl class="function">
+<dt id="ship_mapper.gridder.calculate_gridcell_areas">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">calculate_gridcell_areas</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#calculate_gridcell_areas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.calculate_gridcell_areas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the area of each of the grid-cells in the domain (in km^2)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object WITHOUT <cite>info.grid.areas</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">info</span></code> object WITH <cite>info.grid.areas</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="info_object.html#info_object.info" title="info_object.info">info</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.gridder.getWKT_PRJ">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">getWKT_PRJ</code><span class="sig-paren">(</span><em>epsg_code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#getWKT_PRJ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.getWKT_PRJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads and returns geospatial parameters given an epsg code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>epsg_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Code referring to an entry in the EPSG Geodetic Parameter Dataset,
+which is a collection of definitions of coordinate reference
+systems and coordinate transformations</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">geospatial parameters</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">projection object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.gridder.grid_merger">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">grid_merger</code><span class="sig-paren">(</span><em>info</em>, <em>files=None</em>, <em>filename_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#grid_merger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.grid_merger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines several gridded files into one</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.gridder.gridder">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">gridder</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>filename_out</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#gridder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.gridder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts “pings” inside a grid-cell and computes “Ship minutes per km2”</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</li>
+<li><strong>data_in</strong> (<em>xarray.DataSet</em>) – Data</li>
+<li><strong>filename_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of file that will be writen as output</li>
+<li><strong>overwrite</strong> (<em>boolean</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> older files will be overwritten. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, only new files will be processed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last function">
+<dt id="ship_mapper.gridder.gridder_pingsPerCell">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">gridder_pingsPerCell</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#gridder_pingsPerCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.gridder_pingsPerCell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">gridder_pingsPerCell</code><span class="sig-paren">(</span><em>info</em>, <em>data_in</em>, <em>file_name</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#gridder_pingsPerCell"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.gridder.mergedgrid_to_shp">
+<code class="descclassname">ship_mapper.gridder.</code><code class="descname">mergedgrid_to_shp</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/gridder.html#mergedgrid_to_shp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.gridder.mergedgrid_to_shp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a gridded file into a shapefile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ship_mapper.info_object">
+<span id="ship-mapper-info-object-module"></span><h2>ship_mapper.info_object module<a class="headerlink" href="#module-ship_mapper.info_object" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ship_mapper.info_object.attrs_to_info">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">attrs_to_info</code><span class="sig-paren">(</span><em>attrs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#attrs_to_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.attrs_to_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends <cite>attributes</cite> to <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.info_object.auto_update">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">auto_update</code><span class="sig-paren">(</span><em>filedash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#auto_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.auto_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates some metadata in <code class="docutils literal notranslate"><span class="pre">info</span></code> file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.info_object.data_to_info">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">data_to_info</code><span class="sig-paren">(</span><em>info</em>, <em>data_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#data_to_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.data_to_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads metadata from data source (i.e. data_info.yaml file)
+and appends it to <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.info_object.grid_to_info">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">grid_to_info</code><span class="sig-paren">(</span><em>info</em>, <em>region</em>, <em>basemapName</em>, <em>grid_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#grid_to_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.grid_to_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="ship_mapper.info_object.info">
+<em class="property">class </em><code class="descclassname">ship_mapper.info_object.</code><code class="descname">info</code><span class="sig-paren">(</span><em>calling_file='.'</em>, <em>run_name='auto'</em>, <em>dir_data_original=None</em>, <em>grid_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>info class makes and ‘info object’ which contains all the metadata
+needed to run a project.</p>
+<dl class="method">
+<dt id="ship_mapper.info_object.info.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#info.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.info.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves info into pickle</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.info_object.info_to_attrs">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">info_to_attrs</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#info_to_attrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.info_to_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts <cite>attibutes</cite> from <code class="docutils literal notranslate"><span class="pre">info</span></code> object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.info_object.load_info">
+<code class="descclassname">ship_mapper.info_object.</code><code class="descname">load_info</code><span class="sig-paren">(</span><em>run_name</em>, <em>path_to_info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/info_object.html#load_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.info_object.load_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads “info” file</p>
+<p>Input is full-path to a info.p file or, 
+if None, it will look for ./ancillary/info.p</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ship_mapper.mapper">
+<span id="ship-mapper-mapper-module"></span><h2>ship_mapper.mapper module<a class="headerlink" href="#module-ship_mapper.mapper" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ship_mapper.mapper.define_path_to_map">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">define_path_to_map</code><span class="sig-paren">(</span><em>info</em>, <em>path_to_basemap='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#define_path_to_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.define_path_to_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Figures out where is the .basemap and .grid files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.load_my_cmap">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">load_my_cmap</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#load_my_cmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.load_my_cmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and loads custom colormap</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.make_basemap">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">make_basemap</code><span class="sig-paren">(</span><em>info</em>, <em>spatial</em>, <em>path_to_basemap='auto'</em>, <em>sidebar=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#make_basemap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.make_basemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a basemap</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.make_legend_text">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">make_legend_text</code><span class="sig-paren">(</span><em>info</em>, <em>md</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#make_legend_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.make_legend_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes text for legend in left block of map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">text for legend</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.map_density">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">map_density</code><span class="sig-paren">(</span><em>info</em>, <em>file_in=None</em>, <em>cmap='Default'</em>, <em>sidebar=False</em>, <em>to_screen=True</em>, <em>save=True</em>, <em>filename_out='auto'</em>, <em>filedir_out='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#map_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.map_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a map using a gridded (or merged) file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">.png print of map (default dir is <cite>/pngs</cite>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.map_dots">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">map_dots</code><span class="sig-paren">(</span><em>info</em>, <em>file_in</em>, <em>sidebar=False</em>, <em>save=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#map_dots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.map_dots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a map of “pings” rather than gridded density</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.map_dots_one_ship">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">map_dots_one_ship</code><span class="sig-paren">(</span><em>info</em>, <em>file_in</em>, <em>Ship_No</em>, <em>save=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#map_dots_one_ship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.map_dots_one_ship" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a map of “pings” (i.e. not gridded density) of only one ship</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.mapper.save_basemap">
+<code class="descclassname">ship_mapper.mapper.</code><code class="descname">save_basemap</code><span class="sig-paren">(</span><em>m</em>, <em>info</em>, <em>path_to_basemap='auto'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/mapper.html#save_basemap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.mapper.save_basemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves basemap (and correspoding info.grid) to a pickle file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="info_object.html#info_object.info" title="info_object.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ship_mapper.utils">
+<span id="ship-mapper-utils-module"></span><h2>ship_mapper.utils module<a class="headerlink" href="#module-ship_mapper.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ship_mapper.utils.align_with_grid">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">align_with_grid</code><span class="sig-paren">(</span><em>lon_grid_vector</em>, <em>lat_grid_vector</em>, <em>lon_point</em>, <em>lat_point</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#align_with_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.align_with_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds which gridcell contains a given lat/lon point</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.checkDir">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">checkDir</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#checkDir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.checkDir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if <code class="docutils literal notranslate"><span class="pre">directory</span></code> exists. In not, make it!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Absolute path of directory to check and/or make.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.degrees_to_meters">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">degrees_to_meters</code><span class="sig-paren">(</span><em>degrees</em>, <em>reference_latitude</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#degrees_to_meters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.degrees_to_meters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts degrees to meters</p>
+<p>dy   = latitude difference in meters;
+dlat = latitude difference in degrees;
+dx   = longitude difference in meters;
+dlon = longitude difference in degrees;
+alat = average latitude between the two fixes;</p>
+<p>Reference: American Practical Navigator, Vol II, 1975 Edition, p 5</p>
+<p>Source: <a class="reference external" href="http://pordlabs.ucsd.edu/matlab/coord.htm">http://pordlabs.ucsd.edu/matlab/coord.htm</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.distance">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">distance</code><span class="sig-paren">(</span><em>lat1</em>, <em>lon1</em>, <em>lat2</em>, <em>lon2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates distance between 2 points on Earth.
+Assumes earth is a sphere (up to 0.5% error).
+Output is in meters</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.elapsed_days">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">elapsed_days</code><span class="sig-paren">(</span><em>timedelta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#elapsed_days"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.elapsed_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates elapsed days</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.estimate_velocity">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">estimate_velocity</code><span class="sig-paren">(</span><em>seconds</em>, <em>distance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#estimate_velocity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.estimate_velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Elapsed time (in seconds).</li>
+<li><strong>distance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Elapsed distance (in meters).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Estimated velocity (in knots)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.get_all_files">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">get_all_files</code><span class="sig-paren">(</span><em>dir_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#get_all_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.get_all_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all files within a directory</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.get_filename_from_fullpath">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">get_filename_from_fullpath</code><span class="sig-paren">(</span><em>fullpath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#get_filename_from_fullpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.get_filename_from_fullpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the filename given a fullpath to a file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.get_path_from_fullpath">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">get_path_from_fullpath</code><span class="sig-paren">(</span><em>fullpath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#get_path_from_fullpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.get_path_from_fullpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the path to a file given a fullpath to the file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.interp2d">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">interp2d</code><span class="sig-paren">(</span><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#interp2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.interp2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolated between 2 points</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.make_mydirs">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">make_mydirs</code><span class="sig-paren">(</span><em>top_dir</em>, <em>data_nc_dir</em>, <em>filedash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#make_mydirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.make_mydirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes directories needed for project</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.spatial_filter">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">spatial_filter</code><span class="sig-paren">(</span><em>file_in</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#spatial_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.spatial_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns only the “pings” within a defined box</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.stop">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">stop</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ship_mapper.utils.write_info2data">
+<code class="descclassname">ship_mapper.utils.</code><code class="descname">write_info2data</code><span class="sig-paren">(</span><em>D</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper/utils.html#write_info2data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.utils.write_info2data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes metadata from <code class="docutils literal notranslate"><span class="pre">info</span></code> object to the <cite>attibutes</cite> section in the data</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ship_mapper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ship_mapper" title="Permalink to this headline">¶</a></h2>
+<p>Below are functions that will be loaded when calling: import ship_mapper as sm</p>
+<dl class="function">
+<dt id="ship_mapper.load_settings">
+<code class="descclassname">ship_mapper.</code><code class="descname">load_settings</code><span class="sig-paren">(</span><em>info</em>, <em>path_to_settings=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ship_mapper.html#load_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.load_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the contents of settings.py (usially located in the projects folder)</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ship_mapper.converters.html" class="btn btn-neutral float-right" title="ship_mapper.converters package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="ship_mapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper.converters.VMS_DFO &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow.html">Workflow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../converters.html">Converters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributors:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../ship_mapper.html">ship_mapper</a> &raquo;</li>
+        
+          <li><a href="../converters.html">ship_mapper.converters</a> &raquo;</li>
+        
+      <li>ship_mapper.converters.VMS_DFO</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ship_mapper.converters.VMS_DFO</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<div class="viewcode-block" id="convert"><a class="viewcode-back" href="../../../ship_mapper.converters.html#ship_mapper.converters.VMS_DFO.convert">[docs]</a><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">file_out</span><span class="p">,</span> <span class="n">data_info_file</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This is a csv to nc converter for VMS data</span>
+<span class="sd">    </span>
+<span class="sd">    :param str file_in: Input file (.csv)</span>
+<span class="sd">    </span>
+<span class="sd">    :param str file_out: Output file (.nc)</span>
+<span class="sd">    </span>
+<span class="sd">    :param str data_info_file: YAML file describing other conversion parameters (.yml)</span>
+<span class="sd">    </span>
+<span class="sd">    :return: A netCDF file (.nc) in a format standard for &quot;ship_mapper&quot; </span>
+<span class="sd">             containing the original data, but also containing metadata included in the data_info.yml file</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1">#Load data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">file_in</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_header</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1">#take the data less the header row</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">new_header</span> <span class="c1">#set the header row as the df header</span>
+    
+    <span class="n">data</span><span class="o">.</span><span class="n">LONGITUDE</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">LONGITUDE</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">LATITUDE</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">LATITUDE</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    
+    
+    <span class="c1"># Chores: Create empty lists and counters</span>
+    <span class="n">DateTime_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">DateFlag_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">SeqNum_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">originTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">&#39;1/1/1980 00:00&#39;</span><span class="p">,</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y %H:%M&quot;</span><span class="p">)</span>
+    
+    <span class="c1">#Check date-strings and calculate &quot;serial-date&quot; (i.e. SeqNum)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">DateTime_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;POSITION DATE (UTC)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="s2">&quot;%b </span><span class="si">%d</span><span class="s2"> %Y %H:%M %Z&quot;</span><span class="p">))</span>
+            <span class="n">SeqNum_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">elapsed_days</span><span class="p">(</span><span class="n">DateTime_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">originTime</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">DateTime_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>   
+            <span class="n">SeqNum_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="n">DateFlag_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+    
+    <span class="c1"># Add new columns to DataFrame</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">DateTime_list</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SeqNum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">SeqNum_list</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;DateFlag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">DateFlag_list</span><span class="p">)</span>
+
+    
+    
+    <span class="c1"># STAGE 2 - Calculate Apparent Speed</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;AppSpeed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;SeqNum&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Chores: create empty lists</span>
+    <span class="n">VRN</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">LATITUDE</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">LONGITUDE</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">POSITION_UTC_DATE</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">SPEED_KNOTS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">DateTime</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">SeqNum</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">DateFlag</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ElapsedDistance</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ElapsedDays</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ApparentSpeed</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    
+    <span class="c1"># Find unique ships</span>
+    <span class="n">unis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;VESSEL VRN&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Unique Ships = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unis</span><span class="p">)))</span>
+    
+    <span class="c1"># Loop over each ship</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ship</span> <span class="ow">in</span> <span class="n">unis</span><span class="p">:</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ship: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ship</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
+        <span class="n">singleship</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;VESSEL VRN&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ship</span><span class="p">]</span>
+    
+        <span class="c1"># Note that the first point of each ship is not counted</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">singleship</span><span class="p">)):</span>
+            
+            <span class="c1"># Don&#39;t process ship track with only one point </span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">singleship</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">idx1</span> <span class="o">=</span> <span class="n">singleship</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">idx2</span> <span class="o">=</span> <span class="n">singleship</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                
+                <span class="c1"># Time</span>
+                <span class="n">DateTime</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">ElapsedDays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">elapsed_days</span><span class="p">(</span><span class="n">DateTime</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">][</span><span class="n">idx1</span><span class="p">]))</span>
+                
+                <span class="c1"># Get lat/lons</span>
+                <span class="n">lon1</span> <span class="o">=</span> <span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LONGITUDE&#39;</span><span class="p">][</span><span class="n">idx1</span><span class="p">]</span>
+                <span class="n">lat1</span> <span class="o">=</span> <span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LATITUDE&#39;</span><span class="p">][</span><span class="n">idx1</span><span class="p">]</span>
+                <span class="n">lon2</span> <span class="o">=</span> <span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LONGITUDE&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">]</span>
+                <span class="n">lat2</span> <span class="o">=</span> <span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LATITUDE&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">]</span>
+                                
+                <span class="c1"># Estimate elapsed distance and apperent speed</span>
+                <span class="n">ElapsedDistance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span><span class="n">lon1</span><span class="p">,</span><span class="n">lat2</span><span class="p">,</span><span class="n">lon2</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">ElapsedDays</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ApparentSpeed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sm</span><span class="o">.</span><span class="n">estimate_velocity</span><span class="p">(</span><span class="n">ElapsedDays</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">86400</span><span class="p">,</span> <span class="n">ElapsedDistance</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ApparentSpeed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+    
+                <span class="c1"># Done! Append extra information to lists</span>
+                <span class="n">VRN</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;VESSEL VRN&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">]))</span>
+                <span class="n">LATITUDE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LATITUDE&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">LONGITUDE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;LONGITUDE&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">POSITION_UTC_DATE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;POSITION DATE (UTC)&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">SPEED_KNOTS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;SPEED (KNOTS)&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">SeqNum</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;SeqNum&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                <span class="n">DateFlag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">singleship</span><span class="p">[</span><span class="s1">&#39;DateFlag&#39;</span><span class="p">][</span><span class="n">idx2</span><span class="p">])</span>
+                
+
+
+    <span class="c1"># Metadata</span>
+    <span class="n">dinfo</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">data_info_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+    <span class="n">dinfo</span><span class="p">[</span><span class="s1">&#39;startdate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">DateTime</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">dinfo</span><span class="p">[</span><span class="s1">&#39;enddate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">DateTime</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    
+    <span class="n">D</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">VRN</span><span class="p">),</span>
+                    <span class="s1">&#39;latitude&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">LATITUDE</span><span class="p">),</span>
+                    <span class="s1">&#39;longitude&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">LONGITUDE</span><span class="p">),</span>
+                    <span class="s1">&#39;DateTime&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">DateTime</span><span class="p">),</span>
+                    <span class="s1">&#39;SeqNum&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">SeqNum</span><span class="p">),</span>
+                    <span class="s1">&#39;ApparentSpeed&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">ApparentSpeed</span><span class="p">)},</span>
+
+                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Dindex&#39;</span><span class="p">:([</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">VRN</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">)},</span>
+                <span class="n">attrs</span><span class="o">=</span><span class="n">dinfo</span><span class="p">)</span>
+    
+    
+    <span class="n">encoding</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;latitude&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;longitude&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;DateTime&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;SeqNum&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span>
+                <span class="s1">&#39;ApparentSpeed&#39;</span><span class="p">:{</span><span class="s1">&#39;zlib&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">}}</span>
+    
+    <span class="n">D</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">file_out</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">,</span><span class="n">engine</span><span class="o">=</span><span class="s1">&#39;netcdf4&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    
+    
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Good!&#39;</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    
+<span class="c1">#    sm.bulk_convert_to_nc(__file__)</span>
+    
+    
+    <span class="n">converter</span> <span class="o">=</span> <span class="s1">&#39;VMS_DFO&#39;</span>
+    <span class="n">path_to_data_in</span> <span class="o">=</span> <span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">Users</span><span class="se">\\</span><span class="s1">IbarraD</span><span class="se">\\</span><span class="s1">Documents</span><span class="se">\\</span><span class="s1">GitHub</span><span class="se">\\</span><span class="s1">ship_mapper</span><span class="se">\\</span><span class="s1">examples</span><span class="se">\\</span><span class="s1">data</span><span class="se">\\</span><span class="s1">VMS_2012_DFO</span><span class="se">\\</span><span class="s1">data_original&#39;</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">bulk_convert_to_nc</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="n">path_to_data_in</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -10,11 +10,32 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
+   :caption: Getting started:
    
    ./installation
+   ./overview
+   ./examples
+
+
+
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: User guide:
+
+   ./directory_structure
    ./workflow
-   ./docs
+   ./basemaps_and_grids
+   ./standard_nc_files
+   ./filter_main
+   ./project2grid
+   ./merge_grids
+   ./mapping
+   ./make_shapefile
+
+
+
 
 .. toctree::
    :maxdepth: 3
@@ -25,6 +46,15 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    ./info_object
    ./utils
    ./converters
+
+
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contributors:
+
+   ./docs
 
 
 Indices and tables

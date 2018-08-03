@@ -4,11 +4,9 @@ API
 Code is divided into the following modules:
 
 
-.. toctree::
-   :maxdepth: 3
+.. autosummary::
+   :toctree: generated/
 
-   ./gridder
    ./mapper
-   ./info_object
+   ./gridder
    ./utils
-   ./converters

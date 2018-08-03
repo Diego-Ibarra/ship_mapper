@@ -5,7 +5,10 @@ It is recommended that you make an `environment <https://conda.io/docs/user-guid
 dedicated to run `ship_mapper`.
 
 
-Once your dedicated environment is creates, `activate` it, and install a couple of dependencies that do not install by defaul:
+Once your dedicated environment is created, `activate` it, then install a couple
+of dependencies that do not install by defaul:
+
+Install ``basemap`` and ``basemap-data-hires`` mapping libraries.
 
 In console...
 
@@ -13,6 +16,7 @@ In console...
 
     conda install -c conda-forge basemap basemap-data-hires
 
+Install ``netcdf4`` to be able to work with `.nc` files
 
 In console...
 
