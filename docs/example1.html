@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Directory structure" href="directory_structure.html" />
+    <link rel="next" title="2. Halifax_AIS" href="example2.html" />
     <link rel="prev" title="Examples" href="examples.html" /> 
 
   
@@ -84,8 +84,12 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. Maritimes_AIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example2.html">2. Halifax_AIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example3.html">3. St_Anns_Banks_AIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example4.html">4. Maritimes_VMS</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -98,6 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API:</span></p>
 <ul>
@@ -178,10 +183,15 @@
             
   <div class="section" id="maritimes-ais">
 <h1>1. Maritimes_AIS<a class="headerlink" href="#maritimes-ais" title="Permalink to this headline">¶</a></h1>
+<p>Executing <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/1_run.py">1_run.py</a> (shown below) will produce the following map.</p>
 <a class="reference external image-reference" href="_images/example1_Maritimes_AIS.png"><img alt="_images/example1_Maritimes_AIS.png" class="align-center" src="_images/example1_Maritimes_AIS.png" /></a>
-<p>Before you have to make <code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files
-using <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/grids/Maritimes/make_basemap.py">make_basemap.py</a></p>
-<p>using <a class="reference external" href="../examples/grids/Maritimes/make_basemap.py">make_basemap.py</a></p>
+<p>Note that before you execute <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/1_run.py">1_run.py</a>, you need to ensure that the
+<code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files were made before and are available (they
+should be in the <code class="docutils literal notranslate"><span class="pre">/grids/Maritimes</span></code> directory). If not,
+you have to make them using <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/grids/Maritimes/make_basemap.py">make_basemap.py</a></p>
+<p>Also you need to ensure that the <code class="docutils literal notranslate"><span class="pre">info</span></code> file (i.e. <cite>info_1_run.p</cite>) was priorly made
+and is available. If not, you have to make it with <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/make_info.py">make_info.py</a></p>
+<p>Below are the contents of <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/1_run.py">1_run.py</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
 
 
@@ -232,7 +242,7 @@ using <a class="reference external" href="https://github.com/Diego-Ibarra/ship_m
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="directory_structure.html" class="btn btn-neutral float-right" title="Directory structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="example2.html" class="btn btn-neutral float-right" title="2. Halifax_AIS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="examples.html" class="btn btn-neutral" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

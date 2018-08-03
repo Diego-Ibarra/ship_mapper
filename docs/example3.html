@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. St_Anns_Banks_AIS &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Maritimes_VMS" href="example4.html" />
+    <link rel="prev" title="2. Halifax_AIS" href="example2.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="example1.html">1. Maritimes_AIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example2.html">2. Halifax_AIS</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. St_Anns_Banks_AIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example4.html">4. Maritimes_VMS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="directory_structure.html">Directory structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basemaps_and_grids.html">Basemap and grid files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_nc_files.html">Standard NC files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filter_main.html">Filter Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project2grid.html">Project data onto grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributors:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="examples.html">Examples</a> &raquo;</li>
+        
+      <li>3. St_Anns_Banks_AIS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/example3.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="st-anns-banks-ais">
+<h1>3. St_Anns_Banks_AIS<a class="headerlink" href="#st-anns-banks-ais" title="Permalink to this headline">¶</a></h1>
+<p>Executing <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example3_St_Anns_Banks_AIS/1_run.py">1_run.py</a> (shown below) will produce the following map.</p>
+<a class="reference external image-reference" href="_images/example3_St_Anns_banks_AIS.png"><img alt="_images/example3_St_Anns_Banks_AIS.png" class="align-center" src="_images/example3_St_Anns_Banks_AIS.png" /></a>
+<p>Note that before you execute <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example3_St_Anns_Banks_AIS/1_run.py">1_run.py</a>, you need to ensure that the
+<code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files were made before and are available (they
+should be in the <code class="docutils literal notranslate"><span class="pre">/grids/St_Anns_banks</span></code> directory). If not,
+you have to make them using <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/grids/St_Anns_Bank/make_basemap.py">make_basemap.py</a></p>
+<p>Also you need to ensure that the <code class="docutils literal notranslate"><span class="pre">info</span></code> file (i.e. <cite>info_1_run.p</cite>) was priorly made
+and is available. If not, you have to make it with <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example3_St_Anns_Banks_AIS/make_info.py">make_info.py</a></p>
+<p>Below are the contents of <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example3_St_Anns_Banks_AIS/1_run.py">1_run.py</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+
+
+<span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_info</span><span class="p">(</span><span class="s1">&#39;1_run&#39;</span><span class="p">)</span>
+
+<span class="n">info</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">included_vessel_types</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
+<span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">interp_threshold</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1">#knots</span>
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">mask_below</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">textbox</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># ----------------------------------------------------------------------</span>
+<span class="c1">#Convert original data to nc</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">bulk_convert_to_nc</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="c1"># Filter and grid all input files</span>
+<span class="k">for</span> <span class="n">file_in</span> <span class="ow">in</span> <span class="n">sm</span><span class="o">.</span><span class="n">get_all_files</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_nc</span><span class="p">):</span>
+    
+    <span class="c1"># Get file name</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">get_filename_from_fullpath</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
+    <span class="c1"># Filter data (spatial trimmer)</span>
+    <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">spatial_filter</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> 
+     
+    <span class="c1"># Project &quot;dots&quot; into a grid</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">gridder</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">filtered_data</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+<span class="c1">#Merge grids   </span>
+<span class="n">sm</span><span class="o">.</span><span class="n">grid_merger</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+
+<span class="c1"># Make map</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">map_density</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno_r&#39;</span><span class="p">,</span><span class="n">sidebar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1">## Make shapefiles</span>
+<span class="c1">##sm.mergedgrid_to_shp(info)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="example4.html" class="btn btn-neutral float-right" title="4. Maritimes_VMS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example2.html" class="btn btn-neutral" title="2. Halifax_AIS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -3,10 +3,11 @@ API
 
 Code is divided into the following modules:
 
+.. currentmodule:: ship_mapper.gridder
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: ./generated/
+   :nosignatures:
 
-   ./mapper
-   ./gridder
-   ./utils
+   gridder
+   grid_merger

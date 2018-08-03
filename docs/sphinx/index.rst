@@ -15,6 +15,7 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    ./installation
    ./overview
    ./examples
+   ./api
 
 
 
@@ -33,7 +34,6 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    ./merge_grids
    ./mapping
    ./make_shapefile
-
 
 
 
