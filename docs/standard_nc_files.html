@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Filter Data" href="filter_main.html" />
+    <link rel="next" title="AIS_CCG Converter" href="AIS_CCG.html" />
     <link rel="prev" title="Basemap and grid files" href="basemaps_and_grids.html" /> 
 
   
@@ -83,28 +83,27 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="directory_structure.html">Directory structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basemaps_and_grids.html">Basemap and grid files</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Standard NC files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Standard NC files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VMS_DFO.html">VMS_DFO Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VMS_DFO_Oracle.html">VMS_DFO_Oracle Converter</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="filter_main.html">Filter Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project2grid.html">Project data onto grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -178,7 +177,7 @@
 <p><cite>ship_mapper</cite> works with data inside netCDF files (.nc) with a spedific structure.</p>
 <p>Therefore, a first step is to convert the original “ship data” from
 the orginal source files into .nc files with the standard format. This is done with
-<a class="reference internal" href="converters.html#converters.bulk_convert_to_nc" title="converters.bulk_convert_to_nc"><code class="xref py py-func docutils literal notranslate"><span class="pre">bulk_convert_to_nc()</span></code></a> as shown in the example below.</p>
+<a class="reference internal" href="generated/ship_mapper.bulk_convert_to_nc.html#ship_mapper.bulk_convert_to_nc" title="ship_mapper.bulk_convert_to_nc"><code class="xref py py-func docutils literal notranslate"><span class="pre">bulk_convert_to_nc</span></code></a> as shown in the example below.</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="kn">as</span> <span class="nn">sm</span>
 
@@ -186,6 +185,15 @@ the orginal source files into .nc files with the standard format. This is done w
                       <span class="n">path_to_data_in</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">,</span>
                       <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>Note that the conversion from source to <cite>Standard NC</cite> is done by a <cite>converter file</cite>.</p>
+<p>The following converter files are included:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VMS_DFO.html">VMS_DFO Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VMS_DFO_Oracle.html">VMS_DFO_Oracle Converter</a></li>
+</ul>
 </div>
 </div>
 
@@ -197,7 +205,7 @@ the orginal source files into .nc files with the standard format. This is done w
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="filter_main.html" class="btn btn-neutral float-right" title="Filter Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="AIS_CCG.html" class="btn btn-neutral float-right" title="AIS_CCG Converter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="basemaps_and_grids.html" class="btn btn-neutral" title="Basemap and grid files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

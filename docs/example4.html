@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="Directory structure" href="directory_structure.html" />
     <link rel="prev" title="3. St_Anns_Banks_AIS" href="example3.html" /> 
 
   
@@ -89,7 +89,6 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4. Maritimes_VMS</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -102,15 +101,10 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -194,17 +188,23 @@ and is available. If not, you have to make it with <a class="reference external"
 <p>Below are the contents of <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example4_Maritimes_VMS/1_run.py">1_run.py</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
 
-
+<span class="c1"># Load info object</span>
 <span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_info</span><span class="p">(</span><span class="s1">&#39;1_run&#39;</span><span class="p">)</span>
 
+<span class="c1"># Change or define some items within info</span>
 <span class="n">info</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">included_vessel_types</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
 <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">interp_threshold</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1">#knots</span>
 <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">mask_below</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">textbox</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+
 
 <span class="c1"># ----------------------------------------------------------------------</span>
 <span class="c1">#Convert original data to nc</span>
-<span class="n">sm</span><span class="o">.</span><span class="n">bulk_convert_to_nc</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">bulk_convert_to_nc</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">converter</span><span class="p">,</span>
+                      <span class="n">path_to_data_in</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">,</span>
+                      <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
 <span class="c1"># Filter and grid all input files</span>
@@ -218,18 +218,16 @@ and is available. If not, you have to make it with <a class="reference external"
      
     <span class="c1"># Project &quot;dots&quot; into a grid</span>
     <span class="n">sm</span><span class="o">.</span><span class="n">gridder</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">filtered_data</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
+
+
 <span class="c1">#Merge grids   </span>
 <span class="n">sm</span><span class="o">.</span><span class="n">grid_merger</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
 
-<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmin</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
-<span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">cbarmax</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
-
 <span class="c1"># Make map</span>
 <span class="n">m</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">map_density</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno_r&#39;</span><span class="p">,</span><span class="n">sidebar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1">#</span>
-<span class="c1">## Make shapefiles</span>
-<span class="c1">##sm.mergedgrid_to_shp(info)</span>
+
+<span class="c1"># Make shapefiles</span>
+<span class="c1">#sm.mergedgrid_to_shp(info)</span>
 </pre></div>
 </div>
 </div>
@@ -242,7 +240,7 @@ and is available. If not, you have to make it with <a class="reference external"
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="directory_structure.html" class="btn btn-neutral float-right" title="Directory structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="example3.html" class="btn btn-neutral" title="3. St_Anns_Banks_AIS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

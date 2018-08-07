@@ -6,7 +6,9 @@ We suggest to split ``data``, ``grids`` and ``projects`` into 3 different direct
 Note that the actual code of `ship_mapper` gets automatically installed elsewhere with
 the other python modules.
 
-Directory tree example
+Note that the file ``settings.py`` must be placed in the ``projects`` directory.
+
+Directory tree example:
 
 .. code-block:: python
 

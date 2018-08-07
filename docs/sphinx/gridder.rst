@@ -1,5 +1,0 @@
-Gridder
-=========
-
-.. automodule:: gridder
-   :members:

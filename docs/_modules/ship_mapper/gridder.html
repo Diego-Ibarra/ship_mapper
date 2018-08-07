@@ -81,7 +81,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -94,15 +93,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -187,7 +181,7 @@
 
 
 
-<div class="viewcode-block" id="gridder"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.gridder.html#ship_mapper.gridder.gridder">[docs]</a><span class="k">def</span> <span class="nf">gridder</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">filename_out</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="gridder"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.html#ship_mapper.gridder">[docs]</a><span class="k">def</span> <span class="nf">gridder</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">filename_out</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Counts &quot;pings&quot; inside a grid-cell and computes &quot;Ship minutes per km2&quot;</span>
 <span class="sd">    </span>
@@ -198,7 +192,7 @@
 <span class="sd">                              </span>
 <span class="sd">    .. seealso::</span>
 <span class="sd">        </span>
-<span class="sd">        .. function:: gridder_pingsPerCell</span>
+<span class="sd">        :py:func:`grid_merger &lt;ship_mapper.grid_merger&gt;` </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gridder ---------------------------------------------&#39;</span><span class="p">)</span>
@@ -334,7 +328,7 @@
 
 
 
-<div class="viewcode-block" id="gridder_pingsPerCell"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.gridder.html#ship_mapper.gridder.gridder_pingsPerCell">[docs]</a><span class="k">def</span> <span class="nf">gridder_pingsPerCell</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="gridder_pingsPerCell"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.gridder_pingsPerCell.html#ship_mapper.gridder_pingsPerCell">[docs]</a><span class="k">def</span> <span class="nf">gridder_pingsPerCell</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Counts &quot;pings&quot; inside a gridcell and computes &quot;No. of vessels within grid-cell&quot;</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -510,7 +504,7 @@
 
 
 
-<div class="viewcode-block" id="grid_merger"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.grid_merger.html#ship_mapper.gridder.grid_merger">[docs]</a><span class="k">def</span> <span class="nf">grid_merger</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="grid_merger"><a class="viewcode-back" href="../../generated/ship_mapper.grid_merger.html#ship_mapper.grid_merger">[docs]</a><span class="k">def</span> <span class="nf">grid_merger</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Combines several gridded files into one</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -580,7 +574,7 @@
 
 
         
-<span class="k">def</span> <span class="nf">getWKT_PRJ</span> <span class="p">(</span><span class="n">epsg_code</span><span class="p">):</span>
+<div class="viewcode-block" id="getWKT_PRJ"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.getWKT_PRJ.html#ship_mapper.getWKT_PRJ">[docs]</a><span class="k">def</span> <span class="nf">getWKT_PRJ</span> <span class="p">(</span><span class="n">epsg_code</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Downloads and returns geospatial parameters given an epsg code</span>
 <span class="sd">    </span>
@@ -599,11 +593,11 @@
     <span class="n">wkt_decoded</span> <span class="o">=</span> <span class="n">wkt_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
     <span class="n">remove_spaces</span> <span class="o">=</span> <span class="n">wkt_decoded</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">remove_spaces</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
+    <span class="k">return</span> <span class="n">output</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">mergedgrid_to_shp</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="mergedgrid_to_shp"><a class="viewcode-back" href="../../generated/ship_mapper.mergedgrid_to_shp.html#ship_mapper.mergedgrid_to_shp">[docs]</a><span class="k">def</span> <span class="nf">mergedgrid_to_shp</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Converts a gridded file into a shapefile</span>
 <span class="sd">    </span>
@@ -645,13 +639,13 @@
     <span class="n">epsg</span> <span class="o">=</span> <span class="n">getWKT_PRJ</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">epsg_code</span><span class="p">)</span>
     <span class="n">prj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">epsg</span><span class="p">)</span>
     <span class="n">prj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
     
 
 
 
 
-<span class="k">def</span> <span class="nf">calculate_gridcell_areas</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+<div class="viewcode-block" id="calculate_gridcell_areas"><a class="viewcode-back" href="../../generated/ship_mapper.calculate_gridcell_areas.html#ship_mapper.calculate_gridcell_areas">[docs]</a><span class="k">def</span> <span class="nf">calculate_gridcell_areas</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Calculates the area of each of the grid-cells in the domain (in km^2)</span>
 <span class="sd">    </span>
@@ -690,7 +684,7 @@
             
         <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">areas</span> <span class="o">=</span> <span class="n">areas</span>
     
-    <span class="k">return</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="n">info</span></div>
 
 
 

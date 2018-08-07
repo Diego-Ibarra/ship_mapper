@@ -81,7 +81,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -94,15 +93,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -191,7 +185,7 @@
 <span class="kn">import</span> <span class="nn">netCDF4</span>
 
 
-<div class="viewcode-block" id="map_density"><a class="viewcode-back" href="../../generated/ship_mapper.mapper.map_density.html#ship_mapper.mapper.map_density">[docs]</a><span class="k">def</span> <span class="nf">map_density</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="map_density"><a class="viewcode-back" href="../../generated/ship_mapper.map_density.html#ship_mapper.map_density">[docs]</a><span class="k">def</span> <span class="nf">map_density</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                 <span class="n">to_screen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span><span class="n">filedir_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -431,7 +425,7 @@
     <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">md</span><span class="p">):</span>
+<div class="viewcode-block" id="make_legend_text"><a class="viewcode-back" href="../../generated/ship_mapper.mapper.make_legend_text.html#ship_mapper.make_legend_text">[docs]</a><span class="k">def</span> <span class="nf">make_legend_text</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">md</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Makes text for legend in left block of map</span>
 <span class="sd">    </span>
@@ -481,11 +475,11 @@
     
     
     
-    <span class="k">return</span> <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span>
+    <span class="k">return</span> <span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">map_dots</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="map_dots"><a class="viewcode-back" href="../../generated/ship_mapper.map_dots.html#ship_mapper.map_dots">[docs]</a><span class="k">def</span> <span class="nf">map_dots</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Creates a map of &quot;pings&quot; rather than gridded density</span>
 <span class="sd">    </span>
@@ -538,12 +532,12 @@
 <span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
 <span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
    
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
 
 
-<span class="k">def</span> <span class="nf">map_dots_one_ship</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">Ship_No</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="map_dots_one_ship"><a class="viewcode-back" href="../../generated/ship_mapper.map_dots_one_ship.html#ship_mapper.map_dots_one_ship">[docs]</a><span class="k">def</span> <span class="nf">map_dots_one_ship</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="p">,</span> <span class="n">Ship_No</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Creates a map of &quot;pings&quot; (i.e. not gridded density) of only one ship</span>
 <span class="sd">    </span>
@@ -618,11 +612,11 @@
 <span class="c1">#        filename = info.project_name + &#39;_&#39; + str(info.grid.bin_number) + &#39;.png&#39;</span>
 <span class="c1">#        plt.savefig(os.path.join(filedir,filename), dpi=300)</span>
    
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="define_path_to_map"><a class="viewcode-back" href="../../generated/ship_mapper.mapper.define_path_to_map.html#ship_mapper.define_path_to_map">[docs]</a><span class="k">def</span> <span class="nf">define_path_to_map</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Figures out where is the .basemap and .grid files</span>
 <span class="sd">    </span>
@@ -635,11 +629,11 @@
             <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">project_path</span><span class="p">,</span><span class="s1">&#39;ancillary&#39;</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">path_to_map</span> <span class="o">=</span> <span class="n">path_to_basemap</span>
-    <span class="k">return</span> <span class="n">path_to_map</span>
+    <span class="k">return</span> <span class="n">path_to_map</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">spatial</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="make_basemap"><a class="viewcode-back" href="../../generated/ship_mapper.make_basemap.html#ship_mapper.make_basemap">[docs]</a><span class="k">def</span> <span class="nf">make_basemap</span><span class="p">(</span><span class="n">info</span><span class="p">,</span><span class="n">spatial</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">sidebar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Makes a basemap</span>
 <span class="sd">    </span>
@@ -759,14 +753,14 @@
 <span class="c1">##    plt.savefig(datadir[0:-5] + &#39;png\\&#39; + filename + &#39;- Grid&#39; + str(BinNo) + &#39; - Filter&#39; +str(downLim) + &#39;-&#39; + str(upLim) + &#39;.png&#39;)</span>
 <span class="c1">#    plt.savefig(&#39;test.png&#39;)</span>
     
-    <span class="k">return</span> <span class="n">m</span>
+    <span class="k">return</span> <span class="n">m</span></div>
 
 
 
 
 
 
-<span class="k">def</span> <span class="nf">load_my_cmap</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="load_my_cmap"><a class="viewcode-back" href="../../generated/ship_mapper.mapper.load_my_cmap.html#ship_mapper.load_my_cmap">[docs]</a><span class="k">def</span> <span class="nf">load_my_cmap</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Creates and loads custom colormap</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -816,10 +810,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cmap name does not match any of the available cmaps&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span>  <span class="n">my_cmap</span>
+    <span class="k">return</span>  <span class="n">my_cmap</span></div>
 
 
-<span class="k">def</span> <span class="nf">save_basemap</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="save_basemap"><a class="viewcode-back" href="../../generated/ship_mapper.save_basemap.html#ship_mapper.save_basemap">[docs]</a><span class="k">def</span> <span class="nf">save_basemap</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">info</span><span class="p">,</span><span class="n">path_to_basemap</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Saves basemap (and correspoding info.grid) to a pickle file</span>
 <span class="sd">    </span>
@@ -847,7 +841,7 @@
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">info_picklename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! Pickles were just made: &#39;</span> <span class="o">+</span>  <span class="n">basemap_picklename</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 </pre></div>
 
            </div>

@@ -82,7 +82,6 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -95,15 +94,10 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -195,11 +189,6 @@
 <li class="toctree-l2"><a class="reference internal" href="example4.html">4. Maritimes_VMS</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/ship_mapper.gridder.gridder.html">ship_mapper.gridder.gridder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/ship_mapper.gridder.grid_merger.html">ship_mapper.gridder.grid_merger</a></li>
-</ul>
-</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -208,7 +197,12 @@
 <li class="toctree-l1"><a class="reference internal" href="directory_structure.html">Directory structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basemaps_and_grids.html">Basemap and grid files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="standard_nc_files.html">Standard NC files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="standard_nc_files.html">Standard NC files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VMS_DFO.html">VMS_DFO Converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="VMS_DFO_Oracle.html">VMS_DFO_Oracle Converter</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="filter_main.html">Filter Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="filter_spatial.html">Spatial filter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_temporal.html">Temporal filter</a></li>
@@ -219,20 +213,64 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="VMS_DFO.html">VMS_DFO Converter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="VMS_DFO_Oracle.html">VMS_DFO_Oracle Converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API (List of modules and functions)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#gridder">Gridder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.calculate_gridcell_areas.html">ship_mapper.calculate_gridcell_areas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.grid_merger.html">ship_mapper.grid_merger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.html">ship_mapper.gridder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mergedgrid_to_shp.html">ship_mapper.mergedgrid_to_shp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.getWKT_PRJ.html">ship_mapper.gridder.getWKT_PRJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.gridder_pingsPerCell.html">ship_mapper.gridder.gridder_pingsPerCell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mapper">Mapper</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.make_basemap.html">ship_mapper.make_basemap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_density.html">ship_mapper.map_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_dots.html">ship_mapper.map_dots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_dots_one_ship.html">ship_mapper.map_dots_one_ship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.save_basemap.html">ship_mapper.save_basemap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.load_my_cmap.html">ship_mapper.mapper.load_my_cmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.define_path_to_map.html">ship_mapper.mapper.define_path_to_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.make_legend_text.html">ship_mapper.mapper.make_legend_text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#info-object">Info_Object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.attrs_to_info.html">ship_mapper.attrs_to_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.data_to_info.html">ship_mapper.data_to_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info.html">ship_mapper.info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info_to_attrs.html">ship_mapper.info_to_attrs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.load_info.html">ship_mapper.load_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info_object.auto_update.html">ship_mapper.info_object.auto_update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#converters">Converters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.bulk_convert_to_nc.html">ship_mapper.bulk_convert_to_nc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.bulk_update_attributes.html">ship_mapper.bulk_update_attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.convert_to_nc.html">ship_mapper.convert_to_nc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.align_with_grid.html">ship_mapper.align_with_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.checkDir.html">ship_mapper.checkDir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.degrees_to_meters.html">ship_mapper.degrees_to_meters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.distance.html">ship_mapper.distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.elapsed_days.html">ship_mapper.elapsed_days</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.estimate_velocity.html">ship_mapper.estimate_velocity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_all_files.html">ship_mapper.get_all_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_filename_from_fullpath.html">ship_mapper.get_filename_from_fullpath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_path_from_fullpath.html">ship_mapper.get_path_from_fullpath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.interp2d.html">ship_mapper.interp2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.make_mydirs.html">ship_mapper.make_mydirs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.spatial_filter.html">ship_mapper.spatial_filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.stop.html">ship_mapper.stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.write_info2data.html">ship_mapper.write_info2data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

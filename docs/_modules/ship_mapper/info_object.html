@@ -76,18 +76,27 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../directory_structure.html">Directory structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basemaps_and_grids.html">Basemap and grid files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../standard_nc_files.html">Standard NC files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filter_main.html">Filter Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project2grid.html">Project data onto grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../merge_grids.html">Merge grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mapping.html">Make maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html">Make shapefile</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -139,8 +148,6 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../ship_mapper.html">ship_mapper</a> &raquo;</li>
-        
       <li>ship_mapper.info_object</li>
     
     
@@ -157,14 +164,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ship_mapper.info_object</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info">[docs]</a><span></span><span class="k">class</span> <span class="nc">info</span><span class="p">:</span>
+<div class="viewcode-block" id="info"><a class="viewcode-back" href="../../generated/ship_mapper.info.html#ship_mapper.info">[docs]</a><span></span><span class="k">class</span> <span class="nc">info</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    info class makes and &#39;info object&#39; which contains all the metadata</span>
 <span class="sd">    needed to run a project.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calling_file</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">dir_data_original</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="info.__init__"><a class="viewcode-back" href="../../generated/ship_mapper.info.html#ship_mapper.info.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calling_file</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">dir_data_original</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Initializes an &quot;info&quot; object</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -243,7 +250,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dirs</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">dirs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">maps</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sidebar</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">sidebar</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
     
     
@@ -265,7 +272,7 @@
     
     
     
-<div class="viewcode-block" id="info.save"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Saves info into pickle</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -278,14 +285,14 @@
         
         <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">open</span><span class="p">(</span><span class="n">full_filename</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;!!! Pickle info.p file just got saved &#39;</span><span class="p">)</span>
-        <span class="k">return</span></div></div>
+        <span class="k">return</span></div>
     
     
     
     
     
     
-<div class="viewcode-block" id="load_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.load_info">[docs]</a><span class="k">def</span> <span class="nf">load_info</span><span class="p">(</span><span class="n">run_name</span><span class="p">,</span> <span class="n">path_to_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="load_info"><a class="viewcode-back" href="../../generated/ship_mapper.load_info.html#ship_mapper.load_info">[docs]</a><span class="k">def</span> <span class="nf">load_info</span><span class="p">(</span><span class="n">run_name</span><span class="p">,</span> <span class="n">path_to_info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Loads &quot;info&quot; file</span>
 <span class="sd">    </span>
@@ -316,7 +323,7 @@
 
     
 
-<div class="viewcode-block" id="grid_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.grid_to_info">[docs]</a><span class="k">def</span> <span class="nf">grid_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">basemapName</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">grid_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">basemapName</span><span class="p">,</span> <span class="n">grid_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">_pickle</span> <span class="k">as</span> <span class="nn">pickle</span>
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
@@ -354,12 +361,12 @@
     <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">parallels</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">parallels</span>
     <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">meridians</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">meridians</span>
     <span class="n">info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">scalebar_km</span> <span class="o">=</span> <span class="n">grid_info</span><span class="o">.</span><span class="n">maps</span><span class="o">.</span><span class="n">scalebar_km</span>
-    <span class="k">return</span> <span class="n">info</span></div>
+    <span class="k">return</span> <span class="n">info</span>
 
 
 
 
-<div class="viewcode-block" id="data_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.data_to_info">[docs]</a><span class="k">def</span> <span class="nf">data_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
+<div class="viewcode-block" id="data_to_info"><a class="viewcode-back" href="../../generated/ship_mapper.data_to_info.html#ship_mapper.data_to_info">[docs]</a><span class="k">def</span> <span class="nf">data_to_info</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_source</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Reads metadata from data source (i.e. data_info.yaml file)</span>
 <span class="sd">    and appends it to ``info`` object</span>
@@ -384,7 +391,7 @@
 
 
 
-<div class="viewcode-block" id="info_to_attrs"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.info_to_attrs">[docs]</a><span class="k">def</span> <span class="nf">info_to_attrs</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+<div class="viewcode-block" id="info_to_attrs"><a class="viewcode-back" href="../../generated/ship_mapper.info_to_attrs.html#ship_mapper.info_to_attrs">[docs]</a><span class="k">def</span> <span class="nf">info_to_attrs</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Extracts `attibutes` from ``info`` object</span>
 <span class="sd">    </span>
@@ -408,7 +415,7 @@
 
 
 
-<div class="viewcode-block" id="attrs_to_info"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.attrs_to_info">[docs]</a><span class="k">def</span> <span class="nf">attrs_to_info</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
+<div class="viewcode-block" id="attrs_to_info"><a class="viewcode-back" href="../../generated/ship_mapper.attrs_to_info.html#ship_mapper.attrs_to_info">[docs]</a><span class="k">def</span> <span class="nf">attrs_to_info</span><span class="p">(</span><span class="n">attrs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Appends `attributes` to ``info`` object</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -429,7 +436,7 @@
 
 
 
-<div class="viewcode-block" id="auto_update"><a class="viewcode-back" href="../../ship_mapper.html#ship_mapper.info_object.auto_update">[docs]</a><span class="k">def</span> <span class="nf">auto_update</span><span class="p">(</span><span class="n">filedash</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_update"><a class="viewcode-back" href="../../generated/ship_mapper.info_object.auto_update.html#ship_mapper.auto_update">[docs]</a><span class="k">def</span> <span class="nf">auto_update</span><span class="p">(</span><span class="n">filedash</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Updates some metadata in ``info`` file</span>
 <span class="sd">    &#39;&#39;&#39;</span>

@@ -26,7 +26,7 @@ def gridder(info, data_in, filename_out, overwrite=False):
                               
     .. seealso::
         
-        .. function:: gridder_pingsPerCell
+        :py:func:`grid_merger <ship_mapper.grid_merger>` 
     '''
     
     print('gridder ---------------------------------------------')

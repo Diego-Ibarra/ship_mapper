@@ -2,11 +2,7 @@ Make shapefile
 ======================
 
 
-Make maps
-======================
-
-
-Use function :func:`~gridder.mergedgrid_to_shp` to produce **shapefiles** from a ``merged.nc`` file
+Use function :func:`mergedgrid_to_shp <ship_mapper.mergedgrid_to_shp>` to produce **shapefiles** from a ``merged.nc`` file
 
 Example: 
 

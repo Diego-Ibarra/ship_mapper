@@ -11,7 +11,7 @@ the project directory for one-off use.
 
 Instructions on how to make the ``.basemap`` and ``.grid`` files are made 
 usually located in a ``make_basemap.py`` file, which calls the actual fuction that 
-makes the basemap, :func:`~mapper.make_basemap`
+makes the basemap, :func:`make_basemap <ship_mapper.make_basemap>`
 
 
 The example below shows teh contents of a very simple ``make_basemap.py`` file.

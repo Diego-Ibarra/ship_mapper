@@ -2,7 +2,7 @@ Make maps
 ======================
 
 
-Use function :func:`~mapper.map_density` to produce a map from a ``merged.nc`` file
+Use function :func:`map_density <ship_mapper.map_density>` to produce a map from a ``merged.nc`` file
 
 Example: 
 

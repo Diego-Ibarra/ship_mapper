@@ -1,0 +1,22 @@
+ship\_mapper.converters.AIS\_CCG
+================================
+
+.. automodule:: ship_mapper.converters.AIS_CCG
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      convert
+   
+   
+
+   
+   
+   
+
+   
+   
+   

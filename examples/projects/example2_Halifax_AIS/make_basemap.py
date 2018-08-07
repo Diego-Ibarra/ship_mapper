@@ -1,5 +1,6 @@
 import ship_mapper as sm
 
+# Make info object
 info = sm.info(__file__)
 
 # Define more items in info
@@ -13,18 +14,14 @@ info.grid.maxlat = 44.8
 info.grid.minlon = -64.3
 info.grid.maxlon = -62.8
 info.grid.epsg_code = '4326'
-
 info.maps.resolution = 'f'
 info.maps.parallels = 0.1 # Deegres between lines
 info.maps.meridians = 0.1# Deegres between lines
 info.maps.scalebar_km = 10
 
-## Upper and lower limits (apparent Spped) to filter ship density data
+## Upper and lower limits (apparent Speed) to filter ship density data
 info.filt.speed_low = 0 # Knots
 info.filt.speed_high = 100 # Knots
-
-#project_path = info.dirs.project_path
-#path_to_map = info.dirs.ancillary 
 
 m = sm.make_basemap(info,
                     [info.grid.minlat,

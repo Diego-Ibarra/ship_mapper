@@ -1,15 +1,17 @@
 import ship_mapper as sm
 
+# Load info object
 info = sm.load_info('example2_Halifax_AIS')
 
+# Change or define some items within info
 info.filt.speed_low = 0.5 # Knots
 info.filt.speed_high = 4.5 # Knots
-
 info.grid.interp_threshold = 30 #knots
 info.maps.mask_below = 0
 info.grid.time_bin = 0.034722 #days
 info.sidebar.included_vessel_types = 'all'
-
+info.maps.cbarmin = 'auto'
+info.maps.cbarmax = 'auto'
 
 # Filter and grid all input files
 for file_in in sm.get_all_files(info.dirs.data_nc):
@@ -27,9 +29,6 @@ for file_in in sm.get_all_files(info.dirs.data_nc):
 
 #Merge grids   
 sm.grid_merger(info)
-
-info.maps.cbarmin = 'auto'
-info.maps.cbarmax = 'auto'
 
 # Make map
 m = sm.map_density(info, cmap='inferno_r',sidebar=True)

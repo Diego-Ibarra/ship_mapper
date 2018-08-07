@@ -83,7 +83,6 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul class="current">
@@ -96,15 +95,10 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">Reference:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -181,8 +175,8 @@ organized in a 2-dimessional grid. The functions herein basically count the numb
 of “pings” of a vessel occurring inside each grid-cell.</p>
 <p>The main two fucntions are:</p>
 <ol class="arabic simple">
-<li><a class="reference internal" href="gridder.html#gridder.gridder" title="gridder.gridder"><code class="xref py py-func docutils literal notranslate"><span class="pre">gridder()</span></code></a>: Counts “pings” inside a grid-cell and computes “Ship minutes per km2”</li>
-<li><a class="reference internal" href="gridder.html#gridder.gridder_pingsPerCell" title="gridder.gridder_pingsPerCell"><code class="xref py py-func docutils literal notranslate"><span class="pre">gridder_pingsPerCell()</span></code></a>: Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”</li>
+<li><a class="reference internal" href="generated/ship_mapper.gridder.html#ship_mapper.gridder" title="ship_mapper.gridder"><code class="xref py py-func docutils literal notranslate"><span class="pre">gridder</span></code></a>: Counts “pings” inside a grid-cell and computes “Ship minutes per km2”</li>
+<li><a class="reference internal" href="generated/ship_mapper.gridder.gridder_pingsPerCell.html#ship_mapper.gridder.gridder_pingsPerCell" title="ship_mapper.gridder.gridder_pingsPerCell"><code class="xref py py-func docutils literal notranslate"><span class="pre">gridder.gridder_pingsPerCell</span></code></a>: Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”</li>
 </ol>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="kn">as</span> <span class="nn">sm</span>

@@ -8,8 +8,8 @@ of "pings" of a vessel occurring inside each grid-cell.
 
 The main two fucntions are:
 
-#. :func:`~gridder.gridder`: Counts “pings” inside a grid-cell and computes “Ship minutes per km2”
-#. :func:`~gridder.gridder_pingsPerCell`: Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”
+#. :func:`gridder <ship_mapper.gridder>`: Counts “pings” inside a grid-cell and computes “Ship minutes per km2”
+#. :func:`gridder.gridder_pingsPerCell <ship_mapper.gridder.gridder_pingsPerCell>`: Counts “pings” inside a gridcell and computes “No. of vessels within grid-cell”
 
 Example: 
 

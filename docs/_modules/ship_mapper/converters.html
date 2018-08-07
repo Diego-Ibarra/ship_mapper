@@ -76,18 +76,27 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
+<p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../converters.html">Converters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../directory_structure.html">Directory structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basemaps_and_grids.html">Basemap and grid files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../standard_nc_files.html">Standard NC files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filter_main.html">Filter Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project2grid.html">Project data onto grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../merge_grids.html">Merge grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mapping.html">Make maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html">Make shapefile</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API (List of modules and functions)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -139,8 +148,6 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../ship_mapper.html">ship_mapper</a> &raquo;</li>
-        
       <li>ship_mapper.converters</li>
     
     
@@ -157,7 +164,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ship_mapper.converters</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="convert_to_nc"><a class="viewcode-back" href="../../ship_mapper.converters.html#ship_mapper.converters.convert_to_nc">[docs]</a><span></span><span class="k">def</span> <span class="nf">convert_to_nc</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_to_nc"><a class="viewcode-back" href="../../generated/ship_mapper.convert_to_nc.html#ship_mapper.convert_to_nc">[docs]</a><span></span><span class="k">def</span> <span class="nf">convert_to_nc</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">data_out</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">     Import appropiate converter, which is a file in folder &quot;converters&quot; within</span>
 <span class="sd">     this module, or a customade file in the &quot;path&quot; folder </span>
@@ -181,7 +188,7 @@
 
 
 
-<div class="viewcode-block" id="bulk_convert_to_nc"><a class="viewcode-back" href="../../ship_mapper.converters.html#ship_mapper.converters.bulk_convert_to_nc">[docs]</a><span class="k">def</span> <span class="nf">bulk_convert_to_nc</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_yaml</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="bulk_convert_to_nc"><a class="viewcode-back" href="../../generated/ship_mapper.bulk_convert_to_nc.html#ship_mapper.bulk_convert_to_nc">[docs]</a><span class="k">def</span> <span class="nf">bulk_convert_to_nc</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_converter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path_to_yaml</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Converts ALL files in a directory </span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -258,7 +265,7 @@
 
 
 
-<div class="viewcode-block" id="bulk_update_attributes"><a class="viewcode-back" href="../../ship_mapper.converters.html#ship_mapper.converters.bulk_update_attributes">[docs]</a><span class="k">def</span> <span class="nf">bulk_update_attributes</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="p">,</span> <span class="n">path_to_data_out</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="bulk_update_attributes"><a class="viewcode-back" href="../../generated/ship_mapper.bulk_update_attributes.html#ship_mapper.bulk_update_attributes">[docs]</a><span class="k">def</span> <span class="nf">bulk_update_attributes</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">path_to_data_in</span><span class="p">,</span> <span class="n">path_to_data_out</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Updates attributes in ALL files in a directory</span>
 <span class="sd">    &#39;&#39;&#39;</span>

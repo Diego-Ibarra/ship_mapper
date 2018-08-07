@@ -1,5 +1,0 @@
-Mapper
-========
-
-.. automodule:: mapper
-   :members:

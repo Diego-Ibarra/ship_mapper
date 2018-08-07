@@ -1,7 +1,7 @@
 Merge grids
 ============
 
-Use function :func:`~gridder.grid_merger` to merge all ``grid-files.nc`` from a 
+Use function :func:`grid_merger <ship_mapper.grid_merger>` to merge all ``grid-files.nc`` from a 
 project into one single ``merged.nc`` file
 
 Example: 

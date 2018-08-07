@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API &mdash; ship_mapper 0.1 documentation</title>
+  <title>API (List of modules and functions) &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ship_mapper.gridder.gridder" href="generated/ship_mapper.gridder.gridder.html" />
-    <link rel="prev" title="4. Maritimes_VMS" href="example4.html" /> 
+    <link rel="next" title="ship_mapper.calculate_gridcell_areas" href="generated/ship_mapper.calculate_gridcell_areas.html" />
+    <link rel="prev" title="Make shapefile" href="make_shapefile.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,15 +79,10 @@
             
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/ship_mapper.gridder.gridder.html">ship_mapper.gridder.gridder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/ship_mapper.gridder.grid_merger.html">ship_mapper.gridder.grid_merger</a></li>
-</ul>
-</li>
 </ul>
 <p class="caption"><span class="caption-text">User guide:</span></p>
 <ul>
@@ -100,15 +95,64 @@
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mapping.html">Make maps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="make_shapefile.html">Make shapefile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="make_shapefile.html#make-maps">Make maps</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="gridder.html">Gridder</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mapper.html">Mapper</a></li>
-<li class="toctree-l1"><a class="reference internal" href="info_object.html">Info_object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="converters.html">Converters</a></li>
+<p class="caption"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API (List of modules and functions)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gridder">Gridder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.calculate_gridcell_areas.html">ship_mapper.calculate_gridcell_areas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.grid_merger.html">ship_mapper.grid_merger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.html">ship_mapper.gridder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mergedgrid_to_shp.html">ship_mapper.mergedgrid_to_shp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.getWKT_PRJ.html">ship_mapper.gridder.getWKT_PRJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.gridder.gridder_pingsPerCell.html">ship_mapper.gridder.gridder_pingsPerCell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mapper">Mapper</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.make_basemap.html">ship_mapper.make_basemap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_density.html">ship_mapper.map_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_dots.html">ship_mapper.map_dots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.map_dots_one_ship.html">ship_mapper.map_dots_one_ship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.save_basemap.html">ship_mapper.save_basemap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.load_my_cmap.html">ship_mapper.mapper.load_my_cmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.define_path_to_map.html">ship_mapper.mapper.define_path_to_map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.mapper.make_legend_text.html">ship_mapper.mapper.make_legend_text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#info-object">Info_Object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.attrs_to_info.html">ship_mapper.attrs_to_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.data_to_info.html">ship_mapper.data_to_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info.html">ship_mapper.info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info_to_attrs.html">ship_mapper.info_to_attrs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.load_info.html">ship_mapper.load_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.info_object.auto_update.html">ship_mapper.info_object.auto_update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#converters">Converters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.bulk_convert_to_nc.html">ship_mapper.bulk_convert_to_nc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.bulk_update_attributes.html">ship_mapper.bulk_update_attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.convert_to_nc.html">ship_mapper.convert_to_nc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.align_with_grid.html">ship_mapper.align_with_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.checkDir.html">ship_mapper.checkDir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.degrees_to_meters.html">ship_mapper.degrees_to_meters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.distance.html">ship_mapper.distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.elapsed_days.html">ship_mapper.elapsed_days</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.estimate_velocity.html">ship_mapper.estimate_velocity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_all_files.html">ship_mapper.get_all_files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_filename_from_fullpath.html">ship_mapper.get_filename_from_fullpath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.get_path_from_fullpath.html">ship_mapper.get_path_from_fullpath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.interp2d.html">ship_mapper.interp2d</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.make_mydirs.html">ship_mapper.make_mydirs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.spatial_filter.html">ship_mapper.spatial_filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.stop.html">ship_mapper.stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/ship_mapper.write_info2data.html">ship_mapper.write_info2data</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Contributors:</span></p>
 <ul>
@@ -158,7 +202,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>API</li>
+      <li>API (List of modules and functions)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,23 +221,205 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api">
-<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="api-list-of-modules-and-functions">
+<h1>API (List of modules and functions)<a class="headerlink" href="#api-list-of-modules-and-functions" title="Permalink to this headline">¶</a></h1>
 <p>Code is divided into the following modules:</p>
+<div class="section" id="gridder">
+<h2>Gridder<a class="headerlink" href="#gridder" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.gridder.gridder.html#ship_mapper.gridder.gridder" title="ship_mapper.gridder.gridder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gridder</span></code></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.calculate_gridcell_areas.html#ship_mapper.calculate_gridcell_areas" title="ship_mapper.calculate_gridcell_areas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_gridcell_areas</span></code></a></td>
+<td>Calculates the area of each of the grid-cells in the domain (in km^2)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.grid_merger.html#ship_mapper.grid_merger" title="ship_mapper.grid_merger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_merger</span></code></a></td>
+<td>Combines several gridded files into one</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.gridder.html#ship_mapper.gridder" title="ship_mapper.gridder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gridder</span></code></a></td>
 <td>Counts “pings” inside a grid-cell and computes “Ship minutes per km2”</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.gridder.grid_merger.html#ship_mapper.gridder.grid_merger" title="ship_mapper.gridder.grid_merger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_merger</span></code></a></td>
-<td>Combines several gridded files into one</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.mergedgrid_to_shp.html#ship_mapper.mergedgrid_to_shp" title="ship_mapper.mergedgrid_to_shp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mergedgrid_to_shp</span></code></a></td>
+<td>Converts a gridded file into a shapefile</td>
 </tr>
 </tbody>
 </table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.gridder.getWKT_PRJ.html#ship_mapper.gridder.getWKT_PRJ" title="ship_mapper.gridder.getWKT_PRJ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gridder.getWKT_PRJ</span></code></a></td>
+<td>Downloads and returns geospatial parameters given an epsg code</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.gridder.gridder_pingsPerCell.html#ship_mapper.gridder.gridder_pingsPerCell" title="ship_mapper.gridder.gridder_pingsPerCell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gridder.gridder_pingsPerCell</span></code></a></td>
+<td>Counts “pings” inside a gridcell and computes “No.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mapper">
+<h2>Mapper<a class="headerlink" href="#mapper" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.make_basemap.html#ship_mapper.make_basemap" title="ship_mapper.make_basemap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_basemap</span></code></a></td>
+<td>Makes a basemap</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.map_density.html#ship_mapper.map_density" title="ship_mapper.map_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_density</span></code></a></td>
+<td>Plots a map using a gridded (or merged) file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.map_dots.html#ship_mapper.map_dots" title="ship_mapper.map_dots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_dots</span></code></a></td>
+<td>Creates a map of “pings” rather than gridded density</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.map_dots_one_ship.html#ship_mapper.map_dots_one_ship" title="ship_mapper.map_dots_one_ship"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_dots_one_ship</span></code></a></td>
+<td>Creates a map of “pings” (i.e.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.save_basemap.html#ship_mapper.save_basemap" title="ship_mapper.save_basemap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_basemap</span></code></a></td>
+<td>Saves basemap (and correspoding info.grid) to a pickle file</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.mapper.load_my_cmap.html#ship_mapper.mapper.load_my_cmap" title="ship_mapper.mapper.load_my_cmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapper.load_my_cmap</span></code></a></td>
+<td>Creates and loads custom colormap</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.mapper.define_path_to_map.html#ship_mapper.mapper.define_path_to_map" title="ship_mapper.mapper.define_path_to_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapper.define_path_to_map</span></code></a></td>
+<td>Figures out where is the .basemap and .grid files</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.mapper.make_legend_text.html#ship_mapper.mapper.make_legend_text" title="ship_mapper.mapper.make_legend_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapper.make_legend_text</span></code></a></td>
+<td>Makes text for legend in left block of map</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="info-object">
+<h2>Info_Object<a class="headerlink" href="#info-object" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.attrs_to_info.html#ship_mapper.attrs_to_info" title="ship_mapper.attrs_to_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">attrs_to_info</span></code></a></td>
+<td>Appends <cite>attributes</cite> to <code class="docutils literal notranslate"><span class="pre">info</span></code> object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.data_to_info.html#ship_mapper.data_to_info" title="ship_mapper.data_to_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_to_info</span></code></a></td>
+<td>Reads metadata from data source (i.e.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.info.html#ship_mapper.info" title="ship_mapper.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></td>
+<td>info class makes and ‘info object’ which contains all the metadata needed to run a project.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.info_to_attrs.html#ship_mapper.info_to_attrs" title="ship_mapper.info_to_attrs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info_to_attrs</span></code></a></td>
+<td>Extracts <cite>attibutes</cite> from <code class="docutils literal notranslate"><span class="pre">info</span></code> object</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.load_info.html#ship_mapper.load_info" title="ship_mapper.load_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_info</span></code></a></td>
+<td>Loads “info” file</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.info_object.auto_update.html#ship_mapper.info_object.auto_update" title="ship_mapper.info_object.auto_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info_object.auto_update</span></code></a></td>
+<td>Updates some metadata in <code class="docutils literal notranslate"><span class="pre">info</span></code> file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="converters">
+<h2>Converters<a class="headerlink" href="#converters" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.bulk_convert_to_nc.html#ship_mapper.bulk_convert_to_nc" title="ship_mapper.bulk_convert_to_nc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_convert_to_nc</span></code></a></td>
+<td>Converts ALL files in a directory</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.bulk_update_attributes.html#ship_mapper.bulk_update_attributes" title="ship_mapper.bulk_update_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_update_attributes</span></code></a></td>
+<td>Updates attributes in ALL files in a directory</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.convert_to_nc.html#ship_mapper.convert_to_nc" title="ship_mapper.convert_to_nc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_nc</span></code></a></td>
+<td>Import appropiate converter, which is a file in folder “converters” within this module, or a customade file in the “path” folder</td>
+</tr>
+</tbody>
+</table>
+<p>Included converter files:</p>
+<ul class="simple">
+<li><a class="reference internal" href="AIS_CCG.html"><span class="doc">AIS_CCG</span></a></li>
+<li><a class="reference internal" href="VMS_DFO.html"><span class="doc">VMS_DFO</span></a></li>
+<li><a class="reference internal" href="VMS_DFO_Oracle.html"><span class="doc">VMS_DFO_Oracle</span></a></li>
+</ul>
+</div>
+<div class="section" id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.align_with_grid.html#ship_mapper.align_with_grid" title="ship_mapper.align_with_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">align_with_grid</span></code></a></td>
+<td>Finds which gridcell contains a given lat/lon point</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.checkDir.html#ship_mapper.checkDir" title="ship_mapper.checkDir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkDir</span></code></a></td>
+<td>Check if <code class="docutils literal notranslate"><span class="pre">directory</span></code> exists.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.degrees_to_meters.html#ship_mapper.degrees_to_meters" title="ship_mapper.degrees_to_meters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degrees_to_meters</span></code></a></td>
+<td>Converts degrees to meters</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.distance.html#ship_mapper.distance" title="ship_mapper.distance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">distance</span></code></a></td>
+<td>Estimates distance between 2 points on Earth.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.elapsed_days.html#ship_mapper.elapsed_days" title="ship_mapper.elapsed_days"><code class="xref py py-obj docutils literal notranslate"><span class="pre">elapsed_days</span></code></a></td>
+<td>Estimates elapsed days</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.estimate_velocity.html#ship_mapper.estimate_velocity" title="ship_mapper.estimate_velocity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">estimate_velocity</span></code></a></td>
+<td>Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.get_all_files.html#ship_mapper.get_all_files" title="ship_mapper.get_all_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_files</span></code></a></td>
+<td>Returns all files within a directory</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.get_filename_from_fullpath.html#ship_mapper.get_filename_from_fullpath" title="ship_mapper.get_filename_from_fullpath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_filename_from_fullpath</span></code></a></td>
+<td>Returns the filename given a fullpath to a file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.get_path_from_fullpath.html#ship_mapper.get_path_from_fullpath" title="ship_mapper.get_path_from_fullpath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_path_from_fullpath</span></code></a></td>
+<td>Returns the path to a file given a fullpath to the file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.interp2d.html#ship_mapper.interp2d" title="ship_mapper.interp2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interp2d</span></code></a></td>
+<td>Interpolated between 2 points</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.make_mydirs.html#ship_mapper.make_mydirs" title="ship_mapper.make_mydirs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_mydirs</span></code></a></td>
+<td>Makes directories needed for project</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.spatial_filter.html#ship_mapper.spatial_filter" title="ship_mapper.spatial_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_filter</span></code></a></td>
+<td>Returns only the “pings” within a defined box</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/ship_mapper.stop.html#ship_mapper.stop" title="ship_mapper.stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop</span></code></a></td>
+<td>Stop</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/ship_mapper.write_info2data.html#ship_mapper.write_info2data" title="ship_mapper.write_info2data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_info2data</span></code></a></td>
+<td>Writes metadata from <code class="docutils literal notranslate"><span class="pre">info</span></code> object to the <cite>attibutes</cite> section in the data</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -204,10 +430,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="generated/ship_mapper.gridder.gridder.html" class="btn btn-neutral float-right" title="ship_mapper.gridder.gridder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="generated/ship_mapper.calculate_gridcell_areas.html" class="btn btn-neutral float-right" title="ship_mapper.calculate_gridcell_areas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="example4.html" class="btn btn-neutral" title="4. Maritimes_VMS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="make_shapefile.html" class="btn btn-neutral" title="Make shapefile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
