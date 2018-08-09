@@ -3,6 +3,12 @@ Ship Mapper
 
 This is a tool to create "ship density" heat maps from AIS, VMS and other ship-position services.
 
+.. image:: ./_images/example.png
+   :target: _images/example.png
+   :width: 400px
+   :align: center
+
+
 .. warning::
     
     This project is in VERY early development stages. **Don't use just yet!**

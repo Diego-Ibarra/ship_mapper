@@ -1,12 +1,12 @@
 Installation
 -------------
 
-It is recommended that you make an `environment <https://conda.io/docs/user-guide/tasks/manage-environments>`_ 
-dedicated to run `ship_mapper`.
+It is recommended to run `ship_mapper` in an `Anaconda <https://www.anaconda.com/download/>`_ 
+environment.
 
+You will need to install a couple
+of dependencies that do not install by default when installing Anaconda:
 
-Once your dedicated environment is created, `activate` it, then install a couple
-of dependencies that do not install by defaul:
 
 Install ``basemap`` and ``basemap-data-hires`` mapping libraries.
 
