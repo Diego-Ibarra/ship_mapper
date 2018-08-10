@@ -9,6 +9,6 @@ info = sm.grid_to_info(info, 'Maritimes', 'basemap_sidebar', grid_type='generic'
 # Get metadata from "data_info.yaml" and copy it into info
 info = sm.data_to_info(info, 'AIS_CCG')
 
-info = sm.calculate_gridcell_areas(info)
+#info = sm.calculate_gridcell_areas(info)
 
 info.save()

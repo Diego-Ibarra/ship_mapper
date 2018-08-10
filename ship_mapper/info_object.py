@@ -190,6 +190,7 @@ def grid_to_info(info, region, basemapName, grid_type=None):
     info.grid.minlon = grid_info.grid.minlon
     info.grid.maxlon = grid_info.grid.maxlon
     info.grid.epsg_code = grid_info.grid.epsg_code
+    info.grid.areas = grid_info.grid.areas
     
     info.maps.resolution = grid_info.maps.resolution
     info.maps.parallels = grid_info.maps.parallels

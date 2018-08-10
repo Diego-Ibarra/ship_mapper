@@ -491,6 +491,8 @@ def calculate_gridcell_areas(info):
     '''
     import ship_mapper as sm
     
+    print('Calculating grid-cell areas........................')
+    
     x = np.arange(info.grid.minlon, info.grid.maxlon, info.grid.bin_size, dtype=np.float64)
     y = np.arange(info.grid.minlat, info.grid.maxlat, info.grid.bin_size, dtype=np.float64)
     
