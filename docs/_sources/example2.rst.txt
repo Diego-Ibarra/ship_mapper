@@ -18,9 +18,6 @@ should be in the ``projects/example2_Halifax_AIS`` directory). If not,
 you have to make them using make_basemap.py_. Note that the ``Halifax_Area`` grid
 is a "one-off" grid and this it is not in the ``/grids`` directory (instead it is in the project directory).
 
-Also you need to ensure that the ``info`` file (i.e. `info_1_run.p`) was priorly made
-and is available. If not, you have to make it with make_info.py_
-
 Below are the contents of 1_run.py_
 
 .. literalinclude:: ../../examples/projects/example2_Halifax_AIS/1_run.py

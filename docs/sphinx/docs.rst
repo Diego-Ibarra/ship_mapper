@@ -22,3 +22,8 @@ Everytime you update the `.rts` documentation source files, you will need to run
     
     
 Note: Replace the paths to reflect your computer
+
+
+::  
+    
+    sphinx-autogen -o C:\Users\IbarraD\ship_mapper\docs C:\Users\IbarraD\ship_mapper\docs\sphinx\api.rst

@@ -63,6 +63,7 @@ Info_Object
    info
    info_to_attrs
    load_info
+   make_info_from_GridData
 
 .. autosummary::
    :toctree: ./generated/

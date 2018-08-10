@@ -24,19 +24,28 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. Halifax_AIS" href="example2.html" />
-    <link rel="prev" title="Examples" href="examples.html" /> 
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/>
+        <link rel="up" title="Examples" href="examples.html"/>
+        <link rel="next" title="2. Halifax_AIS" href="example2.html"/>
+        <link rel="prev" title="Examples" href="examples.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
    
   <div class="wy-grid-for-nav">
@@ -120,7 +129,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ship_mapper</a>
@@ -128,10 +137,9 @@
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
 
@@ -183,13 +191,15 @@
 <code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files were made before and are available (they
 should be in the <code class="docutils literal notranslate"><span class="pre">/grids/Maritimes</span></code> directory). If not,
 you have to make them using /grids/Maritimes/<a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/grids/Maritimes/make_basemap.py">make_basemap.py</a></p>
-<p>Also you need to ensure that the <code class="docutils literal notranslate"><span class="pre">info</span></code> file (i.e. <cite>info_1_run.p</cite>) was priorly made
-and is available. If not, you have to make it with /projects/example1_Maritimes_AIS/<a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/make_info.py">make_info.py</a></p>
 <p>Below are the contents of <a class="reference external" href="https://github.com/Diego-Ibarra/ship_mapper/blob/master/examples/projects/example1_Maritimes_AIS/1_run.py">1_run.py</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
 
-<span class="c1"># Load info object</span>
-<span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_info</span><span class="p">(</span><span class="s1">&#39;1_run&#39;</span><span class="p">)</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">make_info_from_GridData</span><span class="p">(</span><span class="n">calling_file</span><span class="o">=</span><span class="vm">__file__</span><span class="p">,</span>
+                                  <span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;1_run&#39;</span><span class="p">,</span>
+                                  <span class="n">region</span><span class="o">=</span><span class="s1">&#39;Maritimes&#39;</span><span class="p">,</span>
+                                  <span class="n">basemap</span><span class="o">=</span><span class="s1">&#39;basemap_sidebar&#39;</span><span class="p">,</span>
+                                  <span class="n">grid_type</span><span class="o">=</span><span class="s1">&#39;generic&#39;</span><span class="p">,</span>
+                                  <span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;AIS_CCG&#39;</span><span class="p">)</span>
 
 <span class="c1"># Change or define some items within info</span>
 <span class="n">info</span><span class="o">.</span><span class="n">sidebar</span><span class="o">.</span><span class="n">included_vessel_types</span> <span class="o">=</span> <span class="s1">&#39;All&#39;</span>
@@ -233,7 +243,9 @@ and is available. If not, you have to make it with /projects/example1_Maritimes_
 
 
            </div>
-           
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -255,7 +267,7 @@ and is available. If not, you have to make it with /projects/example1_Maritimes_
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -274,7 +286,6 @@ and is available. If not, you have to make it with /projects/example1_Maritimes_
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'0.1',
-            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -287,13 +298,19 @@ and is available. If not, you have to make it with /projects/example1_Maritimes_
 
   
 
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script> 
+  </script>
+   
 
 </body>
 </html>

@@ -17,9 +17,6 @@ Note that before you execute 1_run.py_, you need to ensure that the
 should be in the ``/grids/Maritimes`` directory). If not,
 you have to make them using /grids/Maritimes/make_basemap.py_
 
-Also you need to ensure that the ``info`` file (i.e. `info_1_run.p`) was priorly made
-and is available. If not, you have to make it with /projects/example1_Maritimes_AIS/make_info.py_
-
 Below are the contents of 1_run.py_
 
 .. literalinclude:: ../../examples\projects\example1_Maritimes_AIS/1_run.py
