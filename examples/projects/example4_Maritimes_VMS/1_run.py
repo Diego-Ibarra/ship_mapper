@@ -1,7 +1,11 @@
 import ship_mapper as sm
 
-# Load info object
-info = sm.load_info('1_run')
+info = sm.make_info_from_GridData(calling_file=__file__,
+                                  run_name='1_run',
+                                  region='Maritimes',
+                                  basemap='basemap_sidebar',
+                                  grid_type='generic',
+                                  data_name = 'VMS_DFO')
 
 # Change or define some items within info
 info.sidebar.included_vessel_types = 'All'

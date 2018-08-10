@@ -296,3 +296,22 @@ def auto_update(filedash):
 
     return info
 
+
+
+def make_info_from_GridData(calling_file=__file__, run_name=None,
+                            region=None, basemap=None, grid_type='generic',
+                            data_name = None):
+    '''
+    Makes ``info`` object and populated metadata from ``.basemap`` and ``.grid`` files 
+    '''
+    import ship_mapper as sm
+    
+    # Make info object
+    info = sm.info(calling_file=calling_file, run_name=run_name)
+    
+    # Get metadata from "grid" and copy it into info
+    info = sm.grid_to_info(info, region, basemap, grid_type=grid_type)
+    
+    # Get metadata from "data_info.yaml" and copy it into info
+    info = sm.data_to_info(info, data_name)
+    return info

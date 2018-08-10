@@ -1,7 +1,11 @@
 import ship_mapper as sm
 
-# Load info object
-info = sm.load_info('example2_Halifax_AIS')
+info = sm.make_info_from_GridData(calling_file=__file__,
+                                  run_name='example2_Halifax_AIS',
+                                  region='Halifax_Area',
+                                  basemap='basemap_sidebar',
+                                  grid_type='one-off',
+                                  data_name = 'AIS_CCG')
 
 # Change or define some items within info
 info.filt.speed_low = 0.5 # Knots

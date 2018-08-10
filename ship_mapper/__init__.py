@@ -17,7 +17,7 @@ from .mapper import (map_density, map_dots, make_basemap, map_dots_one_ship,
                      save_basemap)
 
 from .info_object import (info, load_info, grid_to_info, data_to_info, 
-                          info_to_attrs, attrs_to_info)
+                          info_to_attrs, attrs_to_info, make_info_from_GridData)
 
 
 
