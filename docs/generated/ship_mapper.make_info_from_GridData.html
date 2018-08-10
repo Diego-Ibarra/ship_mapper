@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ship_mapper.load_info &mdash; ship_mapper 0.1 documentation</title>
+  <title>ship_mapper.make_info_from_GridData &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="ship_mapper 0.1 documentation" href="../index.html"/>
         <link rel="up" title="API (List of modules and functions)" href="../api.html"/>
-        <link rel="next" title="ship_mapper.make_info_from_GridData" href="ship_mapper.make_info_from_GridData.html"/>
-        <link rel="prev" title="ship_mapper.info_to_attrs" href="ship_mapper.info_to_attrs.html"/> 
+        <link rel="next" title="ship_mapper.info_object.auto_update" href="ship_mapper.info_object.auto_update.html"/>
+        <link rel="prev" title="ship_mapper.load_info" href="ship_mapper.load_info.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -115,8 +115,8 @@
 <li class="toctree-l3"><a class="reference internal" href="ship_mapper.data_to_info.html">ship_mapper.data_to_info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ship_mapper.info.html">ship_mapper.info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ship_mapper.info_to_attrs.html">ship_mapper.info_to_attrs</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ship_mapper.load_info</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.make_info_from_GridData.html">ship_mapper.make_info_from_GridData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ship_mapper.load_info.html">ship_mapper.load_info</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ship_mapper.make_info_from_GridData</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ship_mapper.info_object.auto_update.html">ship_mapper.info_object.auto_update</a></li>
 </ul>
 </li>
@@ -174,13 +174,13 @@
         
           <li><a href="../api.html">API (List of modules and functions)</a> &raquo;</li>
         
-      <li>ship_mapper.load_info</li>
+      <li>ship_mapper.make_info_from_GridData</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/generated/ship_mapper.load_info.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/ship_mapper.make_info_from_GridData.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -193,14 +193,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ship-mapper-load-info">
-<h1>ship_mapper.load_info<a class="headerlink" href="#ship-mapper-load-info" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="ship-mapper-make-info-from-griddata">
+<h1>ship_mapper.make_info_from_GridData<a class="headerlink" href="#ship-mapper-make-info-from-griddata" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="ship_mapper.load_info">
-<code class="descclassname">ship_mapper.</code><code class="descname">load_info</code><span class="sig-paren">(</span><em>run_name</em>, <em>path_to_info=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/info_object.html#load_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.load_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads “info” file</p>
-<p>Input is full-path to a info.p file or, 
-if None, it will look for ./ancillary/info.p</p>
+<dt id="ship_mapper.make_info_from_GridData">
+<code class="descclassname">ship_mapper.</code><code class="descname">make_info_from_GridData</code><span class="sig-paren">(</span><em>calling_file='.'</em>, <em>run_name=None</em>, <em>region=None</em>, <em>basemap=None</em>, <em>grid_type='generic'</em>, <em>data_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/info_object.html#make_info_from_GridData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.make_info_from_GridData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes <code class="docutils literal notranslate"><span class="pre">info</span></code> object and populated metadata from <code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files</p>
 </dd></dl>
 
 </div>
@@ -215,10 +213,10 @@ if None, it will look for ./ancillary/info.p</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ship_mapper.make_info_from_GridData.html" class="btn btn-neutral float-right" title="ship_mapper.make_info_from_GridData" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ship_mapper.info_object.auto_update.html" class="btn btn-neutral float-right" title="ship_mapper.info_object.auto_update" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ship_mapper.info_to_attrs.html" class="btn btn-neutral" title="ship_mapper.info_to_attrs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ship_mapper.load_info.html" class="btn btn-neutral" title="ship_mapper.load_info" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

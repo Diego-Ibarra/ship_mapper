@@ -298,7 +298,7 @@ def auto_update(filedash):
 
 
 
-def make_info_from_GridData(calling_file=__file__, run_name=None,
+def make_info_from_GridData(calling_file='.', run_name=None,
                             region=None, basemap=None, grid_type='generic',
                             data_name = None):
     '''

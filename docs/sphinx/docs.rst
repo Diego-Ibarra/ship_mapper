@@ -26,4 +26,4 @@ Note: Replace the paths to reflect your computer
 
 ::  
     
-    sphinx-autogen -o C:\Users\IbarraD\ship_mapper\docs C:\Users\IbarraD\ship_mapper\docs\sphinx\api.rst
+    sphinx-autogen -o C:\Users\IbarraD\ship_mapper\docs\sphinx\generated C:\Users\IbarraD\ship_mapper\docs\sphinx\api.rst
