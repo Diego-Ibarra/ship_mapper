@@ -11,4 +11,4 @@ info = sm.data_to_info(info, 'AIS_CCG')
 
 #info = sm.calculate_gridcell_areas(info)
 
-info.save()
+info.save() 
