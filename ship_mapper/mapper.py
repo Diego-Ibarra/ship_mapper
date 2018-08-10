@@ -576,6 +576,8 @@ def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
         basemap_name = 'basemap_sidebar.p'
     else:
         basemap_name = 'basemap.p'
+        
+    info = sm.calculate_gridcell_areas(info)
     
     # Save basemap
     save_basemap(m,info,path_to_basemap=path_to_map)
