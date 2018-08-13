@@ -483,7 +483,7 @@ def calculate_gridcell_areas(info):
     '''
     Calculates the area of each of the grid-cells in the domain (in km^2)
     
-    :param info info: ``info`` object WITHOUT `info.grid.areas`
+    :param info info: ``info`` object containing metadata
     
     :return: ``info`` object WITH `info.grid.areas`
     
@@ -534,7 +534,7 @@ def grid_to_esriascii(info, file_in=None):
     
     :param info info: ``info`` object WITHOUT `info.grid.areas`
     
-    :param str file_in: Input grid file. If Note it defaults to /merged_grid/merged_grid.nc
+    :param str file_in: Input grid file. If ``None`` it defaults to /merged_grid/merged_grid.nc
     
     :return: ESRI ASCII file (.asc)
     '''
