@@ -18,6 +18,7 @@ Gridder
    grid_merger
    gridder
    mergedgrid_to_shp
+   grid_to_esriascii
 
 .. autosummary::
    :toctree: ./generated/

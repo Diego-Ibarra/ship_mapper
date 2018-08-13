@@ -11,7 +11,8 @@ from .utils import (distance, estimate_velocity, elapsed_days,
                     degrees_to_meters,write_info2data, stop)
 
 from .gridder import (gridder, gridder_pingsPerCell, grid_merger, 
-                      mergedgrid_to_shp, calculate_gridcell_areas)
+                      mergedgrid_to_shp, calculate_gridcell_areas,
+                      grid_to_esriascii)
 
 from .mapper import (map_density, map_dots, make_basemap, map_dots_one_ship,
                      save_basemap)

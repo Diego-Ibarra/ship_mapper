@@ -526,7 +526,50 @@ def calculate_gridcell_areas(info):
 
 
 
+def grid_to_esriascii(info, file_in=None):
+    '''
+    Writes ESRI ASCII file from gridded data
+    
+    See more info about ESRI ASCII `HERE <http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm>`_
+    
+    :param info info: ``info`` object WITHOUT `info.grid.areas`
+    
+    :param str file_in: Input grid file. If Note it defaults to /merged_grid/merged_grid.nc
+    
+    :return: ESRI ASCII file (.asc)
+    '''
+    
+    print('grid_to_esriascii ------------------------------------------------')
+    
+    # Load data
+    if file_in == None:
+        file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
+    
+    # Outputfile
+    sm.checkDir(str(info.dirs.shapefiles))
+    ascii_name = os.path.join(str(info.dirs.shapefiles),info.project_name)
+    
+    d = xr.open_dataset(file_in)
+    
 
+    DataShape = d['ship_density'].shape
+    
+    TheFile=open(ascii_name + ".asc","w")
+    TheFile.write('ncols ' + str(DataShape[0]) + '\n')
+    TheFile.write('nrows ' + str(DataShape[1]) + '\n')
+    TheFile.write('xllcenter ' + str(info.grid.minlon) + '\n')
+    TheFile.write('yllcenter ' + str(info.grid.minlat) + '\n')
+    TheFile.write('cellsize ' + str(info.grid.bin_size) + '\n')
+    TheFile.write('nodata_value  0.0\n')
+    
+    
+    print('Printing esri ascii file')
+    for i in range(DataShape[1]-1,-1,-1):
+        for j in range(0,DataShape[0]):
+            TheFile.write(str(d['ship_density'].values[j,i]) + chr(32))
+        TheFile.write("\n")
+    TheFile.close()
+    return
 
 
 

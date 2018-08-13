@@ -702,7 +702,50 @@
 
 
 
+<div class="viewcode-block" id="grid_to_esriascii"><a class="viewcode-back" href="../../generated/ship_mapper.grid_to_esriascii.html#ship_mapper.grid_to_esriascii">[docs]</a><span class="k">def</span> <span class="nf">grid_to_esriascii</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">file_in</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Writes ESRI ASCII file from gridded data</span>
+<span class="sd">    </span>
+<span class="sd">    See more info about ESRI ASCII `HERE &lt;http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm&gt;`_</span>
+<span class="sd">    </span>
+<span class="sd">    :param info info: ``info`` object WITHOUT `info.grid.areas`</span>
+<span class="sd">    </span>
+<span class="sd">    :param str file_in: Input grid file. If Note it defaults to /merged_grid/merged_grid.nc</span>
+<span class="sd">    </span>
+<span class="sd">    :return: ESRI ASCII file (.asc)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;grid_to_esriascii ------------------------------------------------&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Load data</span>
+    <span class="k">if</span> <span class="n">file_in</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">merged_grid</span><span class="p">),</span><span class="s1">&#39;merged_grid.nc&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Outputfile</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">checkDir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">shapefiles</span><span class="p">))</span>
+    <span class="n">ascii_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">shapefiles</span><span class="p">),</span><span class="n">info</span><span class="o">.</span><span class="n">project_name</span><span class="p">)</span>
+    
+    <span class="n">d</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file_in</span><span class="p">)</span>
+    
 
+    <span class="n">DataShape</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;ship_density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    
+    <span class="n">TheFile</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">ascii_name</span> <span class="o">+</span> <span class="s2">&quot;.asc&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;ncols &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">DataShape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;nrows &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">DataShape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;xllcenter &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;yllcenter &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;cellsize &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">bin_size</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;nodata_value  0.0</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Printing esri ascii file&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">DataShape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">DataShape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;ship_density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>
+        <span class="n">TheFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">TheFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span></div>
 
 
 
