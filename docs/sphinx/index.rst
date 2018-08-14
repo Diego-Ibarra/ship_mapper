@@ -14,7 +14,7 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
     
     This project is in VERY early development stages. **Don't use just yet!**
 
-`See source in Github<https://github.com/Diego-Ibarra/ship_mapper>`_
+`See source in Github <https://github.com/Diego-Ibarra/ship_mapper>`_
 
 .. toctree::
    :maxdepth: 3
