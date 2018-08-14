@@ -2,8 +2,8 @@ settings.py
 =============
 
 You will need to crete file called ``settings.py`` and place it in your
- ``projects`` directory. The contents of this file shoul dbe as bellow, however
- reflecting your own comptuter's paths, user and password
+``projects`` directory. The contents of this file should be as bellow, however
+reflecting your own computer's paths, user and password
 
 
 .. code-block:: python
