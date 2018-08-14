@@ -27,13 +27,15 @@ def download_vms(info, startdate, enddate):
     
     sm.checkDir(info.dirs.data_original)
     
+    settings = sm.load_settings(info)
+    
     FILE=open(os.path.join(info.dirs.data_original,'vms_autoDownloaded.csv'),"w",newline='');
     output=csv.writer(FILE, dialect='excel')
     output.writerow(['VR_NUMBER','LATITUDE','LONGITUDE','POSITION_UTC_DATE'])
     
     # Get data
     MyDNS = cx_Oracle.makedsn('VSNSBIOXP74.ENT.DFO-MPO.CA', 1521, sid=None, service_name='PTRAN.ENT.DFO-MPO.CA')
-    db = cx_Oracle.connect(user='test', password='test',dsn=MyDNS)
+    db = cx_Oracle.connect(user=settings.ORACLE_USER, password=settings.ORACLE_PASSWORD, dsn=MyDNS)
     cursor = db.cursor()
     
     query = ("select VR_NUMBER,LATITUDE,LONGITUDE,POSITION_UTC_DATE"
