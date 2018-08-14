@@ -142,3 +142,7 @@ examples/projects/example2_Halifax_AIS/Halifax_Area/ancillary/
 examples/projects/example1_Maritimes_AIS/gridded_data/CCG_AIS_Dynamic_Data_2017-07-26
 
 examples/projects/example1_Maritimes_AIS/gridded_data/CCG_AIS_Dynamic_Data_2017-07-27
+
+examples/projects/example5_St_Anns_Banks_VMS_Oracle/gridded_data/vms_autoDownloaded
+
+examples/data/VMS_DFO_Oracle/data_original/vms_autoDownloaded\.csv

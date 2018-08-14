@@ -39,16 +39,19 @@ startdate = enddate - datetime.timedelta(days=1)
 
 #data = xr.open_dataset(info.dirs.data_nc + r'\vms_autoDownloaded.nc')
 
-#     
+     
 # Project "dots" into a grid
 #sm.gridder(info, data, 'vms_autoDownloaded', overwrite=True)
-#    
-#    
+    
+    
 ## Merge grids   
 #sm.grid_merger(info)
 
 # Make map
-#m = sm.map_density(info, cmap='inferno_r',sidebar=True)
+m = sm.map_density(info, 
+                   file_in=str(info.dirs.gridded_data)+r'\vms_autoDownloaded',
+                   cmap='inferno_r',
+                   sidebar=True)
 #
 #sm.grid_to_esriascii(info, file_in=None)
 
