@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>VMS_DFO_Oracle Converter &mdash; ship_mapper 0.1 documentation</title>
+  <title>settings.py &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -36,9 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="ship_mapper 0.1 documentation" href="index.html"/>
-        <link rel="up" title="Standard NC files" href="standard_nc_files.html"/>
-        <link rel="next" title="Filter Data" href="filter_main.html"/>
-        <link rel="prev" title="VMS_DFO Converter" href="VMS_DFO.html"/> 
+        <link rel="next" title="Basemap and grid files" href="basemaps_and_grids.html"/>
+        <link rel="prev" title="Workflow" href="workflow.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -97,14 +96,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="directory_structure.html">Directory structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html">settings.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">settings.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basemaps_and_grids.html">Basemap and grid files</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="standard_nc_files.html">Standard NC files</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="AIS_CCG.html">AIS_CCG Converter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="VMS_DFO.html">VMS_DFO Converter</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">VMS_DFO_Oracle Converter</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="standard_nc_files.html">Standard NC files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filter_main.html">Filter Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project2grid.html">Project data onto grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="merge_grids.html">Merge grids</a></li>
@@ -162,15 +156,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="standard_nc_files.html">Standard NC files</a> &raquo;</li>
-        
-      <li>VMS_DFO_Oracle Converter</li>
+      <li>settings.py</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/VMS_DFO_Oracle.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/settings.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -183,31 +175,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-VMS_DFO_Oracle">
-<span id="vms-dfo-oracle-converter"></span><h1>VMS_DFO_Oracle Converter<a class="headerlink" href="#module-VMS_DFO_Oracle" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="VMS_DFO_Oracle.convert">
-<code class="descclassname">VMS_DFO_Oracle.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>file_in</em>, <em>file_out</em>, <em>data_info_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/VMS_DFO_Oracle.html#convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VMS_DFO_Oracle.convert" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a csv to nc converter for VMS data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input file (.csv)</li>
-<li><strong>file_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Output file (.nc)</li>
-<li><strong>data_info_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – YAML file describing other conversion parameters (.yml)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A netCDF file (.nc) in a format standard for “ship_mapper” 
-containing the original data, but also containing metadata included in the data_info.yml file</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+  <div class="section" id="settings-py">
+<h1>settings.py<a class="headerlink" href="#settings-py" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>You will need to crete file called <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> and place it in your</dt>
+<dd><code class="docutils literal notranslate"><span class="pre">projects</span></code> directory. The contents of this file shoul dbe as bellow, however
+reflecting your own comptuter’s paths, user and password</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">This file should be modified to reflect your computers paths, user and password</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">GRIDS</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\IbarraD\ship_mapper\examples\grids&#39;</span><span class="p">)</span>
+
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\IbarraD\ship_mapper\examples\data&#39;</span><span class="p">)</span>
+
+<span class="n">ORACLE_USER</span> <span class="o">=</span> <span class="s1">&#39;test_user&#39;</span>
+
+<span class="n">ORACLE_PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;test_password&#39;</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -220,10 +209,10 @@ containing the original data, but also containing metadata included in the data_
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="filter_main.html" class="btn btn-neutral float-right" title="Filter Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="basemaps_and_grids.html" class="btn btn-neutral float-right" title="Basemap and grid files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="VMS_DFO.html" class="btn btn-neutral" title="VMS_DFO Converter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="workflow.html" class="btn btn-neutral" title="Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

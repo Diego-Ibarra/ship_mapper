@@ -30,6 +30,7 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
 
    ./directory_structure
    ./workflow
+   ./settings
    ./basemaps_and_grids
    ./standard_nc_files
    ./filter_main
