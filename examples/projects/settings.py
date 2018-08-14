@@ -1,3 +1,7 @@
+'''
+This file should be modified to reflect your computers paths, user and password
+'''
+
 from pathlib import Path
 
 

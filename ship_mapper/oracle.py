@@ -1,4 +1,3 @@
-print('Diego!!')
 
 def download_vms(info, startdate, enddate):
     '''
