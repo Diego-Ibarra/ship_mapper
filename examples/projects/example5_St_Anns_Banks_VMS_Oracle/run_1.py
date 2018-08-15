@@ -1,5 +1,5 @@
 import ship_mapper as sm
-from ship_mapper.oracle import download_vms
+from ship_mapper.oracle import download_vms, filter_by_gear
 import datetime
 import xarray as xr
 
@@ -37,8 +37,11 @@ startdate = enddate - datetime.timedelta(days=1)
 #                      path_to_data_in=info.dirs.data_original,
 #                      overwrite=False)
 
-#data = xr.open_dataset(info.dirs.data_nc + r'\vms_autoDownloaded.nc')
+data = xr.open_dataset(info.dirs.data_nc + r'\vms_autoDownloaded.nc')
 
+# Only keeo "fixed gear" data
+data_filtered = filter_by_gear(info, data, startdate, enddate,
+                                   gearcode_sheet=str(info.dirs.project_path) + r'\fixed_gear.xlsx')
      
 # Project "dots" into a grid
 #sm.gridder(info, data, 'vms_autoDownloaded', overwrite=True)
@@ -48,10 +51,10 @@ startdate = enddate - datetime.timedelta(days=1)
 #sm.grid_merger(info)
 
 # Make map
-m = sm.map_density(info, 
-                   file_in=str(info.dirs.gridded_data)+r'\vms_autoDownloaded',
-                   cmap='inferno_r',
-                   sidebar=True)
+#m = sm.map_density(info, 
+#                   file_in=str(info.dirs.gridded_data)+r'\vms_autoDownloaded',
+#                   cmap='inferno_r',
+#                   sidebar=True)
 #
 #sm.grid_to_esriascii(info, file_in=None)
 
