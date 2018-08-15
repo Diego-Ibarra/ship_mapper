@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ship_mapper.oracle &mdash; ship_mapper 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="ship_mapper 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ship_mapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../directory_structure.html">Directory structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow.html">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../settings.html">settings.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basemaps_and_grids.html">Basemap and grid files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../standard_nc_files.html">Standard NC files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filter_main.html">Filter Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project2grid.html">Project data onto grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../merge_grids.html">Merge grids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mapping.html">Make maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../make_shapefile.html">Make shapefile</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API (List of modules and functions)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributors:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../docs.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ship_mapper</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>ship_mapper.oracle</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ship_mapper.oracle</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">cx_Oracle</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">ship_mapper</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<div class="viewcode-block" id="download_vms"><a class="viewcode-back" href="../../generated/ship_mapper.oracle.download_vms.html#ship_mapper.oracle.download_vms">[docs]</a><span class="k">def</span> <span class="nf">download_vms</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">startdate</span><span class="p">,</span> <span class="n">enddate</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Downloads VMS data from oracle database</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">    </span>
+<span class="sd">        startdate (datetime): Start date</span>
+<span class="sd">    </span>
+<span class="sd">        enddate (datetime): End date</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        .cvs file</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="kn">import</span> <span class="nn">csv</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    
+    <span class="c1"># Make new empty file</span>
+    
+    <span class="n">startdate_str</span> <span class="o">=</span> <span class="n">startdate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">enddate_str</span> <span class="o">=</span> <span class="n">enddate</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    
+    <span class="n">sm</span><span class="o">.</span><span class="n">checkDir</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">)</span>
+    
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_settings</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    
+    <span class="n">FILE</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">data_original</span><span class="p">,</span><span class="s1">&#39;vms_autoDownloaded.csv&#39;</span><span class="p">),</span><span class="s2">&quot;w&quot;</span><span class="p">,</span><span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="n">output</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">FILE</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="s1">&#39;excel&#39;</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;VR_NUMBER&#39;</span><span class="p">,</span><span class="s1">&#39;LATITUDE&#39;</span><span class="p">,</span><span class="s1">&#39;LONGITUDE&#39;</span><span class="p">,</span><span class="s1">&#39;POSITION_UTC_DATE&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Get data</span>
+    <span class="n">MyDNS</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">makedsn</span><span class="p">(</span><span class="s1">&#39;VSNSBIOXP74.ENT.DFO-MPO.CA&#39;</span><span class="p">,</span> <span class="mi">1521</span><span class="p">,</span> <span class="n">sid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="s1">&#39;PTRAN.ENT.DFO-MPO.CA&#39;</span><span class="p">)</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">ORACLE_USER</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">ORACLE_PASSWORD</span><span class="p">,</span> <span class="n">dsn</span><span class="o">=</span><span class="n">MyDNS</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    
+    <span class="n">query</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;select VR_NUMBER,LATITUDE,LONGITUDE,POSITION_UTC_DATE&quot;</span>
+             <span class="s2">&quot;              from MFD_OBFMI.VMS_ALL&quot;</span>
+             <span class="s2">&quot;              WHERE POSITION_UTC_DATE&gt; to_date(&#39;&quot;</span> <span class="o">+</span> <span class="n">startdate_str</span> <span class="o">+</span> <span class="s2">&quot;&#39;,&#39;YYYY-MM-DD HH24:MI:SS&#39;)&quot;</span>
+             <span class="s2">&quot;              AND POSITION_UTC_DATE &lt;= to_date(&#39;&quot;</span> <span class="o">+</span> <span class="n">enddate_str</span> <span class="o">+</span> <span class="s2">&quot;&#39;,&#39;YYYY-MM-DD HH24:MI:SS&#39;)&quot;</span>
+             <span class="s2">&quot;              AND (LATITUDE &gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlat</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; AND LATITUDE &lt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlat</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+             <span class="s2">&quot;              AND (LONGITUDE &gt;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">minlon</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; AND LONGITUDE &lt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">maxlon</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+    
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">FILE</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;END of extraction&quot;</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+
+
+<div class="viewcode-block" id="filter_by_gear"><a class="viewcode-back" href="../../generated/ship_mapper.oracle.filter_by_gear.html#ship_mapper.oracle.filter_by_gear">[docs]</a><span class="k">def</span> <span class="nf">filter_by_gear</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">dataIn</span><span class="p">,</span> <span class="n">startdate</span><span class="p">,</span> <span class="n">enddate</span><span class="p">,</span> <span class="n">gearcode_sheet</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Filters data by gear type</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Filtering by gearcode ..............................&#39;</span><span class="p">)</span>
+    
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">load_settings</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    
+    <span class="n">startdate_minus1_str</span> <span class="o">=</span> <span class="p">(</span><span class="n">startdate</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="n">enddate_plus1_str</span> <span class="o">=</span> <span class="p">(</span><span class="n">enddate</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+    
+    <span class="n">MyDNS</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">makedsn</span><span class="p">(</span><span class="s1">&#39;VSNSBIOXP74.ENT.DFO-MPO.CA&#39;</span><span class="p">,</span> <span class="mi">1521</span><span class="p">,</span> <span class="n">sid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service_name</span><span class="o">=</span><span class="s1">&#39;PTRAN.ENT.DFO-MPO.CA&#39;</span><span class="p">)</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">ORACLE_USER</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">ORACLE_PASSWORD</span><span class="p">,</span><span class="n">dsn</span><span class="o">=</span><span class="n">MyDNS</span><span class="p">)</span>
+    
+    <span class="c1"># Get gear-type</span>
+    <span class="c1">#Create additional comlumn in data</span>
+    <span class="n">dummyarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),))</span>
+    <span class="n">dummyarray</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    
+    <span class="n">dummyDataArray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">dummyarray</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;NARW_CODE&#39;</span><span class="p">,</span><span class="n">coords</span><span class="o">=</span><span class="p">[</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;Dindex&#39;</span><span class="p">],],</span><span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Dindex&#39;</span><span class="p">,])</span>
+    
+    <span class="n">md</span> <span class="o">=</span> <span class="n">dataIn</span><span class="o">.</span><span class="n">attrs</span>
+    <span class="n">dataIn</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">dataIn</span><span class="p">,</span><span class="n">dummyDataArray</span><span class="p">])</span>
+    <span class="n">dataIn</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">md</span>
+    
+    <span class="n">gear_codes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">gearcode_sheet</span><span class="p">)</span>
+    <span class="n">narw_codes</span> <span class="o">=</span> <span class="n">gear_codes</span><span class="p">[</span><span class="s1">&#39;GEAR_CODE&#39;</span><span class="p">][</span><span class="n">gear_codes</span><span class="p">[</span><span class="s1">&#39;NARW RISK&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">unis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of Unique Ships = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unis</span><span class="p">)))</span>
+    
+    <span class="k">for</span> <span class="n">ship</span> <span class="ow">in</span> <span class="n">unis</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ship=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ship</span><span class="p">))</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        
+        <span class="n">query</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;SELECT MARFISSCI.MARFIS_HAIL_OUT.VR_NUMBER,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.MARFIS_HAIL_OUT.LICENCE_NO,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.MARFIS_HAIL_OUT.SAILED_DATE_TIME,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.MARFIS_HAIL_OUT.EST_LANDED_DATE,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.MARFIS_HAIL_OUT.SPECIES_CODE,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.LICENCES.SPECIES_CODE AS SPECIES_CODE1,&quot;</span>
+                 <span class="s2">&quot;MARFISSCI.LICENCE_GEARS.GEAR_CODE&quot;</span>
+                 <span class="s2">&quot;              FROM MARFISSCI.LICENCE_GEARS&quot;</span>
+                 <span class="s2">&quot;              INNER JOIN MARFISSCI.MARFIS_HAIL_OUT&quot;</span>
+                 <span class="s2">&quot;              ON MARFISSCI.MARFIS_HAIL_OUT.LICENCE_NO = MARFISSCI.LICENCE_GEARS.LICENCE_ID&quot;</span>
+                 <span class="s2">&quot;              INNER JOIN MARFISSCI.LICENCES&quot;</span>
+                 <span class="s2">&quot;              ON MARFISSCI.MARFIS_HAIL_OUT.LICENCE_NO        = MARFISSCI.LICENCES.LICENCE_ID&quot;</span>
+                 <span class="s2">&quot;              WHERE MARFISSCI.MARFIS_HAIL_OUT.VR_NUMBER      = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ship</span><span class="p">)</span> <span class="o">+</span> 
+                 <span class="s2">&quot;              AND MARFISSCI.MARFIS_HAIL_OUT.EST_LANDED_DATE  &gt; to_date(&#39;&quot;</span> <span class="o">+</span> <span class="n">startdate_minus1_str</span> <span class="o">+</span> <span class="s2">&quot;&#39;,&#39;YYYY-MM-DD HH24:MI:SS&#39;)&quot;</span>
+                 <span class="s2">&quot;              AND MARFISSCI.MARFIS_HAIL_OUT.EST_LANDED_DATE &lt;= to_date(&#39;&quot;</span> <span class="o">+</span> <span class="n">enddate_plus1_str</span> <span class="o">+</span> <span class="s2">&quot;&#39;,&#39;YYYY-MM-DD HH24:MI:SS&#39;)&quot;</span><span class="p">)</span>
+        
+        
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        
+        <span class="n">ho_licence</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ho_sailed_time</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ho_est_landed_time</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ho_species</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ho_species2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ho_gear</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">first_est_landed_time</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">narw_risk</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first_est_landed_time</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>
+                <span class="n">ho_licence</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="n">ho_species</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+                <span class="n">ho_species2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+                <span class="n">ho_gear</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="ow">in</span> <span class="n">narw_codes</span><span class="o">.</span><span class="n">values</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">narw_risk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">narw_risk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ho_licence</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+                <span class="n">ho_sailed_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">ho_est_landed_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">ho_species</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+                <span class="n">ho_species2</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">]])</span>
+                <span class="n">ho_gear</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">]])</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="ow">in</span> <span class="n">narw_codes</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                    <span class="n">narw_risk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">narw_risk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">first_est_landed_time</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    
+    
+        <span class="c1"># Copy NARF_Codes to data</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">narw_risk</span><span class="p">)):</span>
+       
+            <span class="n">startdate</span> <span class="o">=</span> <span class="n">ho_sailed_time</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">enddate</span> <span class="o">=</span> <span class="n">ho_sailed_time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">==</span><span class="n">ship</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">startdate</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">enddate</span><span class="p">))</span>
+            
+            <span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;NARW_CODE&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">narw_risk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#Do left tail</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">==</span><span class="n">ship</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">ho_sailed_time</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;NARW_CODE&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">narw_risk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1">#Do right tail</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;ship_id_vrn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">==</span><span class="n">ship</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;DateTime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">&lt;=</span>  <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">ho_sailed_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;NARW_CODE&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">narw_risk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    
+    
+    <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    
+    <span class="c1"># Further filter data by speed</span>
+    <span class="n">indx</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataIn</span><span class="p">[</span><span class="s1">&#39;NARW_CODE&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span> <span class="p">)</span>
+    
+    <span class="n">dataOut</span> <span class="o">=</span> <span class="n">dataIn</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">Dindex</span><span class="o">=</span><span class="n">indx</span><span class="p">)</span>
+    
+    <span class="c1">#TODO: Add comment to data attrs</span>
+    <span class="c1">#info.sidebar.included_vessel_types = &#39;Fixed gear&#39;</span>
+    
+    <span class="k">return</span> <span class="n">dataOut</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Diego Ibarra.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ship_mapper.distance &mdash; ship_mapper 0.1 documentation</title>
+  <title>ship_mapper.oracle.filter_by_gear &mdash; ship_mapper 0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="ship_mapper 0.1 documentation" href="../index.html"/>
         <link rel="up" title="API (List of modules and functions)" href="../api.html"/>
-        <link rel="next" title="ship_mapper.elapsed_days" href="ship_mapper.elapsed_days.html"/>
-        <link rel="prev" title="ship_mapper.degrees_to_meters" href="ship_mapper.degrees_to_meters.html"/> 
+        <link rel="next" title="Documentation" href="../docs.html"/>
+        <link rel="prev" title="ship_mapper.oracle.download_vms" href="ship_mapper.oracle.download_vms.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -113,24 +113,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../api.html#mapper">Mapper</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#info-object">Info_Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#converters">Converters</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../api.html#utils">Utils</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.align_with_grid.html">ship_mapper.align_with_grid</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.checkDir.html">ship_mapper.checkDir</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.degrees_to_meters.html">ship_mapper.degrees_to_meters</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ship_mapper.distance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.elapsed_days.html">ship_mapper.elapsed_days</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.estimate_velocity.html">ship_mapper.estimate_velocity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.get_all_files.html">ship_mapper.get_all_files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.get_filename_from_fullpath.html">ship_mapper.get_filename_from_fullpath</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.get_path_from_fullpath.html">ship_mapper.get_path_from_fullpath</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.interp2d.html">ship_mapper.interp2d</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.make_mydirs.html">ship_mapper.make_mydirs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.spatial_filter.html">ship_mapper.spatial_filter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.stop.html">ship_mapper.stop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ship_mapper.write_info2data.html">ship_mapper.write_info2data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#utils">Utils</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#oracle">Oracle</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ship_mapper.oracle.download_vms.html">ship_mapper.oracle.download_vms</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ship_mapper.oracle.filter_by_gear</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#oracle">Oracle</a></li>
 </ul>
 </li>
 </ul>
@@ -183,13 +171,13 @@
         
           <li><a href="../api.html">API (List of modules and functions)</a> &raquo;</li>
         
-      <li>ship_mapper.distance</li>
+      <li>ship_mapper.oracle.filter_by_gear</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/generated/ship_mapper.distance.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/generated/ship_mapper.oracle.filter_by_gear.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -202,14 +190,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ship-mapper-distance">
-<h1>ship_mapper.distance<a class="headerlink" href="#ship-mapper-distance" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="ship-mapper-oracle-filter-by-gear">
+<h1>ship_mapper.oracle.filter_by_gear<a class="headerlink" href="#ship-mapper-oracle-filter-by-gear" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="ship_mapper.distance">
-<code class="descclassname">ship_mapper.</code><code class="descname">distance</code><span class="sig-paren">(</span><em>lat1</em>, <em>lon1</em>, <em>lat2</em>, <em>lon2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/utils.html#distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Estimates distance between 2 points on Earth.
-Assumes earth is a sphere (up to 0.5% error).
-Output is in meters</p>
+<dt id="ship_mapper.oracle.filter_by_gear">
+<code class="descclassname">ship_mapper.oracle.</code><code class="descname">filter_by_gear</code><span class="sig-paren">(</span><em>info</em>, <em>dataIn</em>, <em>startdate</em>, <em>enddate</em>, <em>gearcode_sheet=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/oracle.html#filter_by_gear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.oracle.filter_by_gear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters data by gear type</p>
 </dd></dl>
 
 </div>
@@ -224,10 +210,10 @@ Output is in meters</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ship_mapper.elapsed_days.html" class="btn btn-neutral float-right" title="ship_mapper.elapsed_days" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../docs.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="ship_mapper.degrees_to_meters.html" class="btn btn-neutral" title="ship_mapper.degrees_to_meters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="ship_mapper.oracle.download_vms.html" class="btn btn-neutral" title="ship_mapper.oracle.download_vms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

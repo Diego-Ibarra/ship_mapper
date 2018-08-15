@@ -93,6 +93,7 @@ Included converter files:
 * :doc:`VMS_DFO_Oracle  <VMS_DFO_Oracle>`
 
 
+
 Utils
 -------
 
@@ -115,3 +116,14 @@ Utils
    stop
    write_info2data
 
+
+
+Oracle
+-------
+
+.. autosummary::
+   :toctree: ./generated/
+   :nosignatures:
+
+   oracle.download_vms
+   oracle.filter_by_gear
