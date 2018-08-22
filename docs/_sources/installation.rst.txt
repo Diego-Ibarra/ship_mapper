@@ -25,6 +25,14 @@ In console...
     conda install -c anaconda netcdf4
     
 
+Install ``git``...
+
+::
+
+    conda install git
+
+
+
 Then, install `ship_mapper`...
 
 
