@@ -22,6 +22,7 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    
    ./installation
    ./overview
+   ./readme_link
    ./examples
 
 
@@ -50,7 +51,6 @@ This is a tool to create "ship density" heat maps from AIS, VMS and other ship-p
    ./api
 
 
-
 .. toctree::
    :maxdepth: 2
    :caption: Contributors:
@@ -64,3 +64,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

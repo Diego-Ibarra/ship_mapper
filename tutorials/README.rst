@@ -1,5 +1,5 @@
-Tutorials: Table of Contents
-----------------------------
+Tutorials
+----------
 
 
 #. `Download Anaconda <https://github.com/Diego-Ibarra/ship_mapper/blob/master/tutorials/Download_Anaconda.ipynb>`_

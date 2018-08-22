@@ -55,3 +55,20 @@ or if you want to be able to manipulate the modules code without having to re-in
 
     python setup.py develop
     
+
+Updating ship_mapper
+++++++++++++++++++++
+
+If you want to updateto the newest version, first...
+
+::
+
+    pip uninstall ship_mapper
+    
+
+then...
+
+::
+
+    pip install git+https://github.com/Diego-Ibarra/ship_mapper
+    
