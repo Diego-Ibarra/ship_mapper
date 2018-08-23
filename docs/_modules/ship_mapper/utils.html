@@ -180,11 +180,22 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
+
 <div class="viewcode-block" id="distance"><a class="viewcode-back" href="../../generated/ship_mapper.distance.html#ship_mapper.distance">[docs]</a><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">lat1</span><span class="p">,</span><span class="n">lon1</span><span class="p">,</span><span class="n">lat2</span><span class="p">,</span><span class="n">lon2</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Estimates distance between 2 points on Earth.</span>
-<span class="sd">    Assumes earth is a sphere (up to 0.5% error).</span>
-<span class="sd">    Output is in meters</span>
+<span class="sd">    </span>
+<span class="sd">    Assumes Earth is a sphere (up to 0.5% error).</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        lat1 (float): Latitude 1 (decimal degrees).</span>
+<span class="sd">        lon1  (float): Longitude 2 (decimal degrees).</span>
+<span class="sd">        lat2  (float): Latitude 1 (decimal degrees).</span>
+<span class="sd">        lon2  (float): Longitude 2 (decimal degrees).</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Distance in units of meters</span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">R</span><span class="o">=</span><span class="mi">6371000</span>  <span class="c1"># radius of Earth in meters</span>
@@ -207,13 +218,12 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)</span>
 <span class="sd">    </span>
-<span class="sd">    </span>
-<span class="sd">    :param float seconds: Elapsed time (in seconds).</span>
-<span class="sd">        </span>
-<span class="sd">    :param float distance: Elapsed distance (in meters).</span>
-<span class="sd">    </span>
-<span class="sd">    :return: Estimated velocity (in knots)</span>
-<span class="sd">    :rtype: float</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        seconds (float): Elapsed time (in seconds)</span>
+<span class="sd">        distance (float): Elapsed distance (in meters)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Estimated velocity (in knots)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">velocity_m</span> <span class="o">=</span> <span class="n">distance</span><span class="o">/</span><span class="n">seconds</span> <span class="c1">#units: meters / second</span>
     <span class="n">velocity_k</span> <span class="o">=</span> <span class="n">velocity_m</span> <span class="o">*</span> <span class="mf">1.943844</span> <span class="c1">#units: knots</span>
@@ -272,7 +282,18 @@
 
 <div class="viewcode-block" id="spatial_filter"><a class="viewcode-back" href="../../generated/ship_mapper.spatial_filter.html#ship_mapper.spatial_filter">[docs]</a><span class="k">def</span> <span class="nf">spatial_filter</span><span class="p">(</span><span class="n">file_in</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Returns only the &quot;pings&quot; within a defined box</span>
+<span class="sd">    Returns only the &quot;pings&quot; within a defined box.</span>
+<span class="sd">    </span>
+<span class="sd">    This functions used the min and max lat/lons from ``info`` to exclude all </span>
+<span class="sd">    data outside the spatial domain of interest</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        file_in (str): Input file (&quot;standard&quot; .nc file)</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        xarray.Dataset: Dataset containly the spatially filtered data</span>
+
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
     
@@ -300,7 +321,8 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Check if ``directory`` exists. In not, make it!</span>
 
-<span class="sd">    :param str directory: Absolute path of directory to check and/or make.</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        directory (str): Absolute path of directory to check and/or make.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>

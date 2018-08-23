@@ -24,7 +24,23 @@ def convert_to_nc(data_in, data_out, converter, path_to_converter=None):
 
 def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, path_to_yaml=None, overwrite=False):
     '''
-    Converts ALL files in a directory 
+    Converts ALL raw files in a directory into "Standard" .nc ship_mapper files
+    
+    Arguments:
+        converter (str): Name of converter to use. Supported names are:
+            
+            * ``AIS_CCG`` - AIS from Canadian Coastgard
+            * ``VMS_DFO`` - VMS from DFO
+            * ``VMS_DFO_Oracle`` - VMS from DFO via Oracle database
+            
+    Keyword Arguments:
+        path_to_data (str): Directory where raw files are located
+        path_to_converter (str): Directory where converter file is located
+        path_to_yaml (str): Directory where ``data_info.yaml`` is located
+        overwrite (bool): If ``True`` it will overwrite preiviously converted files
+        
+    Returns:
+        "Standard" .nc ship_mapper files   
     '''
     import imp
     import os

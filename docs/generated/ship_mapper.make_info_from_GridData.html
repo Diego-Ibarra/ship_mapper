@@ -201,7 +201,32 @@
 <dl class="function">
 <dt id="ship_mapper.make_info_from_GridData">
 <code class="descclassname">ship_mapper.</code><code class="descname">make_info_from_GridData</code><span class="sig-paren">(</span><em>calling_file='.'</em>, <em>run_name=None</em>, <em>region=None</em>, <em>basemap=None</em>, <em>grid_type='generic'</em>, <em>data_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/info_object.html#make_info_from_GridData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.make_info_from_GridData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes <code class="docutils literal notranslate"><span class="pre">info</span></code> object and populated metadata from <code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files</p>
+<dd><p>Makes <code class="docutils literal notranslate"><span class="pre">info</span></code> object and populates its metadata from <code class="docutils literal notranslate"><span class="pre">.basemap</span></code> and <code class="docutils literal notranslate"><span class="pre">.grid</span></code> files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>calling_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Usually this is <code class="docutils literal notranslate"><span class="pre">__file__</span></code>, which returns the
+full path and name of the calling file</li>
+<li><strong>run_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Usually the name of the script file</li>
+<li><strong>region</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of region</li>
+<li><strong>basemap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of basemap</li>
+<li><strong>grid_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – If <code class="docutils literal notranslate"><span class="pre">'generic'</span></code> grid is located in the <code class="docutils literal notranslate"><span class="pre">grid</span></code> directory.
+If <code class="docutils literal notranslate"><span class="pre">'one-off'</span></code> grid is located in the project directory</li>
+<li><strong>data_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Name of dataset (e.g. <code class="docutils literal notranslate"><span class="pre">AIS_CCG</span></code> or <code class="docutils literal notranslate"><span class="pre">VMS_DFO</span></code>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Info object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="ship_mapper.info.html#ship_mapper.info" title="ship_mapper.info">info</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

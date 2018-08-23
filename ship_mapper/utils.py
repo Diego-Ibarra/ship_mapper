@@ -6,8 +6,18 @@ import os
 def distance(lat1,lon1,lat2,lon2):
     '''
     Estimates distance between 2 points on Earth.
-    Assumes earth is a sphere (up to 0.5% error).
-    Output is in meters
+    
+    Assumes Earth is a sphere (up to 0.5% error).
+    
+    Arguments:
+        lat1 (float): Latitude 1 (decimal degrees).
+        lon1  (float): Longitude 2 (decimal degrees).
+        lat2  (float): Latitude 1 (decimal degrees).
+        lon2  (float): Longitude 2 (decimal degrees).
+            
+    Returns:
+        float: Distance in units of meters
+
     '''
 
     R=6371000  # radius of Earth in meters
@@ -30,13 +40,12 @@ def estimate_velocity(seconds, distance):
     '''
     Estimates velocity (in knots) given seconds elapsed to cover a distance (in meters)
     
-    
-    :param float seconds: Elapsed time (in seconds).
-        
-    :param float distance: Elapsed distance (in meters).
-    
-    :return: Estimated velocity (in knots)
-    :rtype: float
+    Arguments:
+        seconds (float): Elapsed time (in seconds)
+        distance (float): Elapsed distance (in meters)
+
+    Returns:
+        float: Estimated velocity (in knots)
     '''
     velocity_m = distance/seconds #units: meters / second
     velocity_k = velocity_m * 1.943844 #units: knots
@@ -95,7 +104,18 @@ def interp2d(x1, y1, x2, y2):
 
 def spatial_filter(file_in, info):
     '''
-    Returns only the "pings" within a defined box
+    Returns only the "pings" within a defined box.
+    
+    This functions used the min and max lat/lons from ``info`` to exclude all 
+    data outside the spatial domain of interest
+    
+    Arguments:
+        file_in (str): Input file ("standard" .nc file)
+        info (info): ``info`` object containing metadata
+        
+    Returns:
+        xarray.Dataset: Dataset containly the spatially filtered data
+
     '''
     import xarray as xr
     
@@ -123,7 +143,8 @@ def checkDir(directory):
     '''
     Check if ``directory`` exists. In not, make it!
 
-    :param str directory: Absolute path of directory to check and/or make.
+    Arguments:
+        directory (str): Absolute path of directory to check and/or make.
     '''
 
     if not os.path.exists(directory):

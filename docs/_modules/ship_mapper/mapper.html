@@ -203,9 +203,24 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Plots a map using a gridded (or merged) file</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
-<span class="sd">    </span>
-<span class="sd">    :return: .png print of map (default dir is `/pngs`)</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        file_in (str): Gridded or merged file to map. If ``None`` it looks for </span>
+<span class="sd">            ``merged_grid.nc`` in the `\merged` directory</span>
+<span class="sd">        cmap (str): Colormap to use</span>
+<span class="sd">        sidebar (bool): If ``True``, includes side panel with metadata</span>
+<span class="sd">        to_screen (bool): If ``True``, a plot is printed to screen</span>
+<span class="sd">        save (bool): If ``True`` a ``.png`` figure is saved to hardrive</span>
+<span class="sd">        filename_out (str): Name of produced figure. </span>
+<span class="sd">            If ``auto`` then name is ``info.run_name + &#39;__&#39; + file_in + &#39;.png&#39;``</span>
+<span class="sd">        filedir_out (str): Directory where figure is saved.</span>
+<span class="sd">            If ``auto`` then output directory is ``info.dirs.pngs``</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Basemap object</span>
+<span class="sd">        </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;map_density ------------------------------------------------------&#39;</span><span class="p">)</span>
@@ -649,7 +664,17 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Makes a basemap</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        spatial (list): List with corners... this will be deprecated soon</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">        path_to_basemap (str): Directory where to save the produced basemap. If ``&#39;auto&#39;``</span>
+<span class="sd">            then path is setup by :func:`~ship_mapper.mapper.define_path_to_map`</span>
+<span class="sd">        sidebar (bool): If ``True`` space for a side panel is added to the basemap</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A ``.basemap`` and a ``.grid`` files </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Making basemap...&#39;</span><span class="p">)</span>
     <span class="c1"># -----------------------------------------------------------------------------</span>

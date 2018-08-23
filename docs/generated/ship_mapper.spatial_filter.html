@@ -208,7 +208,27 @@
 <dl class="function">
 <dt id="ship_mapper.spatial_filter">
 <code class="descclassname">ship_mapper.</code><code class="descname">spatial_filter</code><span class="sig-paren">(</span><em>file_in</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ship_mapper/utils.html#spatial_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ship_mapper.spatial_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns only the “pings” within a defined box</p>
+<dd><p>Returns only the “pings” within a defined box.</p>
+<p>This functions used the min and max lat/lons from <code class="docutils literal notranslate"><span class="pre">info</span></code> to exclude all
+data outside the spatial domain of interest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_in</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Input file (“standard” .nc file)</li>
+<li><strong>info</strong> (<a class="reference internal" href="ship_mapper.info.html#ship_mapper.info" title="ship_mapper.info"><em>info</em></a>) – <code class="docutils literal notranslate"><span class="pre">info</span></code> object containing metadata</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dataset containly the spatially filtered data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.10.8)">xarray.Dataset</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

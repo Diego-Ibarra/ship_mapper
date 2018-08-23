@@ -19,14 +19,18 @@ def gridder(info, data_in, filename_out, overwrite=False):
     '''
     Counts "pings" inside a grid-cell and computes "Ship minutes per km2"
     
-    :param info info: ``info`` object containing metadata
-    :param xarray.DataSet data_in: Data
-    :param str filename_out: Name of file that will be writen as output
-    :param boolean overwrite: If ``True`` older files will be overwritten. If ``False``, only new files will be processed
-                              
-    .. seealso::
+    Arguments:
+        info (info): ``info`` object containing metadata
+        data_in (xarray.Dataset): Data to be gridded
+        filename_out (str): Name of file that will be writen as output
         
-        :py:func:`grid_merger <ship_mapper.grid_merger>` 
+    Keyword arguments:
+        overwrite (bool): If ``True`` older files will be overwritten. 
+            If ``False``, only new files will be processed
+            
+    See also:
+        :py:func:`gridder_pingsPerCell <ship_mapper.gridder_pingsPerCelll>`
+        :py:func:`grid_merger <ship_mapper.grid_merger>`
     '''
     
     print('gridder ---------------------------------------------')
@@ -165,6 +169,19 @@ def gridder(info, data_in, filename_out, overwrite=False):
 def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
     '''
     Counts "pings" inside a gridcell and computes "No. of vessels within grid-cell"
+    
+    Arguments:
+        info (info): ``info`` object containing metadata
+        data_in (xarray.Dataset): Data to be gridded
+        file_name (str): Name of file that will be writen as output
+        
+    Keyword arguments:
+        overwrite (bool): If ``True`` older files will be overwritten. 
+            If ``False``, only new files will be processed
+            
+    See also:
+        :py:func:`gridder <ship_mapper.gridder>`
+        :py:func:`grid_merger <ship_mapper.grid_merger>`
     '''
     
     print('gridder_pingsPerCell ----------------------------')
@@ -341,6 +358,16 @@ def gridder_pingsPerCell(info, data_in, file_name, overwrite=False):
 def grid_merger(info, files=None, filename_out='auto'):
     '''
     Combines several gridded files into one
+    
+    Arguments:
+        info (info): ``info`` object containing metadata
+        
+    Keyword Arguments:
+        files (str): Directory where gridded files recide
+        filename_out (str): Name of output file
+        
+    Returns:
+        One gridded file
     '''
     
     from datetime import datetime
@@ -435,7 +462,15 @@ def mergedgrid_to_shp(info, file_in=None):
     '''
     Converts a gridded file into a shapefile
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        info (info): ``info`` object containing metadata
+        
+    Keyword Arguments:
+        file_in (str): Gridded file to convert. 
+            If ``None`` it will use for ``merged_grid.nc``
+            
+    Returns:
+        A set of shape files
     '''
     import shapefile
     
@@ -532,11 +567,16 @@ def grid_to_esriascii(info, file_in=None):
     
     See more info about ESRI ASCII `HERE <http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm>`_
     
-    :param info info: ``info`` object containing metadata
-    
-    :param str file_in: Input grid file. If ``None`` it defaults to /merged_grid/merged_grid.nc
-    
-    :return: ESRI ASCII file (.asc)
+    Arguments:
+        info (info): ``info`` object containing metadata
+        
+        
+    Keyword Arguments:
+        file_in (str): Gridded file to convert. 
+            If ``None`` it will use for ``/merged_grid/merged_grid.nc``
+            
+    Returns:
+        ESRI ASCII file (.asc)
     '''
     
     print('grid_to_esriascii ------------------------------------------------')

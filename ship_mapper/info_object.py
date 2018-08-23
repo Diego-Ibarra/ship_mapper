@@ -302,7 +302,20 @@ def make_info_from_GridData(calling_file='.', run_name=None,
                             region=None, basemap=None, grid_type='generic',
                             data_name = None):
     '''
-    Makes ``info`` object and populated metadata from ``.basemap`` and ``.grid`` files 
+    Makes ``info`` object and populates its metadata from ``.basemap`` and ``.grid`` files
+    
+    Keyword Arguments:
+        calling_file (str): Usually this is ``__file__``, which returns the 
+            full path and name of the calling file
+        run_name (str): Usually the name of the script file
+        region (str): Name of region
+        basemap (str): Name of basemap
+        grid_type (str): If ``'generic'`` grid is located in the ``grid`` directory.
+            If ``'one-off'`` grid is located in the project directory
+        data_name (str): Name of dataset (e.g. ``AIS_CCG`` or ``VMS_DFO``)
+        
+    Returns:
+        info: Info object
     '''
     import ship_mapper as sm
     

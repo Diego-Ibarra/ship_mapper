@@ -197,14 +197,18 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Counts &quot;pings&quot; inside a grid-cell and computes &quot;Ship minutes per km2&quot;</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
-<span class="sd">    :param xarray.DataSet data_in: Data</span>
-<span class="sd">    :param str filename_out: Name of file that will be writen as output</span>
-<span class="sd">    :param boolean overwrite: If ``True`` older files will be overwritten. If ``False``, only new files will be processed</span>
-<span class="sd">                              </span>
-<span class="sd">    .. seealso::</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        data_in (xarray.Dataset): Data to be gridded</span>
+<span class="sd">        filename_out (str): Name of file that will be writen as output</span>
 <span class="sd">        </span>
-<span class="sd">        :py:func:`grid_merger &lt;ship_mapper.grid_merger&gt;` </span>
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">        overwrite (bool): If ``True`` older files will be overwritten. </span>
+<span class="sd">            If ``False``, only new files will be processed</span>
+<span class="sd">            </span>
+<span class="sd">    See also:</span>
+<span class="sd">        :py:func:`gridder_pingsPerCell &lt;ship_mapper.gridder_pingsPerCelll&gt;`</span>
+<span class="sd">        :py:func:`grid_merger &lt;ship_mapper.grid_merger&gt;`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gridder ---------------------------------------------&#39;</span><span class="p">)</span>
@@ -343,6 +347,19 @@
 <div class="viewcode-block" id="gridder_pingsPerCell"><a class="viewcode-back" href="../../generated/ship_mapper.gridder.gridder_pingsPerCell.html#ship_mapper.gridder_pingsPerCell">[docs]</a><span class="k">def</span> <span class="nf">gridder_pingsPerCell</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">data_in</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Counts &quot;pings&quot; inside a gridcell and computes &quot;No. of vessels within grid-cell&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        data_in (xarray.Dataset): Data to be gridded</span>
+<span class="sd">        file_name (str): Name of file that will be writen as output</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">        overwrite (bool): If ``True`` older files will be overwritten. </span>
+<span class="sd">            If ``False``, only new files will be processed</span>
+<span class="sd">            </span>
+<span class="sd">    See also:</span>
+<span class="sd">        :py:func:`gridder &lt;ship_mapper.gridder&gt;`</span>
+<span class="sd">        :py:func:`grid_merger &lt;ship_mapper.grid_merger&gt;`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gridder_pingsPerCell ----------------------------&#39;</span><span class="p">)</span>
@@ -519,6 +536,16 @@
 <div class="viewcode-block" id="grid_merger"><a class="viewcode-back" href="../../generated/ship_mapper.grid_merger.html#ship_mapper.grid_merger">[docs]</a><span class="k">def</span> <span class="nf">grid_merger</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename_out</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Combines several gridded files into one</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        files (str): Directory where gridded files recide</span>
+<span class="sd">        filename_out (str): Name of output file</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        One gridded file</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
@@ -613,7 +640,15 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Converts a gridded file into a shapefile</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        file_in (str): Gridded file to convert. </span>
+<span class="sd">            If ``None`` it will use for ``merged_grid.nc``</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A set of shape files</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">shapefile</span>
     
@@ -710,11 +745,16 @@
 <span class="sd">    </span>
 <span class="sd">    See more info about ESRI ASCII `HERE &lt;http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm&gt;`_</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
-<span class="sd">    </span>
-<span class="sd">    :param str file_in: Input grid file. If ``None`` it defaults to /merged_grid/merged_grid.nc</span>
-<span class="sd">    </span>
-<span class="sd">    :return: ESRI ASCII file (.asc)</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        file_in (str): Gridded file to convert. </span>
+<span class="sd">            If ``None`` it will use for ``/merged_grid/merged_grid.nc``</span>
+<span class="sd">            </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ESRI ASCII file (.asc)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;grid_to_esriascii ------------------------------------------------&#39;</span><span class="p">)</span>

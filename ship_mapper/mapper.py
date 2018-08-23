@@ -25,9 +25,24 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     '''
     Plots a map using a gridded (or merged) file
     
-    :param info info: ``info`` object containing metadata
-    
-    :return: .png print of map (default dir is `/pngs`)
+    Arguments:
+        info (info): ``info`` object containing metadata
+        
+    Keyword Arguments:
+        file_in (str): Gridded or merged file to map. If ``None`` it looks for 
+            ``merged_grid.nc`` in the `\merged` directory
+        cmap (str): Colormap to use
+        sidebar (bool): If ``True``, includes side panel with metadata
+        to_screen (bool): If ``True``, a plot is printed to screen
+        save (bool): If ``True`` a ``.png`` figure is saved to hardrive
+        filename_out (str): Name of produced figure. 
+            If ``auto`` then name is ``info.run_name + '__' + file_in + '.png'``
+        filedir_out (str): Directory where figure is saved.
+            If ``auto`` then output directory is ``info.dirs.pngs``
+
+    Returns:
+        Basemap object
+        
     '''
     
     print('map_density ------------------------------------------------------')
@@ -471,7 +486,17 @@ def make_basemap(info,spatial,path_to_basemap='auto', sidebar=False):
     '''
     Makes a basemap
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        info (info): ``info`` object containing metadata
+        spatial (list): List with corners... this will be deprecated soon
+        
+    Keyword arguments:
+        path_to_basemap (str): Directory where to save the produced basemap. If ``'auto'``
+            then path is setup by :func:`~ship_mapper.mapper.define_path_to_map`
+        sidebar (bool): If ``True`` space for a side panel is added to the basemap
+        
+    Returns:
+        A ``.basemap`` and a ``.grid`` files 
     '''
     print('Making basemap...')
     # -----------------------------------------------------------------------------
