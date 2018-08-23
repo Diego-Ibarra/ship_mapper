@@ -2,6 +2,7 @@ import math
 import numpy as np
 import os
 
+
 def distance(lat1,lon1,lat2,lon2):
     '''
     Estimates distance between 2 points on Earth.
