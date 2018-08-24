@@ -3,6 +3,7 @@ ancillary/*
 gridded_data/*
 pngs/*
 .pypirc
+pytest_cache
 
 
 
