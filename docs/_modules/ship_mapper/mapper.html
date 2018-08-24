@@ -511,7 +511,14 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Creates a map of &quot;pings&quot; rather than gridded density</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        file_in (str): Gridded or merged file to map. If ``None`` it looks for </span>
+<span class="sd">            ``merged_grid.nc`` in the `\merged` directory</span>
+<span class="sd">        sidebar (bool): If ``True``, includes side panel with metadata</span>
+<span class="sd">        save (bool): If ``True`` a ``.png`` figure is saved to hardrive</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
     <span class="c1"># -----------------------------------------------------------------------------</span>
@@ -569,7 +576,14 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Creates a map of &quot;pings&quot; (i.e. not gridded density) of only one ship</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        file_in (str): Gridded or merged file to map. If ``None`` it looks for </span>
+<span class="sd">            ``merged_grid.nc`` in the `\merged` directory</span>
+<span class="sd">        Ship_No (str): Unique identifier of the ship to plot</span>
+<span class="sd">        save (bool): If ``True`` a ``.png`` figure is saved to hardrive</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mapping...&#39;</span><span class="p">)</span>
@@ -648,7 +662,8 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Figures out where is the .basemap and .grid files</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">path_to_basemap</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;one-off&#39;</span><span class="p">:</span>
@@ -857,7 +872,15 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Saves basemap (and correspoding info.grid) to a pickle file</span>
 <span class="sd">    </span>
-<span class="sd">    :param info info: ``info`` object containing metadata</span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        m (mpl_toolkits.basemap.Basemap): Basemap object</span>
+<span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Pickle file</span>
+<span class="sd">        </span>
+<span class="sd">    See also:</span>
+<span class="sd">        :mod:`pickle`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 <span class="c1">#    </span>
 <span class="c1">#    basemap = [grid, m]</span>

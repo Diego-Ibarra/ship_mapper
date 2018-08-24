@@ -204,6 +204,8 @@ intersphinx_mapping = {
     'urllib3': ('http://urllib3.readthedocs.org/en/latest', None),
     'python': ('http://docs.python.org/3', None),
     'xarray': ('http://xarray.pydata.org/en/stable', None),
+    'mpl_toolkits': ('https://matplotlib.org/basemap', None),
+    
 }
 
 # -- Options for todo extension ----------------------------------------------

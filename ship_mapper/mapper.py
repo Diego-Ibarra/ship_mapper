@@ -332,7 +332,14 @@ def map_dots(info, file_in, sidebar=False, save=True):
     '''
     Creates a map of "pings" rather than gridded density
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        info (info): ``info`` object containing metadata
+
+    Keyword Arguments:
+        file_in (str): Gridded or merged file to map. If ``None`` it looks for 
+            ``merged_grid.nc`` in the `\merged` directory
+        sidebar (bool): If ``True``, includes side panel with metadata
+        save (bool): If ``True`` a ``.png`` figure is saved to hardrive
     '''
     print('Mapping...')
     # -----------------------------------------------------------------------------
@@ -390,7 +397,14 @@ def map_dots_one_ship(info, file_in, Ship_No, save=True):
     '''
     Creates a map of "pings" (i.e. not gridded density) of only one ship
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        info (info): ``info`` object containing metadata
+
+    Keyword Arguments:
+        file_in (str): Gridded or merged file to map. If ``None`` it looks for 
+            ``merged_grid.nc`` in the `\merged` directory
+        Ship_No (str): Unique identifier of the ship to plot
+        save (bool): If ``True`` a ``.png`` figure is saved to hardrive
     '''
     import pandas as pd
     print('Mapping...')
@@ -469,7 +483,8 @@ def define_path_to_map(info, path_to_basemap='auto'):
     '''
     Figures out where is the .basemap and .grid files
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        info (info): ``info`` object containing metadata
     '''
     if path_to_basemap == 'auto':
         if info.grid.type == 'one-off':
@@ -678,7 +693,15 @@ def save_basemap(m,info,path_to_basemap='auto'):
     '''
     Saves basemap (and correspoding info.grid) to a pickle file
     
-    :param info info: ``info`` object containing metadata
+    Arguments:
+        m (mpl_toolkits.basemap.Basemap): Basemap object
+        info (info): ``info`` object containing metadata
+        
+    Returns:
+        Pickle file
+        
+    See also:
+        :mod:`pickle`
     '''
 #    
 #    basemap = [grid, m]

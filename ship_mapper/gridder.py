@@ -3,15 +3,12 @@ Fucntions that condense a list of "pings" (i.e. vessel positions) into a 2-dimen
 
 
 '''
-
-
 import pandas as pd
 import numpy as np
 import xarray as xr
 import os
 import copy
 import ship_mapper as sm
-
 
 
 
@@ -154,14 +151,6 @@ def gridder(info, data_in, filename_out, overwrite=False):
         D.to_netcdf(path=file_out)
     
     return
-
-
-
-
-
-
-
-
 
 
 
@@ -439,14 +428,13 @@ def getWKT_PRJ (epsg_code):
     '''
     Downloads and returns geospatial parameters given an epsg code
     
-    :param str epsg_code: Code referring to an entry in the EPSG Geodetic Parameter Dataset,
-                          which is a collection of definitions of coordinate reference
-                          systems and coordinate transformations
+    Arguments:
+        epsg_code (str): Code referring to an entry in the EPSG Geodetic Parameter Dataset, 
+            which is a collection of definitions of coordinate reference
+            systems and coordinate transformations
                           
-    :return: geospatial parameters
-    
-    :rtype: projection object
-                          
+    Returns:
+        str: geospatial parameters                         
     '''
     import urllib.request
     wkt = urllib.request.urlopen("http://spatialreference.org/ref/epsg/{0}/prettywkt/".format(epsg_code))
@@ -518,11 +506,11 @@ def calculate_gridcell_areas(info):
     '''
     Calculates the area of each of the grid-cells in the domain (in km^2)
     
-    :param info info: ``info`` object WITHOUT `info.grid.areas`
+    Arguments:
+        info (info): ``info`` object  WITHOUT ``info.grid.areas``
     
-    :return: ``info`` object WITH `info.grid.areas`
-    
-    :rtype: info
+    Returns:
+        info:  ``info`` object WITH ``info.grid.areas``
     '''
     import ship_mapper as sm
     
@@ -565,7 +553,7 @@ def grid_to_esriascii(info, file_in=None):
     '''
     Writes ESRI ASCII file from gridded data
     
-    See more info about ESRI ASCII `HERE <http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm>`_
+    See more info about `ESRI ASCII <http://resources.esri.com/help/9.3/arcgisdesktop/com/gp_toolref/spatial_analyst_tools/esri_ascii_raster_format.htm>`_
     
     Arguments:
         info (info): ``info`` object containing metadata
