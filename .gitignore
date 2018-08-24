@@ -149,3 +149,5 @@ examples/projects/example5_St_Anns_Banks_VMS_Oracle/gridded_data/vms_autoDownloa
 examples/data/VMS_DFO_Oracle/data_original/vms_autoDownloaded\.csv
 
 examples/projects/settings\.py
+
+examples/projects/example3_St_Anns_Banks_AIS/shapefiles/example3_St_Anns_Banks_AIS\.asc
