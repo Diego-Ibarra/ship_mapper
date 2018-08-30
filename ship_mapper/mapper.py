@@ -31,12 +31,18 @@ def map_density(info, file_in=None, cmap='Default', sidebar=False,
     Keyword Arguments:
         file_in (str): Gridded or merged file to map. If ``None`` it looks for 
             ``merged_grid.nc`` in the `\merged` directory
+            
         cmap (str): Colormap to use
+        
         sidebar (bool): If ``True``, includes side panel with metadata
+        
         to_screen (bool): If ``True``, a plot is printed to screen
+        
         save (bool): If ``True`` a ``.png`` figure is saved to hardrive
+        
         filename_out (str): Name of produced figure. 
             If ``auto`` then name is ``info.run_name + '__' + file_in + '.png'``
+            
         filedir_out (str): Directory where figure is saved.
             If ``auto`` then output directory is ``info.dirs.pngs``
 
@@ -696,6 +702,9 @@ def save_basemap(m,info,path_to_basemap='auto'):
     Arguments:
         m (mpl_toolkits.basemap.Basemap): Basemap object
         info (info): ``info`` object containing metadata
+        
+    Keyword Arguments:
+        path_to_basemap (str): If ``'auto'`` it looks in ``grids`` directory
         
     Returns:
         Pickle file

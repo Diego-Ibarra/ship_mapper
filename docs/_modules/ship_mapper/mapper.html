@@ -210,12 +210,18 @@
 <span class="sd">    Keyword Arguments:</span>
 <span class="sd">        file_in (str): Gridded or merged file to map. If ``None`` it looks for </span>
 <span class="sd">            ``merged_grid.nc`` in the `\merged` directory</span>
+<span class="sd">            </span>
 <span class="sd">        cmap (str): Colormap to use</span>
+<span class="sd">        </span>
 <span class="sd">        sidebar (bool): If ``True``, includes side panel with metadata</span>
+<span class="sd">        </span>
 <span class="sd">        to_screen (bool): If ``True``, a plot is printed to screen</span>
+<span class="sd">        </span>
 <span class="sd">        save (bool): If ``True`` a ``.png`` figure is saved to hardrive</span>
+<span class="sd">        </span>
 <span class="sd">        filename_out (str): Name of produced figure. </span>
 <span class="sd">            If ``auto`` then name is ``info.run_name + &#39;__&#39; + file_in + &#39;.png&#39;``</span>
+<span class="sd">            </span>
 <span class="sd">        filedir_out (str): Directory where figure is saved.</span>
 <span class="sd">            If ``auto`` then output directory is ``info.dirs.pngs``</span>
 
@@ -875,6 +881,9 @@
 <span class="sd">    Arguments:</span>
 <span class="sd">        m (mpl_toolkits.basemap.Basemap): Basemap object</span>
 <span class="sd">        info (info): ``info`` object containing metadata</span>
+<span class="sd">        </span>
+<span class="sd">    Keyword Arguments:</span>
+<span class="sd">        path_to_basemap (str): If ``&#39;auto&#39;`` it looks in ``grids`` directory</span>
 <span class="sd">        </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Pickle file</span>
