@@ -33,7 +33,7 @@ Install ``git``...
 
 
 
-Then, install `ship_mapper`...
+Then, install ``ship_mapper``...
 
 
 Method 1
@@ -64,10 +64,17 @@ or if you want to be able to manipulate the modules code without having to re-in
     python setup.py develop
     
 
+
+.. warning::
+    
+    If you are using SPYDER IDE, you should dissable inline plotting: Go to Tools > Preferences > IPython console > Graphics ...and change the Backend to "automatic"
+
+
+
 Updating ship_mapper
 ++++++++++++++++++++
 
-If you want to updateto the newest version, first...
+If you want to update to the newest version, first...
 
 ::
 
