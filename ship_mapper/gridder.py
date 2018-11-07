@@ -549,7 +549,7 @@ def calculate_gridcell_areas(info):
 
 
 
-def grid_to_esriascii(info, file_in=None):
+def grid_to_esriascii(info, file_in=None, file_out=None):
     '''
     Writes ESRI ASCII file from gridded data
     
@@ -572,10 +572,13 @@ def grid_to_esriascii(info, file_in=None):
     # Load data
     if file_in == None:
         file_in = os.path.join(str(info.dirs.merged_grid),'merged_grid.nc')
+        
+    if file_out == None:
+        file_out = info.project_name
     
     # Outputfile
     sm.checkDir(str(info.dirs.shapefiles))
-    ascii_name = os.path.join(str(info.dirs.shapefiles),info.project_name)
+    ascii_name = os.path.join(str(info.dirs.shapefiles),file_out)
     
     d = xr.open_dataset(file_in)
     

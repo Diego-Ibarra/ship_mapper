@@ -103,14 +103,20 @@ def bulk_convert_to_nc(converter, path_to_data_in=None, path_to_converter=None, 
             if os.path.isfile(file_out) and overwrite:
                 # Convert!
                 print('Processing: ' + file_in)
-                convert.convert(file_in,file_out,yaml_in)
+                try:
+                    convert.convert(file_in,file_out,yaml_in)
+                except ValueError:
+                    print('Empty File!!!!!!!!!!!!')
                 
             elif not os.path.isfile(file_out):
                 sm.checkDir(root_out)
                 
                 # Convert!
                 print('Processing: ' + file_in)
-                convert.convert(file_in,file_out,yaml_in)
+                try:
+                    convert.convert(file_in,file_out,yaml_in)
+                except ValueError:
+                    print('Empty File!!!!!!!!!!!!')
     return
 
 
