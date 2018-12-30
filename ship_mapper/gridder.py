@@ -34,7 +34,8 @@ def gridder(info, data_in, filename_out, overwrite=False):
     
     file_out = os.path.join(str(info.dirs.gridded_data), filename_out)
     
-    interp_threshold = 40
+#    interp_threshold = 40
+    interp_threshold = info.grid.interp_threshold
     
     if not os.path.isfile(file_out) or overwrite:
         

@@ -188,7 +188,8 @@ def get_all_files(dir_in):
     # Do all files in all directories within dir_in
     for root, dirs, files in os.walk(dir_in):
         for file in files:
-            all_files.append(os.path.join(root, file))  
+            all_files.append(os.path.join(root, file))
+    all_files.sort()
     return all_files
 
 
