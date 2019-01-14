@@ -12,7 +12,7 @@ from .utils import (distance, estimate_velocity, elapsed_days,
 
 from .gridder import (gridder, gridder_pingsPerCell, grid_merger, 
                       mergedgrid_to_shp, calculate_gridcell_areas,
-                      grid_to_esriascii)
+                      grid_to_esriascii,last_points)
 
 from .mapper import (map_density, map_dots, make_basemap, map_dots_one_ship,
                      save_basemap)

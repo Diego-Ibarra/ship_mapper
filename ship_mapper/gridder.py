@@ -12,6 +12,57 @@ import ship_mapper as sm
 
 
 
+def last_points(current_data, last_data):
+    '''
+    Merges data with the "last points" from the last file.
+    Also returns the "last points" from this file to append in the next file
+    '''
+    
+    print('Adding/getting last points...')
+    
+    ship_id = current_data.attrs['ship_id']
+    unis = pd.unique(current_data[ship_id].values)
+    
+    last_indices = []
+    
+    for ship in unis:
+        indxship = (current_data[ship_id] == ship)
+        singleship = current_data.sel(Dindex=indxship)     
+        last = singleship['Dindex'][singleship['SeqNum'] == singleship['SeqNum'].max()].values[-1]
+        last_indices.append(last)
+        
+    new_last_data = current_data.sel(Dindex=last_indices)
+    
+    if last_data != None:
+
+#        new_data = xr.merge([current_data,last_data])
+#        xr.concat([current_data['MMSI'],last_data['MMSI']], dim='Dindex')
+#        xr.concat([current_data['SeqNum'],last_data['SeqNum']], dim='Dindex')
+        print(current_data['longitude'])
+        print('-----------------')
+        print(last_data['longitude'])
+        current_data['longitude'] = xr.concat([current_data['longitude'],last_data['longitude']], dim='Dindex')
+        print('@@@@@@@@@@@@@@@@@@@@@')
+        current_data.reset_index('Dindex')
+        print(current_data['longitude'])
+#        xr.concat([current_data['latitude'],last_data['latitude']], dim='Dindex')       
+#        xr.concat([current_data['Dindex'],last_data['Dindex']], dim='Dindex')
+        new_data = xr.concat([current_data,last_data], dim='Dindex')
+
+    else:
+        new_data = current_data
+
+        
+#    new_data.reset_index('Dindex')
+    
+    return new_data, new_last_data
+
+
+
+
+
+
+
 def gridder(info, data_in, filename_out, overwrite=False):
     '''
     Counts "pings" inside a grid-cell and computes "Ship minutes per km2"
