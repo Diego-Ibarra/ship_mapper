@@ -16,7 +16,7 @@ The plotting module currently used by ship_mapper (i.e. Basemap) fails to setup 
 
 >>> KeyError: 'PROJ_LIB'
 
-The way temporary fix this problem is to do the following at the begining of each working session (remeber to add the CORRECT path to EPSG in your own computer):
+The way to temporary fix this problem is to do the following at the begining of each working session (remeber to add the CORRECT path to EPSG in your own computer):
 
 >>> import os
 os.environ['PROJ_LIB'] = r'C:\Users\Diego\Anaconda3\Library\share'
